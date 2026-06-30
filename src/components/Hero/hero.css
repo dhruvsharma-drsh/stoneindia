@@ -1,0 +1,123 @@
+/* ══════════════════════════════════════════════════════════════
+   Premium Awwwards-Level Hero — Custom Styles
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Film-grain noise overlay ──────────────────────────────── */
+.hero-noise-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ── Subtle architectural grid ─────────────────────────────── */
+.hero-grid-pattern {
+  background-size: 80px 80px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+}
+
+/* ── Luxury glass navbar (white / light) ───────────────────── */
+.luxury-glass-navbar {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 40px rgba(17, 17, 17, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+/* ── Glass card on the image ───────────────────────────────── */
+.luxury-glass-card {
+  background: rgba(17, 17, 17, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(184, 149, 93, 0.2);
+}
+
+/* ── Bottom feature strip ──────────────────────────────────── */
+.luxury-glass-strip {
+  background: linear-gradient(135deg, rgba(17, 17, 17, 0.92) 0%, rgba(20, 20, 20, 0.85) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid rgba(184, 149, 93, 0.2);
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Gold glow on CTA buttons ──────────────────────────────── */
+.gold-glow-shadow {
+  box-shadow: 0 8px 25px -5px rgba(184, 149, 93, 0.4);
+}
+.gold-glow-shadow:hover {
+  box-shadow: 0 14px 35px -5px rgba(184, 149, 93, 0.65);
+}
+
+/* ── Cinematic vignette overlays ───────────────────────────── */
+.hero-vignette-left {
+  background: linear-gradient(
+    90deg,
+    rgba(17, 17, 17, 0.92) 0%,
+    rgba(17, 17, 17, 0.80) 25%,
+    rgba(17, 17, 17, 0.50) 50%,
+    rgba(17, 17, 17, 0.15) 75%,
+    transparent 100%
+  );
+}
+
+.hero-vignette-top {
+  background: linear-gradient(
+    180deg,
+    rgba(17, 17, 17, 0.75) 0%,
+    rgba(17, 17, 17, 0.20) 60%,
+    transparent 100%
+  );
+}
+
+.hero-vignette-bottom {
+  background: linear-gradient(
+    0deg,
+    rgba(17, 17, 17, 1) 0%,
+    rgba(17, 17, 17, 0.65) 40%,
+    transparent 100%
+  );
+}
+
+/* ── Slow Ken Burns zoom animation for background ──────────── */
+@keyframes heroKenBurns {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+.hero-ken-burns {
+  animation: heroKenBurns 22s ease-in-out infinite;
+}
+
+/* ── Slider indicator pulse ────────────────────────────────── */
+@keyframes indicatorPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.6; }
+}
+
+/* ── Gold underline animation for "Possibilities" ──────────── */
+@keyframes goldUnderline {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.gold-underline-anim {
+  animation: goldUnderline 0.8s 1.2s ease-out both;
+  transform-origin: left center;
+}
+
+/* ── Feature icon container ────────────────────────────────── */
+.feature-icon-box {
+  background: rgba(184, 149, 93, 0.1);
+  border: 1px solid rgba(184, 149, 93, 0.2);
+  transition: all 0.3s ease;
+}
+.feature-icon-box:hover,
+.group:hover .feature-icon-box {
+  background: #B8955D;
+  border-color: #B8955D;
+}
+.feature-icon-box:hover svg,
+.group:hover .feature-icon-box svg {
+  color: #fff;
+}
