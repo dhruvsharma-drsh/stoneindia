@@ -90,13 +90,13 @@ export function Header() {
                       <span className="text-xs font-semibold text-white">Need bespoke stone cutting?</span>
                       <span className="text-[11px] text-white/50">Custom CNC architectural fabrication available.</span>
                     </div>
-                    <a
-                      href="/#contact"
-                      className="inline-flex items-center gap-1 text-xs font-mono text-[#B8955D] hover:underline"
-                    >
-                      <span>Request Catalog</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </a>
+                    <Link
+                    to="/contact"
+                    className="inline-flex items-center gap-1 text-xs font-mono text-[#B8955D] hover:underline"
+                  >
+                    <span>Contact Us</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </Link>
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -118,7 +118,7 @@ export function Header() {
               </NavigationMenuLink>
 
               <NavigationMenuLink className="px-3 py-2 text-sm font-medium text-white/80 hover:text-[#B8955D] transition-colors" asChild>
-                <a href="/#contact">Contact Us</a>
+                <Link to="/contact">Contact Us</Link>
               </NavigationMenuLink>
             </NavigationMenuList>
           </NavigationMenu>

@@ -1,4 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import Footer from '@/components/Footer';
 import {
@@ -92,58 +95,56 @@ const VeinMark = () => (
   </svg>
 );
 
-/* Core-sample reading-progress rail — desktop only */
-const CoreSampleRail = ({ progress }) => {
-  const bands = [
-    { h: 14, c: '#2A2622' },
-    { h: 9, c: '#3D362C' },
-    { h: 20, c: '#1F3A30' },
-    { h: 11, c: '#4B4238' },
-    { h: 16, c: '#14140F' },
-    { h: 12, c: '#5B4E3C' },
-    { h: 18, c: '#1F3A30' },
-  ];
+const CircularProgressButton = ({ progress }) => {
+  const radius = 22;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - progress * circumference;
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <div
-      className="hidden lg:flex fixed left-8 top-1/2 -translate-y-1/2 z-30 flex-col items-center gap-3"
-      role="progressbar"
-      aria-label="Reading progress"
-      aria-valuenow={Math.round(progress * 100)}
-      aria-valuemin={0}
-      aria-valuemax={100}
+    <button
+      onClick={scrollToTop}
+      className={`fixed right-6 bottom-6 lg:right-10 lg:bottom-10 z-50 flex items-center justify-center rounded-full bg-white shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-[#EDEDE9] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8955D] ${
+        progress > 0.05 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'
+      }`}
+      aria-label="Scroll to top"
     >
-      <span className="font-mono text-[10px] tracking-[0.15em] text-[#8A8580]">
-        {String(Math.round(progress * 100)).padStart(2, '0')}%
-      </span>
-      <div className="relative w-[10px] h-56 rounded-full overflow-hidden bg-[#EDEAE3] shadow-inner">
-        {/* strata bands, always visible, faint */}
-        <div className="absolute inset-0 flex flex-col opacity-25">
-          {bands.map((b, i) => (
-            <div key={i} style={{ height: `${b.h}%`, background: b.c }} />
-          ))}
-        </div>
-        {/* fill, clipped to progress, full-strength strata = "drilled" portion */}
-        <div
-          className="absolute bottom-0 left-0 w-full flex flex-col-reverse transition-[height] duration-150 ease-out"
-          style={{ height: `${progress * 100}%` }}
-        >
-          {[...bands].reverse().map((b, i) => (
-            <div key={i} style={{ height: `${b.h}%`, background: b.c }} />
-          ))}
-        </div>
-        <div className="absolute inset-0 rounded-full ring-1 ring-black/10" />
+      <svg className="w-14 h-14 -rotate-90 transform" viewBox="0 0 52 52">
+        {/* Background track */}
+        <circle cx="26" cy="26" r={radius} fill="none" stroke="#F3F0EA" strokeWidth="3" />
+        {/* Progress stroke */}
+        <circle
+          cx="26"
+          cy="26"
+          r={radius}
+          fill="none"
+          stroke="#B8955D"
+          strokeWidth="3"
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
+          className="transition-all duration-150 ease-out"
+        />
+      </svg>
+      <div className="absolute flex items-center justify-center inset-0 text-[#14140F]">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
       </div>
-      <span className="font-mono text-[9px] tracking-[0.2em] text-[#8A8580] rotate-180 [writing-mode:vertical-rl]">
-        CORE
-      </span>
-    </div>
+    </button>
   );
 };
+
+gsap.registerPlugin(ScrollTrigger);
 
 const BlogPostPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const articleRef = useRef(null);
+  const articleContentRef = useRef(null);
   const [progress, setProgress] = useState(0);
   const [copied, setCopied] = useState(false);
 
@@ -171,8 +172,35 @@ const BlogPostPage = () => {
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
   }, [post]);
+
+  useGSAP(() => {
+    if (!articleContentRef.current) return;
+    
+    // Select all the main text blocks to animate
+    const elements = gsap.utils.toArray(articleContentRef.current.querySelectorAll('p, h2, h3, ul, .faq-container'));
+    
+    elements.forEach((el) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          }
+        }
+      );
+    });
+  }, { dependencies: [post], scope: articleContentRef });
 
   const handleCopyLink = async () => {
     try {
@@ -217,7 +245,7 @@ const BlogPostPage = () => {
       className="min-h-screen text-[#14140F]"
       style={{ background: '#F7F5F0', fontFamily: "'Inter', sans-serif" }}
     >
-      <CoreSampleRail progress={progress} />
+      <CircularProgressButton progress={progress} />
 
       {/* ---------------------------------------------------------------
           HERO
@@ -227,9 +255,9 @@ const BlogPostPage = () => {
           <img
             src={post.image}
             alt={post.title}
-            className="w-full h-full object-cover motion-safe:animate-[heroIn_1.4s_ease-out]"
+            className="w-full h-full object-cover brightness-[0.55] contrast-[0.9] grayscale-[15%] motion-safe:animate-[heroIn_1.4s_ease-out]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A08] via-[#0A0A08]/55 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A08] via-[#0A0A08]/60 to-[#0A0A08]/10" />
         </div>
 
         <div className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-20 md:pb-28 pt-32">
@@ -304,18 +332,18 @@ const BlogPostPage = () => {
           </div>
 
           <div
-            className="[&_p]:mb-6 [&_p]:text-[#3A3630] [&_p]:leading-[1.85] [&_p]:text-[1.125rem]
+            ref={articleContentRef}
+            className="[&_p]:mb-6 [&_p]:text-[#3A3630] [&_p]:leading-[1.85] [&_p]:text-[1.125rem] [&_p]:font-sans
                        [&_h2]:mt-14 [&_h2]:mb-6 [&_h2]:pb-4 [&_h2]:border-b [&_h2]:border-[#E4E0D8]
-                       [&_h2]:text-[#14140F] [&_h2]:text-[1.9rem] [&_h2]:font-medium
-                       [&_h3]:mt-10 [&_h3]:mb-4 [&_h3]:text-[#14140F] [&_h3]:text-[1.4rem] [&_h3]:font-medium
+                       [&_h2]:text-[#14140F] [&_h2]:text-[2.2rem] [&_h2]:font-medium [&_h2]:font-['Fraunces']
+                       [&_h3]:mt-10 [&_h3]:mb-4 [&_h3]:text-[#14140F] [&_h3]:text-[1.5rem] [&_h3]:font-medium [&_h3]:font-['Fraunces']
                        [&_a]:text-[#B8955D] [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-[#14140F]
-                       [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-6 [&_li]:text-[#3A3630] [&_li]:mb-2 [&_li]:leading-[1.8]
+                       [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-6 [&_li]:text-[#3A3630] [&_li]:mb-2 [&_li]:leading-[1.8] [&_li]:font-sans
                        [&_strong]:text-[#14140F] [&_strong]:font-semibold
                        [&>p:first-of-type]:first-letter:font-['Fraunces'] [&>p:first-of-type]:first-letter:text-[5rem]
                        [&>p:first-of-type]:first-letter:font-medium [&>p:first-of-type]:first-letter:text-[#1F3A30]
                        [&>p:first-of-type]:first-letter:float-left [&>p:first-of-type]:first-letter:mr-3
                        [&>p:first-of-type]:first-letter:mt-1 [&>p:first-of-type]:first-letter:leading-[0.85]"
-            style={{ fontFamily: "'Source Serif 4', serif" }}
           >
             {post.content}
           </div>
@@ -404,6 +432,15 @@ const BlogPostPage = () => {
         }
         @media (prefers-reduced-motion: reduce) {
           .motion-safe\\:animate-\\[heroIn_1\\.4s_ease-out\\] { animation: none !important; }
+        }
+        .scroll-reveal-item {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .scroll-reveal-item.is-revealed {
+          opacity: 1;
+          transform: translateY(0);
         }
       `}</style>
     </div>

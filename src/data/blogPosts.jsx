@@ -1,4 +1,6 @@
 import React from 'react';
+import { FAQ } from '@/components/ui/FAQ';
+import { Typewriter } from '@/components/ui/Typewriter';
 
 export const blogPosts = [
   {
@@ -60,23 +62,31 @@ export const blogPosts = [
         <h2>Conclusion</h2>
         <p>Wrapping up your landscaping project doesn't have to be stressful when you choose a material that lasts. Fossil Mint natural stones give you that rare mix of natural beauty, safety, and rugged durability that handles whatever the weather throws at it. If you are ready to transform your backyard into a relaxing retreat, let Stone India help you select the perfect slabs. Reach out to our team today to get samples and start bringing your outdoor design ideas to life!</p>
 
-        <hr className="my-8 border-[#EDEDE9]" />
+        <hr className="my-12 border-[#EDEDE9]" />
         
-        <h3>Frequently Asked Questions</h3>
-        <p><strong>Q. What are Fossil Mint Natural Stones best used for outdoors?</strong><br/>
-        They are perfect for patios, garden paths, swimming pool edges, walkways, and low garden borders. Their warm, neutral tones let them fit in with almost any home style, from rustic cottages to modern houses.</p>
-
-        <p><strong>Q. How do I maintain and clean Fossil Mint Natural Stones?</strong><br/>
-        Just sweep them regularly to keep dirt and leaves from building up. For a deeper clean, wash them down with a garden hose and some mild dish soap. If you want to prevent stains, apply a clear stone sealer every few years.</p>
-
-        <p><strong>Q. Are Fossil Mint Natural Stones slip-resistant for pool areas?</strong><br/>
-        Yes, as long as you choose a natural riven or sandblasted finish. These finishes leave a slight texture on the surface that gives you excellent grip, even when the stone is wet from pool splashes.</p>
-
-        <p><strong>Q. Can these stones withstand freezing temperatures?</strong><br/>
-        Yes, they handle freezing weather very well. The key is making sure they are installed on top of a proper gravel base with good drainage so that freezing water cannot trap underneath the slabs and lift them.</p>
-
-        <p><strong>Q. How do I choose the right finish and thickness for my project?</strong><br/>
-        For standard garden paths and patios, 20–30 mm thick slabs work beautifully. If you are paving an area that needs to hold a heavy weight, go with thicker pieces. Always look at a physical sample in the daylight to make sure you like the colour mix.</p>
+        <h3 className="!mt-0 !mb-8"><Typewriter text="Frequently Asked Questions" delay={300} /></h3>
+        <div className="faq-container bg-white rounded-2xl p-6 border border-[#EDEDE9] shadow-sm mb-8">
+          <FAQ 
+            question="What are Fossil Mint Natural Stones best used for outdoors?" 
+            answer="They are perfect for patios, garden paths, swimming pool edges, walkways, and low garden borders. Their warm, neutral tones let them fit in with almost any home style, from rustic cottages to modern houses." 
+          />
+          <FAQ 
+            question="How do I maintain and clean Fossil Mint Natural Stones?" 
+            answer="Just sweep them regularly to keep dirt and leaves from building up. For a deeper clean, wash them down with a garden hose and some mild dish soap. If you want to prevent stains, apply a clear stone sealer every few years." 
+          />
+          <FAQ 
+            question="Are Fossil Mint Natural Stones slip-resistant for pool areas?" 
+            answer="Yes, as long as you choose a natural riven or sandblasted finish. These finishes leave a slight texture on the surface that gives you excellent grip, even when the stone is wet from pool splashes." 
+          />
+          <FAQ 
+            question="Can these stones withstand freezing temperatures?" 
+            answer="Yes, they handle freezing weather very well. The key is making sure they are installed on top of a proper gravel base with good drainage so that freezing water cannot trap underneath the slabs and lift them." 
+          />
+          <FAQ 
+            question="How do I choose the right finish and thickness for my project?" 
+            answer="For standard garden paths and patios, 20–30 mm thick slabs work beautifully. If you are paving an area that needs to hold a heavy weight, go with thicker pieces. Always look at a physical sample in the daylight to make sure you like the colour mix." 
+          />
+        </div>
       </>
     )
   },
@@ -262,9 +272,6 @@ export const blogPosts = [
     title: "Explore The Aesthetic And Structural Advantages Of Sagar Black Sandstone",
     excerpt: "Natural stones have a timeless charm that endures for centuries. Sagar black sandstone stands out with its robust structural integrity and deep aesthetic appeal for modern homes.",
     category: "Architecture",
-    date: "Jun 10, 2023",
-    readTime: "5 MIN READ",
-    author: "Stone India Team",
     date: "Jun 10, 2023",
     readTime: "5 MIN READ",
     author: "Stone India Team",
