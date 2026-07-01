@@ -106,15 +106,15 @@ export function Header() {
               </NavigationMenuLink>
 
               <NavigationMenuLink className="px-3 py-2 text-sm font-medium text-white/80 hover:text-[#B8955D] transition-colors" asChild>
-                <a href="/#projects">Our Projects</a>
+                <Link to="/projects">Our Projects</Link>
               </NavigationMenuLink>
 
               <NavigationMenuLink className="px-3 py-2 text-sm font-medium text-white/80 hover:text-[#B8955D] transition-colors" asChild>
-                <a href="/#packaging">Packaging</a>
+                <Link to="/packaging">Packaging</Link>
               </NavigationMenuLink>
 
               <NavigationMenuLink className="px-3 py-2 text-sm font-medium text-white/80 hover:text-[#B8955D] transition-colors" asChild>
-                <a href="/#blog">Blog</a>
+                <Link to="/blog">Blog</Link>
               </NavigationMenuLink>
 
               <NavigationMenuLink className="px-3 py-2 text-sm font-medium text-white/80 hover:text-[#B8955D] transition-colors" asChild>
@@ -173,9 +173,9 @@ export function Header() {
           </div>
 
           <Link to="/infrastructure" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Infrastructure</Link>
-          <a href="/#projects" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Our Projects</a>
-          <a href="/#packaging" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Packaging</a>
-          <a href="/#blog" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Blog</a>
+          <Link to="/projects" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Our Projects</Link>
+          <Link to="/packaging" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Packaging</Link>
+          <Link to="/blog" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Blog</Link>
           <a href="/#contact" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Contact Us</a>
         </div>
 
