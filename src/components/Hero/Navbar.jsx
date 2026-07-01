@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight, Sparkles } from "lucide-react";
+import gsap from "gsap";
+import Button from "../Button";
 import "./hero.css";
 
 const navLinks = [
@@ -18,6 +20,17 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState("Home");
+
+  const handleMagneticMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - (rect.left + rect.width / 2)) * 0.55;
+    const y = (e.clientY - (rect.top + rect.height / 2)) * 0.55;
+    gsap.to(e.currentTarget, { x, y, scale: 1.08, duration: 0.3, ease: "power2.out" });
+  };
+
+  const handleMagneticLeave = (e) => {
+    gsap.to(e.currentTarget, { x: 0, y: 0, scale: 1, duration: 0.7, ease: "elastic.out(1, 0.3)" });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,6 +98,8 @@ const Navbar = () => {
                 key={link.name}
                 href={link.href}
                 onClick={() => setActiveLink(link.name)}
+                onMouseMove={handleMagneticMove}
+                onMouseLeave={handleMagneticLeave}
                 className={`relative px-3 py-1.5 text-[13px] font-sans font-medium tracking-wide transition-colors duration-300 rounded-full focus:outline-none ${
                   isActive
                     ? "text-[#111111]"
@@ -106,21 +121,17 @@ const Navbar = () => {
 
         {/* CTA Button */}
         <div className="hidden sm:flex items-center gap-3">
-          <motion.a
-            href="#contact"
-            whileHover={{ y: -2, scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="group relative inline-flex items-center gap-2 bg-[#B8955D] text-white text-xs font-sans font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full gold-glow-shadow transition-all duration-300 hover:bg-[#a6834d]"
-          >
-            <span>Get a Quote</span>
-            <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </motion.a>
+          <Button
+            title="Get a Quote"
+            onClick={() => (window.location.href = "#contact")}
+          />
         </div>
 
         {/* Mobile Hamburger Button */}
         <button
           type="button"
+          onMouseMove={handleMagneticMove}
+          onMouseLeave={handleMagneticLeave}
           aria-label="Toggle Navigation Menu"
           aria-expanded={mobileMenuOpen}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

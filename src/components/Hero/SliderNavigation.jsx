@@ -1,8 +1,20 @@
 import React from "react";
 import { motion } from "framer-motion";
+import gsap from "gsap";
 import "./hero.css";
 
 const SliderNavigation = ({ totalSlides = 3, activeIndex = 0, onSelectSlide }) => {
+  const handleMagneticMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - (rect.left + rect.width / 2)) * 0.6;
+    const y = (e.clientY - (rect.top + rect.height / 2)) * 0.6;
+    gsap.to(e.currentTarget, { x, y, scale: 1.2, duration: 0.3, ease: "power2.out" });
+  };
+
+  const handleMagneticLeave = (e) => {
+    gsap.to(e.currentTarget, { x: 0, y: 0, scale: 1, duration: 0.7, ease: "elastic.out(1, 0.3)" });
+  };
+
   return (
     <div className="absolute right-6 sm:right-10 lg:right-14 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-center gap-0 pointer-events-auto">
       {Array.from({ length: totalSlides }).map((_, idx) => {
@@ -13,8 +25,10 @@ const SliderNavigation = ({ totalSlides = 3, activeIndex = 0, onSelectSlide }) =
           <button
             key={idx}
             type="button"
+            onMouseMove={handleMagneticMove}
+            onMouseLeave={handleMagneticLeave}
             onClick={() => onSelectSlide && onSelectSlide(idx)}
-            className="group flex flex-col items-center focus:outline-none"
+            className="group flex flex-col items-center focus:outline-none p-2"
             aria-label={`Go to slide ${num}`}
           >
             {/* Number */}

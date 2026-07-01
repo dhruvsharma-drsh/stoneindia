@@ -1,230 +1,505 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Sparkles, Star, ArrowRight, CheckCircle2, Quote, Award } from "lucide-react";
+import { Star, ArrowRight, Quote, ChevronLeft, ChevronRight, X, Volume2, VolumeX, Loader2 } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const portraits = [
-  { id: 0, name: "Alessandro Rossi", role: "Principal Architect, Milan", img: "img/person_1.png", quote: "Flawless book-matched Calacatta marble for our royal palace project in Dubai. The precision exceeded our highest standards." },
-  { id: 1, name: "Elena Rostova", role: "Interior Design Head, Zurich", img: "img/person_2.png", quote: "Their custom fluted limestone vanities transformed our 200+ suite Swiss Alpine resort into an architectural sanctuary." },
-  { id: 2, name: "Sir Marcus Sterling", role: "Managing Director, London", img: "img/person_3.png", quote: "The custom backlit emerald onyx wall is the undisputed centerpiece of our London corporate headquarters." },
-  { id: 3, name: "Rajeshwar Singhania", role: "Chief Projects Officer", img: "img/person_4.png", quote: "From quarry selection to export packaging, their engineering precision made complex installations effortless." },
-  { id: 4, name: "Camille Laurent", role: "Luxury Hospitality Director", img: "img/person_5.png", quote: "Sourcing direct from quarries gave us unmatched color consistency across our international villas." },
-  { id: 5, name: "Hendrik Van Der Berg", role: "Facade Engineering Lead", img: "img/project_dubai_palace.png", quote: "The structural acoustics and bush-hammered finitures on our Dubai facade withstood intense desert heat flawlessly." },
-  { id: 6, name: "Sophia Al-Mansoor", role: "Palace Development Chief", img: "img/project_london_tower.png", quote: "Direct access to rare Persian onyx and Indian marble blocks gave our royal interior unique luminosity." },
+/* ── Inject animations once ── */
+if (typeof document !== "undefined" && !document.getElementById("fb-css")) {
+  const s = document.createElement("style");
+  s.id = "fb-css";
+  s.textContent = `
+    @keyframes fb-reveal { 0%{opacity:0;transform:translateY(30px) scale(0.97)} 100%{opacity:1;transform:translateY(0) scale(1)} }
+    @keyframes fb-shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(400%)} }
+    @keyframes fb-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    @keyframes fb-glow { 0%,100%{opacity:0.4;box-shadow:0 0 20px rgba(184,149,93,0.15)} 50%{opacity:1;box-shadow:0 0 40px rgba(184,149,93,0.35)} }
+    @keyframes fb-counter { 0%{opacity:0;transform:translateY(20px)} 100%{opacity:1;transform:translateY(0)} }
+    @keyframes equalizer { 0%, 100% { height: 4px; } 50% { height: 16px; } }
+    .fb-reveal{animation:fb-reveal .7s cubic-bezier(.22,1,.36,1) both}
+    .fb-shimmer{animation:fb-shimmer 3s ease-in-out infinite}
+    .fb-float{animation:fb-float 4s ease-in-out infinite}
+    .fb-glow{animation:fb-glow 3s ease-in-out infinite}
+    .fb-counter{animation:fb-counter .5s cubic-bezier(.22,1,.36,1) both}
+    .eq-bar-1 { animation: equalizer 0.6s ease-in-out infinite; }
+    .eq-bar-2 { animation: equalizer 0.4s ease-in-out infinite 0.1s; }
+    .eq-bar-3 { animation: equalizer 0.5s ease-in-out infinite 0.2s; }
+    .eq-bar-4 { animation: equalizer 0.7s ease-in-out infinite 0.15s; }
+  `;
+  document.head.appendChild(s);
+}
+
+const audioCache = {};
+
+const testimonials = [
+  { id: 0, name: "Alessandro Rossi", role: "Principal Architect", location: "Milan, Italy", img: "img/person_1.png", quote: "Flawless book-matched Calacatta marble for our royal palace project in Dubai. The precision exceeded our highest standards.", project: "Royal Palace, Dubai", sarvamSpeaker: "ashutosh" },
+  { id: 1, name: "Elena Rostova", role: "Interior Design Head", location: "Zurich, Switzerland", img: "img/person_2.png", quote: "Their custom fluted limestone vanities transformed our 200+ suite Swiss Alpine resort into an architectural sanctuary.", project: "Alpine Resort, Switzerland", sarvamSpeaker: "priya" },
+  { id: 2, name: "Sir Marcus Sterling", role: "Managing Director", location: "London, UK", img: "img/person_3.png", quote: "The custom backlit emerald onyx wall is the undisputed centerpiece of our London corporate headquarters.", project: "Sterling Tower, London", sarvamSpeaker: "advait" },
+  { id: 3, name: "Rajeshwar Singhania", role: "Chief Projects Officer", location: "New Delhi, India", img: "img/person_4.png", quote: "From quarry selection to export packaging, their engineering precision made complex installations effortless.", project: "National Centre, Delhi", sarvamSpeaker: "aditya" },
+  { id: 4, name: "Camille Laurent", role: "Luxury Hospitality Director", location: "Paris, France", img: "img/person_5.png", quote: "Sourcing direct from quarries gave us unmatched color consistency across our international villas.", project: "Laurent Villas, Côte d'Azur", sarvamSpeaker: "shreya" },
+  { id: 5, name: "Hendrik Van Der Berg", role: "Facade Engineering Lead", location: "Cape Town, SA", img: "img/person_6.png", quote: "The structural acoustics and bush-hammered finitures on our Dubai facade withstood intense desert heat flawlessly.", project: "Dubai Marina Tower", sarvamSpeaker: "mani" },
+  { id: 6, name: "Sophia Al-Mansoor", role: "Palace Development Chief", location: "Abu Dhabi, UAE", img: "img/person_7.png", quote: "Direct access to rare Persian onyx and Indian marble blocks gave our royal interior unique luminosity.", project: "Al-Mansoor Palace", sarvamSpeaker: "suhani" },
 ];
 
 const Feedback = () => {
   const sectionRef = useRef(null);
-  const gridRef = useRef(null);
+  const quoteRef = useRef(null);
+  const audioRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [direction, setDirection] = useState(1); // 1 = next, -1 = prev
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isGeneratingVoice, setIsGeneratingVoice] = useState(false);
 
-  // null means no image is currently hovered by user
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-  // Auto-spotlight index rotates every 4.5s when user isn't hovering
-  const [autoIndex, setAutoIndex] = useState(0);
+  const active = testimonials[activeIndex];
 
-  // Auto-loop spotlight when idle
-  useEffect(() => {
-    if (hoveredIndex !== null) return;
-    const interval = setInterval(() => {+
-      setAutoIndex((prev) => (prev + 1) % portraits.length);
-    }, 4500);
-    return () => clearInterval(interval);
-  }, [hoveredIndex]);
+  const stopSpeech = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+    setIsSpeaking(false);
+    setIsGeneratingVoice(false);
+  }, []);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Gentle floating sine animation on cards
-      const cards = gridRef.current.querySelectorAll(".portrait-wrapper");
-      cards.forEach((card, idx) => {
-        gsap.to(card, {
-          y: (idx % 2 === 0 ? -1 : 1) * 12,
-          duration: 3.5 + (idx % 2),
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-        });
+  const toggleSpeak = useCallback(async () => {
+    if (isSpeaking || isGeneratingVoice) {
+      stopSpeech();
+      return;
+    }
+
+    const t = active;
+
+    // Check memory cache first
+    if (audioCache[t.id]) {
+      const audio = new Audio(audioCache[t.id]);
+      audioRef.current = audio;
+      audio.onended = () => setIsSpeaking(false);
+      audio.onerror = () => setIsSpeaking(false);
+      audio.play();
+      setIsSpeaking(true);
+      return;
+    }
+
+    setIsGeneratingVoice(true);
+    const textToSpeak = `Hi, I am ${t.name}, ${t.role} in ${t.location}. Here is my feedback: ${t.quote}`;
+
+    try {
+      const res = await fetch("https://api.sarvam.ai/text-to-speech", {
+        method: "POST",
+        headers: {
+          "api-subscription-key": "sk_2eq54hoe_cI8n82QmbGNe2OC9gFLteJLe",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          inputs: [textToSpeak],
+          target_language_code: "en-IN",
+          speaker: t.sarvamSpeaker || "priya",
+          model: "bulbul:v3",
+        }),
       });
 
-      gsap.fromTo(
-        sectionRef.current.querySelector(".content-stage"),
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-          },
-        }
-      );
-    }, sectionRef);
+      const data = await res.json();
+      if (data.audios && data.audios[0]) {
+        const base64Audio = `data:audio/wav;base64,${data.audios[0]}`;
+        audioCache[t.id] = base64Audio;
+        setIsGeneratingVoice(false);
 
+        const audio = new Audio(base64Audio);
+        audioRef.current = audio;
+        audio.onended = () => setIsSpeaking(false);
+        audio.onerror = () => setIsSpeaking(false);
+        audio.play();
+        setIsSpeaking(true);
+      } else {
+        setIsGeneratingVoice(false);
+        console.error("Sarvam API error response:", data);
+      }
+    } catch (err) {
+      console.error("Sarvam TTS fetch failure:", err);
+      setIsGeneratingVoice(false);
+    }
+  }, [isSpeaking, isGeneratingVoice, active, stopSpeech]);
+
+  // Stop speech when activeIndex changes or unmounts
+  useEffect(() => {
+    stopSpeech();
+  }, [activeIndex, stopSpeech]);
+
+  // Auto-rotate (pause when speaking or generating voice)
+  useEffect(() => {
+    if (isSpeaking || isGeneratingVoice) return;
+    const timer = setInterval(() => {
+      goNext();
+    }, 7000);
+    return () => clearInterval(timer);
+  }, [activeIndex, isSpeaking, isGeneratingVoice]);
+
+  const goNext = useCallback(() => {
+    if (isTransitioning) return;
+    setDirection(1);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveIndex((prev) => (prev + 1) % testimonials.length);
+      setIsTransitioning(false);
+    }, 400);
+  }, [isTransitioning]);
+
+  const goPrev = useCallback(() => {
+    if (isTransitioning) return;
+    setDirection(-1);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+      setIsTransitioning(false);
+    }, 400);
+  }, [isTransitioning]);
+
+  const goTo = useCallback((idx) => {
+    if (isTransitioning || idx === activeIndex) return;
+    setDirection(idx > activeIndex ? 1 : -1);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveIndex(idx);
+      setIsTransitioning(false);
+    }, 400);
+  }, [isTransitioning, activeIndex]);
+
+  // Magnetic button physics
+  const handleMagneticMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - (rect.left + rect.width / 2)) * 0.65;
+    const y = (e.clientY - (rect.top + rect.height / 2)) * 0.65;
+    gsap.to(e.currentTarget, {
+      x,
+      y,
+      scale: 1.1,
+      duration: 0.3,
+      ease: "power2.out",
+    });
+  };
+
+  const handleMagneticLeave = (e) => {
+    gsap.to(e.currentTarget, {
+      x: 0,
+      y: 0,
+      scale: 1,
+      duration: 0.7,
+      ease: "elastic.out(1, 0.3)",
+    });
+  };
+
+  // GSAP scroll reveal
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(sectionRef.current, { opacity: 0 }, {
+        opacity: 1,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+      });
+    }, sectionRef);
     return () => ctx.revert();
   }, []);
 
-  // Active item is either user hovered item OR auto rotating item
-  const activeIdx = hoveredIndex !== null ? hoveredIndex : autoIndex;
-  const activeItem = portraits[activeIdx];
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === "ArrowRight") goNext();
+      if (e.key === "ArrowLeft") goPrev();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [goNext, goPrev]);
 
   return (
     <section
       ref={sectionRef}
       id="feedback"
-      className="relative w-full min-h-screen bg-white overflow-hidden py-16 lg:py-24 flex flex-col justify-between border-t border-black/[0.06]"
+      className="relative w-full bg-[#0A0A0A] overflow-hidden"
     >
-      {/* Background Vertical Dashed Grid Lines matching reference */}
-      <div className="absolute inset-0 pointer-events-none flex justify-around px-4 sm:px-12 opacity-30">
-        {[...Array(8)].map((_, i) => (
-          <div key={i} className="w-[1px] h-full border-l border-dashed border-black/20" />
-        ))}
-      </div>
+      {/* ═══════════════════════════════════════════════
+          HERO SPLIT — Left Image | Right Content
+      ═══════════════════════════════════════════════ */}
+      <div className="relative min-h-[60vh] lg:min-h-[70vh] flex flex-col lg:flex-row">
 
-      {/* Subtle radial ambient background */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[65vw] h-[65vw] bg-[#B8955D]/[0.05] rounded-full blur-[150px] pointer-events-none" />
+        {/* ── LEFT: Cinematic Portrait ── */}
+        <div className="relative w-full lg:w-[42%] h-[40vh] lg:h-auto overflow-hidden">
+          {/* Image with cross-fade */}
+          {testimonials.map((t, idx) => (
+            <div
+              key={t.id}
+              className={`absolute inset-0 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                idx === activeIndex
+                  ? "opacity-100 scale-100 z-10 pointer-events-auto"
+                  : "opacity-0 scale-105 z-0 pointer-events-none"
+              }`}
+            >
+              <img
+                src={t.img}
+                alt={t.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full relative z-10 flex flex-col items-center text-center">
-        
-        {/* ── Top Cascading Floating Portraits Grid with Interactive Popup ── */}
-        <div
-          ref={gridRef}
-          onMouseLeave={() => setHoveredIndex(null)}
-          className="w-full flex flex-wrap justify-center items-center gap-5 sm:gap-8 lg:gap-10 mb-14 sm:mb-18 pt-20 pb-8 relative"
-        >
-          {portraits.map((item, idx) => {
-            const isActive = activeIdx === idx;
-            const isUserHovered = hoveredIndex === idx;
-            const isAnyActive = hoveredIndex !== null || autoIndex !== null;
+          {/* Cinematic overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#0A0A0A] z-10 hidden lg:block" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/30 to-transparent z-10 lg:hidden" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-transparent to-[#0A0A0A]/20 z-10" />
 
-            // Initially all dull (opacity 50%, grayscale 60%). Active one pops up (opacity 100%, color), others become very dull (opacity 25%)
-            let cardStyle = "opacity-50 grayscale-[60%] scale-95 border-white/80 shadow-md";
-            if (isActive) {
-              cardStyle = "opacity-100 grayscale-0 scale-125 z-50 border-2 border-[#B8955D] shadow-2xl shadow-[#B8955D]/30 !rotate-0 ring-4 ring-[#B8955D]/20";
-            } else if (isAnyActive) {
-              cardStyle = "opacity-25 grayscale-[80%] scale-90 blur-[1px] border-white/40 shadow-none";
-            }
+          {/* Noise texture overlay */}
+          <div className="absolute inset-0 z-10 opacity-[0.03] pointer-events-none" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")" }} />
 
-            // Stagger elevation along the arch
-            const translateY = idx === 0 || idx === 6 ? "translate-y-8 sm:translate-y-10" : idx === 1 || idx === 5 ? "translate-y-3 sm:translate-y-4" : idx === 3 ? "-translate-y-6 sm:-translate-y-8" : "translate-y-0";
-            const rotation = idx === 0 ? "-rotate-6" : idx === 6 ? "rotate-6" : idx === 5 ? "rotate-4" : idx === 1 ? "-rotate-4" : "-rotate-1";
-
-            return (
-              <div
-                key={item.id}
-                onMouseEnter={() => setHoveredIndex(idx)}
-                className={`portrait-wrapper relative cursor-pointer transition-all duration-500 transform ${translateY}`}
-              >
-                {/* ── Floating Speech Bubble Comment Box attached above active image ── */}
-                <div className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-64 sm:w-72 bg-black/90 backdrop-blur-xl text-white p-4 sm:p-5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-[#B8955D]/60 pointer-events-none transition-all duration-300 z-50 ${
-                  isActive
-                    ? "opacity-100 translate-y-0 scale-100"
-                    : "opacity-0 translate-y-4 scale-90"
-                }`}>
-                  {/* Subtle gold top glow */}
-                  <div className="absolute top-0 left-4 right-4 h-[2px] bg-gradient-to-r from-transparent via-[#B8955D] to-transparent" />
-
-                  {/* Star rating */}
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-[#B8955D] text-[#B8955D]" />
-                      ))}
-                    </div>
-                    <span className="font-mono text-[10px] text-[#B8955D] uppercase tracking-wider">Verified</span>
-                  </div>
-
-                  {/* Comment text */}
-                  <p className="font-editorial text-sm sm:text-base leading-snug text-white/95 font-light mb-3 text-left">
-                    “{item.quote}”
-                  </p>
-
-                  {/* Person info */}
-                  <div className="flex items-center gap-2.5 pt-2.5 border-t border-white/10 text-left">
-                    <img src={item.img} alt={item.name} className="w-7 h-7 rounded-full object-cover border border-[#B8955D]" />
-                    <div>
-                      <h6 className="font-editorial text-xs font-semibold text-white leading-none">
-                        {item.name}
-                      </h6>
-                      <span className="font-sans text-[10px] text-[#B8955D] block mt-0.5">
-                        {item.role}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Downward triangle tail pointing to portrait */}
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-[1px] border-8 border-transparent border-t-black/90" />
-                </div>
-
-                {/* Card Frame */}
-                <div className={`relative w-24 sm:w-28 lg:w-32 aspect-square rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-400 ${rotation} ${cardStyle}`}>
-                  <img
-                    src={item.img}
-                    alt={item.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* ── Center Content Stage (Exact Reference Match) ── */}
-        <div className="content-stage flex flex-col items-center max-w-4xl mx-auto mt-4 sm:mt-6">
+          {/* Gold accent line at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#B8955D]/40 to-transparent z-20 lg:hidden" />
           
-          {/* Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#FAF9F5] border border-black/10 shadow-sm mb-6">
-            <Sparkles className="w-3.5 h-3.5 text-[#B8955D]" />
-            <span className="font-sans text-xs font-bold text-[#1A1A1A] tracking-widest uppercase">
-              Testimonials
-            </span>
-          </div>
+          {/* Gold accent line at right edge (desktop) */}
+          <div className="absolute top-0 bottom-0 right-0 w-[1px] bg-gradient-to-b from-transparent via-[#B8955D]/30 to-transparent z-20 hidden lg:block" />
 
-          {/* Clean Bold Heading exactly matching image */}
-          <h2 className="font-editorial text-4xl sm:text-6xl lg:text-7xl font-light tracking-tight text-[#1A1A1A] leading-tight mb-4">
-            Trusted by leaders <br />
-            <span className="text-[#8A8A8A] font-normal">from various industries</span>
-          </h2>
-
-          {/* Subtitle */}
-          <p className="font-sans text-base sm:text-lg lg:text-xl text-[#6B6B6B] max-w-2xl font-light leading-relaxed mb-8">
-            Learn why world-class architects, real estate developers, and interior designers trust Gwalior Stone for bespoke natural surfaces.
-          </p>
-
-          {/* Dynamic Active Review Banner at bottom */}
-          <div className="w-full max-w-3xl bg-[#FAF9F5] p-6 sm:p-8 rounded-3xl border border-black/[0.06] shadow-sm mb-8 transition-all duration-300">
-            <div key={activeItem.id} className="flex flex-col sm:flex-row items-center gap-5 text-left animate-in fade-in duration-300">
-              <img src={activeItem.img} alt="Avatar" className="w-16 h-16 rounded-2xl object-cover border-2 border-[#B8955D] shadow-md flex-shrink-0" />
-              <div>
-                <div className="flex items-center gap-1 mb-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#B8955D] text-[#B8955D]" />
-                  ))}
-                  <span className="text-xs font-bold text-[#1A1A1A] ml-2 uppercase">Verified Client Endorsement</span>
-                </div>
-                <p className="font-editorial text-lg sm:text-xl text-[#1A1A1A] font-light italic mb-2">
-                  “{activeItem.quote}”
-                </p>
-                <span className="font-sans text-xs font-semibold text-[#B8955D]">
-                  {activeItem.name} — {activeItem.role}
-                </span>
-              </div>
+          {/* Counter badge */}
+          <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8 z-20 flex items-center gap-3">
+            <div className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/[0.06]">
+              <span className="font-mono text-2xl sm:text-3xl font-bold text-[#B8955D] fb-counter" key={activeIndex}>
+                {String(activeIndex + 1).padStart(2, "0")}
+              </span>
+              <span className="font-mono text-sm text-white/20 mx-1">/</span>
+              <span className="font-mono text-sm text-white/30">
+                {String(testimonials.length).padStart(2, "0")}
+              </span>
             </div>
           </div>
 
-          {/* CTA Pill Button exactly like image */}
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#1A1A1A] text-white font-sans text-sm font-semibold hover:bg-[#B8955D] hover:text-black transition-all duration-300 shadow-xl group active:scale-95"
-          >
-            <span>Read Success Stories</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </a>
-
+          {/* Project name floating tag */}
+          <div className="absolute top-6 left-6 sm:top-8 sm:left-8 z-20">
+            <div key={active.project} className="px-3 py-1.5 rounded-lg bg-[#B8955D]/10 backdrop-blur-md border border-[#B8955D]/20 fb-reveal">
+              <span className="font-mono text-[10px] sm:text-xs text-[#B8955D] uppercase tracking-[0.2em] font-bold">
+                {active.project}
+              </span>
+            </div>
+          </div>
         </div>
 
+        {/* ── RIGHT: Content ── */}
+        <div className="relative flex-1 flex flex-col justify-center px-6 sm:px-10 lg:px-14 xl:px-20 py-8 lg:py-10">
+
+          {/* Decorative background elements */}
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#B8955D]/[0.03] rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#B8955D]/[0.02] rounded-full blur-[100px] pointer-events-none" />
+
+          {/* Section label */}
+          <div className="flex items-center gap-3 mb-5 sm:mb-6">
+            <div className="w-8 h-[1px] bg-[#B8955D]" />
+            <span className="font-mono text-[11px] text-[#B8955D] uppercase tracking-[0.3em] font-bold">
+              Client Stories
+            </span>
+          </div>
+
+          {/* Quote content with transition */}
+          <div className="relative min-h-[200px] sm:min-h-[220px] mb-6">
+            {testimonials.map((t, idx) => (
+              <div
+                key={t.id}
+                className={`absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                  idx === activeIndex
+                    ? "opacity-100 translate-y-0 z-10 pointer-events-auto"
+                    : idx > activeIndex || (activeIndex === testimonials.length - 1 && idx === 0)
+                      ? "opacity-0 translate-y-8 z-0 pointer-events-none"
+                      : "opacity-0 -translate-y-8 z-0 pointer-events-none"
+                }`}
+              >
+                {/* Stars */}
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-[#B8955D] text-[#B8955D]" />
+                  ))}
+                  <span className="ml-3 font-mono text-[10px] text-white/25 uppercase tracking-[0.2em]">5.0</span>
+                </div>
+
+                {/* Large quote */}
+                <div className="relative">
+                  <Quote className="absolute -top-3 -left-2 w-8 h-8 sm:w-10 sm:h-10 text-[#B8955D]/10 rotate-180" />
+                  <p ref={idx === activeIndex ? quoteRef : null} className="font-editorial text-lg sm:text-xl md:text-2xl text-white/85 font-light italic leading-[1.5] pl-6 pr-2">
+                    {t.quote}
+                  </p>
+                </div>
+
+                {/* Person + Speak Endorsement Button */}
+                <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="relative">
+                      <div className="absolute -inset-[2px] rounded-full bg-gradient-to-br from-[#B8955D] to-[#D4A95C] opacity-50 blur-[2px]" />
+                      <img
+                        src={t.img}
+                        alt={t.name}
+                        className="relative w-10 h-10 rounded-full object-cover border-2 border-[#0A0A0A]"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="font-editorial text-sm sm:text-base font-bold text-white tracking-tight">
+                        {t.name}
+                      </h4>
+                      <p className="font-sans text-xs sm:text-sm text-white/30 mt-0.5">
+                        {t.role} <span className="text-[#B8955D]/50">·</span> {t.location}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Speak button (interactive when active slide) */}
+                  {idx === activeIndex && (
+                    <button
+                      onClick={toggleSpeak}
+                      onMouseMove={handleMagneticMove}
+                      onMouseLeave={handleMagneticLeave}
+                      disabled={isGeneratingVoice}
+                      className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full font-mono text-[11px] uppercase tracking-wider transition-all duration-300 cursor-pointer border ${
+                        isSpeaking
+                          ? "bg-[#B8955D] text-[#0A0A0A] font-bold border-[#B8955D] shadow-[0_0_20px_rgba(184,149,93,0.4)] scale-105 animate-pulse"
+                          : isGeneratingVoice
+                          ? "bg-[#B8955D]/20 text-[#B8955D] border-[#B8955D]/50 cursor-wait"
+                          : "bg-white/[0.04] text-white/70 hover:text-[#B8955D] border-white/10 hover:border-[#B8955D]/40 hover:bg-[#B8955D]/10"
+                      }`}
+                      aria-label="Listen to Voice Endorsement"
+                    >
+                      {isGeneratingVoice ? (
+                        <>
+                          <Loader2 className="w-3.5 h-3.5 animate-spin text-[#B8955D]" />
+                          <span>Generating Voice...</span>
+                        </>
+                      ) : isSpeaking ? (
+                        <>
+                          <Volume2 className="w-3.5 h-3.5 animate-bounce" />
+                          <span>Speaking...</span>
+                          <div className="flex items-end gap-[2px] h-3 ml-1">
+                            <div className="w-[2px] bg-[#0A0A0A] eq-bar-1" />
+                            <div className="w-[2px] bg-[#0A0A0A] eq-bar-2" />
+                            <div className="w-[2px] bg-[#0A0A0A] eq-bar-3" />
+                            <div className="w-[2px] bg-[#0A0A0A] eq-bar-4" />
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <Volume2 className="w-3.5 h-3.5 text-[#B8955D]" />
+                          <span>Listen Voice</span>
+                        </>
+                      )}
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* ── Navigation Controls ── */}
+          <div className="flex items-center justify-between border-t border-white/[0.06] pt-5">
+            
+            {/* Avatar selector dots */}
+            <div className="flex items-center gap-2">
+              {testimonials.map((t, idx) => (
+                <button
+                  key={t.id}
+                  onClick={() => goTo(idx)}
+                  onMouseMove={handleMagneticMove}
+                  onMouseLeave={handleMagneticLeave}
+                  className={`relative rounded-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] cursor-pointer ${
+                    idx === activeIndex
+                      ? "w-9 h-9 ring-2 ring-[#B8955D] ring-offset-2 ring-offset-[#0A0A0A]"
+                      : "w-7 h-7 opacity-40 hover:opacity-70 grayscale hover:grayscale-0"
+                  }`}
+                  aria-label={`View testimonial from ${t.name}`}
+                >
+                  <img src={t.img} alt={t.name} className="w-full h-full object-cover" />
+                  {idx === activeIndex && (
+                    <div className="absolute inset-0 rounded-full fb-glow pointer-events-none" />
+                  )}
+                </button>
+              ))}
+            </div>
+
+            {/* Prev / Next arrows */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={goPrev}
+                onMouseMove={handleMagneticMove}
+                onMouseLeave={handleMagneticLeave}
+                className="w-9 h-9 rounded-full border border-white/[0.08] hover:border-[#B8955D]/40 bg-white/[0.02] hover:bg-[#B8955D]/10 flex items-center justify-center transition-all duration-300 group cursor-pointer"
+                aria-label="Previous testimonial"
+              >
+                <ChevronLeft className="w-4 h-4 text-white/40 group-hover:text-[#B8955D] transition-colors" />
+              </button>
+              <button
+                onClick={goNext}
+                onMouseMove={handleMagneticMove}
+                onMouseLeave={handleMagneticLeave}
+                className="w-9 h-9 rounded-full border border-white/[0.08] hover:border-[#B8955D]/40 bg-white/[0.02] hover:bg-[#B8955D]/10 flex items-center justify-center transition-all duration-300 group cursor-pointer"
+                aria-label="Next testimonial"
+              >
+                <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-[#B8955D] transition-colors" />
+              </button>
+            </div>
+          </div>
+
+          {/* Progress bar */}
+          <div className="mt-4 w-full h-[2px] bg-white/[0.04] rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-[#B8955D] to-[#D4A95C] rounded-full transition-all duration-500 ease-out"
+              style={{ width: `${((activeIndex + 1) / testimonials.length) * 100}%` }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════════════
+          BOTTOM: Stats bar
+      ═══════════════════════════════════════════════ */}
+      <div className="relative border-t border-white/[0.04]">
+        {/* Shimmer line */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] overflow-hidden">
+          <div className="fb-shimmer w-1/4 h-full bg-gradient-to-r from-transparent via-[#B8955D]/50 to-transparent" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-8 sm:px-12 lg:px-20 py-7 sm:py-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12">
+            {[
+              { value: "500+", label: "Projects Delivered" },
+              { value: "40+", label: "Countries Served" },
+              { value: "98%", label: "Client Satisfaction" },
+              { value: "25+", label: "Years of Excellence" },
+            ].map((stat, i) => (
+              <div key={i} className="text-center sm:text-left group">
+                <div className="font-editorial text-2xl sm:text-3xl lg:text-4xl font-light text-[#B8955D] tracking-tight mb-1 transition-transform duration-300 group-hover:scale-105">
+                  {stat.value}
+                </div>
+                <div className="font-sans text-xs sm:text-sm text-white/25 uppercase tracking-[0.15em] font-medium">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════════════
+          CTA Strip
+      ═══════════════════════════════════════════════ */}
+      <div className="relative border-t border-white/[0.04] py-8 sm:py-10">
+        <div className="max-w-7xl mx-auto px-8 sm:px-12 lg:px-20 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div>
+            <h3 className="font-editorial text-xl sm:text-2xl text-white font-light mb-1">
+              Ready to start your project?
+            </h3>
+            <p className="font-sans text-sm text-white/30">
+              Join 500+ satisfied clients across 40+ countries.
+            </p>
+          </div>
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-[#B8955D] text-[#0A0A0A] font-sans text-sm font-bold hover:bg-[#D4A95C] transition-all duration-300 shadow-[0_0_30px_rgba(184,149,93,0.2)] hover:shadow-[0_0_50px_rgba(184,149,93,0.35)] group active:scale-95"
+          >
+            <span>Get a Quote</span>
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </a>
+        </div>
       </div>
     </section>
   );
