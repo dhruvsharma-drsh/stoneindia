@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import Navbar from "./Navbar";
 import HeroContent from "./HeroContent";
 import HeroImage from "./HeroImage";
 import SliderNavigation from "./SliderNavigation";
@@ -45,8 +44,7 @@ const Hero = () => {
         className="absolute top-1/4 left-[10%] w-[50vw] h-[50vw] rounded-full bg-[#B8955D]/[0.06] blur-[160px] pointer-events-none z-[5]"
       />
 
-      {/* ── Floating Glass Navbar ── */}
-      <Navbar />
+
 
       {/* ── Hero Content (left overlay) ── */}
       <div className="absolute inset-0 z-20 flex items-center pointer-events-none">

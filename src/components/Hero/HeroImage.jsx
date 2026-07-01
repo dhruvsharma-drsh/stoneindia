@@ -32,12 +32,12 @@ const HeroImage = ({ activeIndex = 0 }) => {
   }, []);
 
   return (
-    <div className="absolute inset-0 w-full h-full overflow-hidden z-[1]">
+    <div className="absolute inset-0 w-full h-full overflow-hidden bg-[#111111] z-[1]">
       {/* Parallax container */}
       <motion.div
         animate={{ x: -mousePos.x, y: -mousePos.y }}
         transition={{ type: "spring", stiffness: 35, damping: 25 }}
-        className="absolute inset-[-20px] w-[calc(100%+40px)] h-[calc(100%+40px)]"
+        className="absolute -inset-16 w-[calc(100%+128px)] h-[calc(100%+128px)]"
       >
         {slides.map((slide, idx) => {
           const isActive = idx === activeIndex % slides.length;
@@ -62,9 +62,9 @@ const HeroImage = ({ activeIndex = 0 }) => {
                 alt={slide.alt}
                 loading="eager"
                 decoding="async"
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover object-center scale-[1.15]"
                 style={{
-                  filter: "brightness(0.82) contrast(1.08) saturate(0.95)",
+                  filter: "brightness(0.85) contrast(1.08) saturate(0.95)",
                 }}
               />
             </motion.div>
