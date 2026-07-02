@@ -255,7 +255,7 @@ const SeoElement = memo(({ tag = Tag.P, texts }) => {
 // ══════════════════════════════════════════════════════
 export default function VaporizeTextCycle({
   texts = ["Next.js", "React"],
-  font = { fontFamily: "sans-serif", fontSize: "50px", fontWeight: 400 },
+  font = { fontFamily: "ui-rounded, 'SF Pro Rounded', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif", fontSize: "50px", fontWeight: 400 },
   color = "rgb(255, 255, 255)",
   spread = 5,
   density = 5,

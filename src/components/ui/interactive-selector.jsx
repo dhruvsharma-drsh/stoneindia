@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Maximize2, X } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { Maximize2, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const InteractiveSelector = ({ title, description, images }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animatedOptions, setAnimatedOptions] = useState([]);
-  const [modalImage, setModalImage] = useState(null);
+  const [modalImageIndex, setModalImageIndex] = useState(null);
   
   const handleOptionClick = (index) => {
     if (index !== activeIndex) {
       setActiveIndex(index);
     } else {
       // If already active and clicked again, open the modal
-      setModalImage(images[index]);
+      setModalImageIndex(index);
     }
   };
 
@@ -30,16 +31,34 @@ const InteractiveSelector = ({ title, description, images }) => {
     };
   }, [images]);
 
-  // Handle escape key to close modal
+  // Handle escape key and arrows for modal
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') setModalImage(null);
+      if (e.key === 'Escape') setModalImageIndex(null);
+      if (e.key === 'ArrowRight' && modalImageIndex !== null) {
+        setModalImageIndex(prev => (prev + 1) % images.length);
+      }
+      if (e.key === 'ArrowLeft' && modalImageIndex !== null) {
+        setModalImageIndex(prev => (prev - 1 + images.length) % images.length);
+      }
     };
-    if (modalImage) {
+    if (modalImageIndex !== null) {
       window.addEventListener('keydown', handleKeyDown);
     }
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [modalImage]);
+  }, [modalImageIndex, images.length]);
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (modalImageIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [modalImageIndex]);
 
   return (
     <>
@@ -105,7 +124,7 @@ const InteractiveSelector = ({ title, description, images }) => {
                 className="absolute left-1/2 -translate-x-1/2 md:left-6 md:translate-x-0 bottom-4 md:bottom-6 flex items-center justify-center z-10 hover:scale-110 transition-transform duration-300"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setModalImage(imgUrl);
+                  setModalImageIndex(index);
                 }}
               >
                 <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-md shadow-lg transition-transform duration-500 ease-in-out cursor-pointer"
@@ -168,26 +187,49 @@ const InteractiveSelector = ({ title, description, images }) => {
       </div>
 
       {/* Lightbox Modal */}
-      {modalImage && (
+      {modalImageIndex !== null && createPortal(
         <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 md:p-8 transition-opacity duration-300"
-          onClick={() => setModalImage(null)}
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 md:p-8 transition-opacity duration-300"
+          onClick={() => setModalImageIndex(null)}
         >
           <button 
             className="absolute top-6 right-6 md:top-10 md:right-10 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-[110]"
-            onClick={() => setModalImage(null)}
+            onClick={() => setModalImageIndex(null)}
             aria-label="Close modal"
           >
             <X size={24} />
           </button>
           
+          <button 
+            className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-[110]"
+            onClick={(e) => {
+              e.stopPropagation();
+              setModalImageIndex(prev => (prev - 1 + images.length) % images.length);
+            }}
+            aria-label="Previous image"
+          >
+            <ChevronLeft size={24} />
+          </button>
+          
+          <button 
+            className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-[110]"
+            onClick={(e) => {
+              e.stopPropagation();
+              setModalImageIndex(prev => (prev + 1) % images.length);
+            }}
+            aria-label="Next image"
+          >
+            <ChevronRight size={24} />
+          </button>
+          
           <img 
-            src={modalImage} 
+            src={images[modalImageIndex]} 
             alt="Project full view" 
-            className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl animate-zoomIn"
+            className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl animate-zoomIn"
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking the image itself
           />
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

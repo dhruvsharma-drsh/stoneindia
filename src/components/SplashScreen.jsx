@@ -161,7 +161,7 @@ const SplashScreen = ({ onComplete }) => {
         <VaporizeTextCycle
           texts={["Gwalior Stone", "Premium Marble", "Natural Granite", "Exotic Onyx", "Timeless Luxury"]}
           font={{
-            fontFamily: "Inter, sans-serif",
+            fontFamily: "ui-rounded, 'SF Pro Rounded', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
             fontSize: "60px",
             fontWeight: 700,
           }}

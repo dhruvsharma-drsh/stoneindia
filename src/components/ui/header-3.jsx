@@ -57,9 +57,6 @@ export function Header() {
               <span className="font-serif font-bold tracking-wider text-white text-lg leading-tight">
                 GWALIOR <span className="text-[#B8955D] font-light">STONE</span>
               </span>
-              <span className="text-[9px] uppercase tracking-[0.25em] text-white/40">
-                Rajasthan · India
-              </span>
             </div>
           </Link>
 
