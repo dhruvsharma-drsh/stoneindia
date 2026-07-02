@@ -83,186 +83,12 @@ const getVaporizeStyle = (scrollProgress, staggerStart = 0, staggerEnd = 1) => {
   };
 };
 
-/* ── Hover-Reveal Project Index ──
-   Minimal text list with cursor-following image reveal on hover.
-   Inspired by luxury stone/marble collection galleries. */
-const ProjectHoverIndex = ({ projects }) => {
-  const [hoveredId, setHoveredId] = useState(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [smoothPos, setSmoothPos] = useState({ x: 0, y: 0 });
-  const [imageIndex, setImageIndex] = useState({});
-  const containerRef = useRef(null);
-  const rafRef = useRef(null);
 
-  // Smooth cursor-following via lerp (spring-like)
-  useEffect(() => {
-    const animate = () => {
-      setSmoothPos(prev => ({
-        x: prev.x + (mousePos.x - prev.x) * 0.12,
-        y: prev.y + (mousePos.y - prev.y) * 0.12,
-      }));
-      rafRef.current = requestAnimationFrame(animate);
-    };
-    rafRef.current = requestAnimationFrame(animate);
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
-  }, [mousePos]);
-
-  const handleMouseMove = useCallback((e) => {
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      const rawX = e.clientX - rect.left;
-      const rawY = e.clientY - rect.top;
-      const center = rect.width / 2;
-      
-      let clampedX = rawX;
-
-      if (hoveredId) {
-        const projectIndex = projects.findIndex(p => p.id === hoveredId);
-        const isRightSide = projectIndex % 2 !== 0;
-
-        if (isRightSide) {
-          // Right side zig-zag: keep image STRICTLY on the right, away from centered text
-          const minAllowedX = Math.min(center + 440, rect.width - 150);
-          clampedX = Math.max(rawX, minAllowedX);
-          clampedX = Math.min(clampedX, rect.width - 150); // keep on screen
-        } else {
-          // Left side zig-zag: keep image STRICTLY on the left
-          const maxAllowedX = Math.max(center - 440, 150);
-          clampedX = Math.min(rawX, maxAllowedX);
-          clampedX = Math.max(clampedX, 150); // keep on screen
-        }
-      }
-
-      setMousePos({
-        x: clampedX,
-        y: rawY,
-      });
-    }
-  }, [hoveredId, projects]);
-
-  const handleHoverEnter = (projectId, images) => {
-    setHoveredId(projectId);
-    // Cycle to next image each time user hovers
-    setImageIndex(prev => ({
-      ...prev,
-      [projectId]: ((prev[projectId] || 0) + 1) % images.length,
-    }));
-  };
-
-  const handleHoverLeave = () => {
-    setHoveredId(null);
-  };
-
-  const hoveredProject = projects.find(p => p.id === hoveredId);
-  const currentImageSrc = hoveredProject
-    ? hoveredProject.images[imageIndex[hoveredId] || 0]
-    : null;
-
-  return (
-    <section
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
-      className="relative min-h-[100vh] flex flex-col justify-center py-16 md:py-20 overflow-hidden bg-white"
-    >
-      {/* Section Heading */}
-      <div className="text-center mb-8 md:mb-14 px-6 shrink-0">
-        <h2
-          className="text-4xl md:text-5xl lg:text-6xl text-[#1A1A18] tracking-tight"
-          style={{ fontFamily: "'Playfair Display', 'Georgia', serif", fontWeight: 400 }}
-        >
-          Our <em className="not-italic" style={{ fontStyle: 'italic' }}>Projects</em>
-        </h2>
-      </div>
-
-      {/* Project List */}
-      <div className="max-w-6xl mx-auto px-6 w-full flex flex-col justify-center shrink-0">
-        {projects.map((project, index) => (
-          <div key={project.id}>
-            {/* Divider line */}
-            {index === 0 && (
-              <div className="h-px w-full" style={{ background: 'rgba(26,26,24,0.12)' }} />
-            )}
-
-            {/* Project Row */}
-            <div
-              className="group cursor-pointer block w-full hover:bg-black/[0.02] transition-colors duration-500"
-              onMouseEnter={() => handleHoverEnter(project.id, project.images)}
-              onMouseLeave={handleHoverLeave}
-            >
-              <div className="py-5 md:py-8 lg:py-10 flex items-center justify-center relative">
-                <span
-                  className="text-2xl md:text-3xl lg:text-4xl text-center transition-all duration-500 ease-out"
-                  style={{
-                    fontFamily: "'Playfair Display', 'Georgia', serif",
-                    fontWeight: 400,
-                    color: hoveredId === project.id ? '#1A1A18' : 'rgba(26,26,24,0.25)',
-                    letterSpacing: '-0.02em',
-                  }}
-                >
-                  {project.title}
-                  <sup
-                    className="ml-1 text-xs md:text-sm relative -top-4 md:-top-6 transition-colors duration-500"
-                    style={{
-                      fontFamily: "'Inter', sans-serif",
-                      fontWeight: 500,
-                      color: hoveredId === project.id ? '#B8955D' : 'rgba(26,26,24,0.2)',
-                    }}
-                  >
-                    {project.images.length}
-                  </sup>
-                </span>
-              </div>
-            </div>
-
-            {/* Divider line */}
-            <div className="h-px w-full" style={{ background: 'rgba(26,26,24,0.12)' }} />
-          </div>
-        ))}
-      </div>
-
-      {/* Floating Hover Image */}
-      <div
-        className="absolute pointer-events-none z-30"
-        style={{
-          left: `${smoothPos.x}px`,
-          top: `${smoothPos.y}px`,
-          transform: 'translate(-50%, -70%)',
-          willChange: 'left, top, opacity, transform',
-        }}
-      >
-        <div
-          className="relative overflow-hidden rounded-lg shadow-2xl"
-          style={{
-            width: '280px',
-            height: '200px',
-            opacity: hoveredId ? 1 : 0,
-            transform: hoveredId ? 'scale(1) rotate(-2deg)' : 'scale(0.7) rotate(0deg)',
-            transition: 'opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-          }}
-        >
-          {currentImageSrc && (
-            <img
-              src={currentImageSrc}
-              alt=""
-              className="w-full h-full object-cover"
-              style={{
-                transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-                transform: hoveredId ? 'scale(1.05)' : 'scale(1.2)',
-              }}
-            />
-          )}
-          {/* Subtle border overlay */}
-          <div className="absolute inset-0 rounded-lg border border-white/20" />
-        </div>
-      </div>
-
-    </section>
-  );
-};
 
 const ProjectsPage = () => {
   const [copied, setCopied] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [expandedProjectIds, setExpandedProjectIds] = useState([projects[0].id]);
   const heroContentRef = useRef(null);
 
   useEffect(() => {
@@ -314,7 +140,7 @@ const ProjectsPage = () => {
         </div>
 
         {/* Hero Content — each element vaporizes on scroll with staggered timing */}
-        <div ref={heroContentRef} className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-20 md:pb-28 pt-32">
+        <div ref={heroContentRef} className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-24 md:pb-32 pt-32">
           
           {/* Back button — dissolves first (0.0 → 0.4) */}
           <div style={getVaporizeStyle(scrollProgress, 0.0, 0.4)}>
@@ -413,18 +239,62 @@ const ProjectsPage = () => {
         {/* Fractured Stone Edge — top of the white content */}
         <FractureEdge fill="#FFFFFF" />
 
-        {/* ── PROJECT INDEX — Hover-reveal gallery ── */}
-        <ProjectHoverIndex projects={projects} />
 
-        {/* ── Detailed Project Sections ── */}
-        {projects.map((project, index) => (
-          <InteractiveSelector 
-            key={project.id}
-            title={project.title}
-            description={project.description}
-            images={project.images}
-          />
-        ))}
+
+        {/* ── Detailed Project Sections (Accordion) ── */}
+        <div className="flex flex-col border-t border-gray-200 min-h-[100vh]">
+          {projects.map((project, index) => {
+            const isExpanded = expandedProjectIds.includes(project.id);
+            return (
+              <div key={project.id} className="border-b border-black/[0.06] bg-white">
+                {/* Accordion Header */}
+                <button
+                  onClick={() => {
+                    setExpandedProjectIds(prev => 
+                      prev.includes(project.id) 
+                        ? prev.filter(id => id !== project.id)
+                        : [...prev, project.id]
+                    );
+                  }}
+                  className="w-full text-left py-10 md:py-16 px-6 md:px-12 flex flex-col md:flex-row md:items-center justify-between gap-6 group hover:bg-[#FAF9F6] transition-colors duration-1000"
+                >
+                  <div className="flex items-center gap-8 md:gap-12 transform group-hover:translate-x-4 transition-transform duration-700 ease-[0.16,1,0.3,1]">
+                    <span className="text-sm font-mono font-bold text-black/20 group-hover:text-[#B8955D] transition-colors duration-500">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <h3 className={`text-3xl md:text-5xl font-editorial tracking-tight transition-colors duration-500 ${isExpanded ? 'text-[#B8955D]' : 'text-[#1A1A18]'}`}>
+                      {project.title}
+                    </h3>
+                  </div>
+                  <div className="flex items-center gap-8 text-gray-500 w-full md:w-auto transform group-hover:-translate-x-2 transition-transform duration-700 ease-[0.16,1,0.3,1]">
+                    <span className="text-sm font-medium hidden md:block max-w-sm truncate text-black/40 group-hover:text-black/60 transition-colors duration-500">{project.description}</span>
+                    <div className={`ml-auto md:ml-0 relative w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-700 shrink-0 ${isExpanded ? 'border-[#B8955D] text-[#B8955D] bg-[#B8955D]/5' : 'border-black/10 text-black/40 group-hover:border-[#B8955D] group-hover:text-[#B8955D] group-hover:bg-[#B8955D]/5'}`}>
+                      {/* Horizontal line */}
+                      <div className={`absolute w-3.5 h-[1px] bg-current transition-transform duration-500 ease-[0.16,1,0.3,1] ${isExpanded ? 'rotate-180' : 'rotate-0'}`} />
+                      {/* Vertical line (cross) */}
+                      <div className={`absolute w-3.5 h-[1px] bg-current transition-all duration-500 ease-[0.16,1,0.3,1] ${isExpanded ? 'rotate-0 opacity-0 scale-50' : 'rotate-90 opacity-100 scale-100'}`} />
+                    </div>
+                  </div>
+                </button>
+
+                {/* Accordion Content */}
+                <div 
+                  className={`overflow-hidden transition-all duration-700 ease-[0.16,1,0.3,1] ${
+                    isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
+                  }`}
+                >
+                  <div className="-mt-16 md:-mt-24 pb-8">
+                    <InteractiveSelector 
+                      title=""
+                      description=""
+                      images={project.images}
+                    />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
         <Footer />
       </div>

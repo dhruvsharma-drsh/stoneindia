@@ -14,10 +14,10 @@ const Footer = () => {
       </span>
 
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
-        
+
         {/* Top Grid Section */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16 pb-16 border-b border-white/10">
-          
+
           {/* Brand & Heritage Col */}
           <div className="md:col-span-5 flex flex-col justify-between">
             <div>

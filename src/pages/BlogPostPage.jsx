@@ -33,7 +33,19 @@ import { blogPosts } from '@/data/blogPosts';
    stone      #8A8580  captions / muted meta
 ------------------------------------------------------------------------ */
 
+const FONTS_HREF =
+  'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap';
 
+function useGoogleFonts() {
+  useEffect(() => {
+    if (document.getElementById('bp-fonts')) return;
+    const link = document.createElement('link');
+    link.id = 'bp-fonts';
+    link.rel = 'stylesheet';
+    link.href = FONTS_HREF;
+    document.head.appendChild(link);
+  }, []);
+}
 
 /* Contour / topographic pattern — reused on the closing CTA band */
 const ContourPattern = ({ className = '', opacity = 0.14 }) => (
@@ -95,9 +107,8 @@ const CircularProgressButton = ({ progress }) => {
   return (
     <button
       onClick={scrollToTop}
-      className={`fixed right-6 bottom-6 lg:right-10 lg:bottom-10 z-50 flex items-center justify-center rounded-full bg-white shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-[#EDEDE9] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8955D] ${
-        progress > 0.05 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'
-      }`}
+      className={`fixed right-6 bottom-6 lg:right-10 lg:bottom-10 z-50 flex items-center justify-center rounded-full bg-white shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-[#EDEDE9] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8955D] ${progress > 0.05 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'
+        }`}
       aria-label="Scroll to top"
     >
       <svg className="w-14 h-14 -rotate-90 transform" viewBox="0 0 52 52">
@@ -119,7 +130,7 @@ const CircularProgressButton = ({ progress }) => {
       </svg>
       <div className="absolute flex items-center justify-center inset-0 text-[#14140F]">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 19V5M5 12l7-7 7 7"/>
+          <path d="M12 19V5M5 12l7-7 7 7" />
         </svg>
       </div>
     </button>
@@ -136,7 +147,7 @@ const BlogPostPage = () => {
   const [progress, setProgress] = useState(0);
   const [copied, setCopied] = useState(false);
 
-
+  useGoogleFonts();
 
   const postIndex = blogPosts.findIndex((p) => p.id === id);
   const post = postIndex !== -1 ? blogPosts[postIndex] : null;
@@ -168,10 +179,10 @@ const BlogPostPage = () => {
 
   useGSAP(() => {
     if (!articleContentRef.current) return;
-    
+
     // Select all the main text blocks to animate
     const elements = gsap.utils.toArray(articleContentRef.current.querySelectorAll('p, h2, h3, ul, .faq-container'));
-    
+
     elements.forEach((el) => {
       gsap.fromTo(el,
         { opacity: 0, y: 40 },
@@ -204,14 +215,14 @@ const BlogPostPage = () => {
     return (
       <div
         className="min-h-screen flex flex-col items-center justify-center text-center px-6"
-        style={{ background: '#F7F5F0' }}
+        style={{ background: '#F7F5F0', fontFamily: "'Inter', sans-serif" }}
       >
         <span className="font-mono text-xs tracking-[0.3em] text-[#8A8580] mb-4">
           404 — NO SAMPLE FOUND
         </span>
         <h1
           className="text-4xl mb-4 text-[#14140F]"
-
+          style={{ fontFamily: "'Fraunces', serif" }}
         >
           This page isn&apos;t in the archive.
         </h1>
@@ -231,7 +242,7 @@ const BlogPostPage = () => {
   return (
     <div
       className="min-h-screen text-[#14140F]"
-      style={{ background: '#F7F5F0' }}
+      style={{ background: '#F7F5F0', fontFamily: "'Inter', sans-serif" }}
     >
       <CircularProgressButton progress={progress} />
 
@@ -275,7 +286,7 @@ const BlogPostPage = () => {
 
           <h1
             className="text-4xl md:text-5xl lg:text-[4.5rem] text-white tracking-tight mb-8 leading-[1.08] max-w-4xl drop-shadow-lg"
-            style={{ fontWeight: 500 }}
+            style={{ fontFamily: "'Fraunces', serif", fontWeight: 500 }}
           >
             {post.title}
           </h1>
@@ -313,7 +324,7 @@ const BlogPostPage = () => {
             <VeinMark />
             <p
               className="text-2xl md:text-3xl text-[#1F3A30] leading-snug"
-              style={{ fontStyle: 'italic', fontWeight: 500 }}
+              style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontWeight: 500 }}
             >
               {post.excerpt}
             </p>
@@ -323,12 +334,12 @@ const BlogPostPage = () => {
             ref={articleContentRef}
             className="[&_p]:mb-6 [&_p]:text-[#3A3630] [&_p]:leading-[1.85] [&_p]:text-[1.125rem] [&_p]:font-sans
                        [&_h2]:mt-14 [&_h2]:mb-6 [&_h2]:pb-4 [&_h2]:border-b [&_h2]:border-[#E4E0D8]
-                       [&_h2]:text-[#14140F] [&_h2]:text-[2.2rem] [&_h2]:font-medium [&_h2]:font-sans
-                       [&_h3]:mt-10 [&_h3]:mb-4 [&_h3]:text-[#14140F] [&_h3]:text-[1.5rem] [&_h3]:font-medium [&_h3]:font-sans
+                       [&_h2]:text-[#14140F] [&_h2]:text-[2.2rem] [&_h2]:font-medium [&_h2]:font-['Fraunces']
+                       [&_h3]:mt-10 [&_h3]:mb-4 [&_h3]:text-[#14140F] [&_h3]:text-[1.5rem] [&_h3]:font-medium [&_h3]:font-['Fraunces']
                        [&_a]:text-[#B8955D] [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-[#14140F]
                        [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-6 [&_li]:text-[#3A3630] [&_li]:mb-2 [&_li]:leading-[1.8] [&_li]:font-sans
                        [&_strong]:text-[#14140F] [&_strong]:font-semibold
-                       [&>p:first-of-type]:first-letter:font-sans [&>p:first-of-type]:first-letter:text-[5rem]
+                       [&>p:first-of-type]:first-letter:font-['Fraunces'] [&>p:first-of-type]:first-letter:text-[5rem]
                        [&>p:first-of-type]:first-letter:font-medium [&>p:first-of-type]:first-letter:text-[#1F3A30]
                        [&>p:first-of-type]:first-letter:float-left [&>p:first-of-type]:first-letter:mr-3
                        [&>p:first-of-type]:first-letter:mt-1 [&>p:first-of-type]:first-letter:leading-[0.85]"
@@ -398,7 +409,7 @@ const BlogPostPage = () => {
               </span>
               <h3
                 className="text-3xl md:text-4xl text-white mt-4 leading-tight max-w-xl"
-                style={{ fontWeight: 500 }}
+                style={{ fontFamily: "'Fraunces', serif", fontWeight: 500 }}
               >
                 {nextPost.title}
               </h3>

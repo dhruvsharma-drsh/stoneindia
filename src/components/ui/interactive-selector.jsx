@@ -7,6 +7,21 @@ const InteractiveSelector = ({ title, description, images }) => {
   const [animatedOptions, setAnimatedOptions] = useState([]);
   const [modalImageIndex, setModalImageIndex] = useState(null);
   
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [isHoveringImage, setIsHoveringImage] = useState(false);
+
+  useEffect(() => {
+    const handleGlobalMouseMove = (e) => {
+      if (isHoveringImage) {
+        setCursorPos({ x: e.clientX, y: e.clientY });
+      }
+    };
+    if (isHoveringImage) {
+      window.addEventListener('mousemove', handleGlobalMouseMove);
+    }
+    return () => window.removeEventListener('mousemove', handleGlobalMouseMove);
+  }, [isHoveringImage]);
+
   const handleOptionClick = (index) => {
     if (index !== activeIndex) {
       setActiveIndex(index);
@@ -18,14 +33,14 @@ const InteractiveSelector = ({ title, description, images }) => {
 
   useEffect(() => {
     const timers = [];
-    
+
     images.forEach((_, i) => {
       const timer = setTimeout(() => {
         setAnimatedOptions(prev => [...prev, i]);
       }, 100 * i); // Faster stagger
       timers.push(timer);
     });
-    
+
     return () => {
       timers.forEach(timer => clearTimeout(timer));
     };
@@ -62,8 +77,25 @@ const InteractiveSelector = ({ title, description, images }) => {
 
   return (
     <>
-      <div className="relative flex flex-col items-center justify-center py-16 md:py-24 overflow-hidden w-full border-b border-[#EDEDE9] bg-[#FAFAF8]"> 
-        
+      {/* Custom Cursor */}
+      {createPortal(
+        <div 
+          className={`fixed pointer-events-none z-[10000] flex items-center justify-center rounded-full bg-[#B8955D] text-white w-[84px] h-[84px] font-sans font-semibold text-[10px] tracking-[0.2em] uppercase shadow-2xl transition-[opacity,transform] duration-300 ease-out ${
+            isHoveringImage ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
+          }`}
+          style={{ 
+            left: cursorPos.x, 
+            top: cursorPos.y,
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          Zoom
+        </div>,
+        document.body
+      )}
+
+      <div className="relative flex flex-col items-center justify-center py-16 md:py-24 overflow-hidden w-full border-b border-[#EDEDE9] bg-[#FAFAF8]">
+
         {/* Header Section */}
         <div className="w-full max-w-4xl px-6 mb-10 md:mb-14 text-center relative z-10">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#111] mb-4 tracking-tight drop-shadow-sm animate-fadeInTop">
@@ -96,31 +128,37 @@ const InteractiveSelector = ({ title, description, images }) => {
                 minHeight: '100px',
                 margin: '0 4px',
                 borderRadius: '24px',
-                cursor: 'pointer',
+                cursor: 'none',
                 backgroundColor: '#EDEDE9',
-                boxShadow: activeIndex === index 
-                  ? '0 20px 50px rgba(184,149,93,0.3)' 
+                boxShadow: activeIndex === index
+                  ? '0 20px 50px rgba(184,149,93,0.3)'
                   : '0 10px 20px rgba(0,0,0,0.05)',
                 flex: activeIndex === index ? '6 1 0%' : '1 1 0%',
                 zIndex: activeIndex === index ? 10 : 1,
                 willChange: 'flex-grow, box-shadow'
               }}
-              onClick={() => handleOptionClick(index)}
+              onMouseEnter={(e) => {
+                setActiveIndex(index);
+                setIsHoveringImage(true);
+                setCursorPos({ x: e.clientX, y: e.clientY });
+              }}
+              onMouseLeave={() => setIsHoveringImage(false)}
+              onClick={() => setModalImageIndex(index)}
             >
               {/* Shadow effect */}
-              <div 
+              <div
                 className="absolute left-0 right-0 bottom-0 pointer-events-none transition-all duration-700 ease-in-out z-0"
                 style={{
                   height: '100%',
-                  background: activeIndex === index 
+                  background: activeIndex === index
                     ? 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.0) 50%, transparent 100%)'
                     : 'linear-gradient(to top, rgba(0,0,0,0.2) 0%, transparent 100%)',
                   opacity: 1
                 }}
               ></div>
-              
+
               {/* Expand Icon */}
-              <div 
+              <div
                 className="absolute left-1/2 -translate-x-1/2 md:left-6 md:translate-x-0 bottom-4 md:bottom-6 flex items-center justify-center z-10 hover:scale-110 transition-transform duration-300"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -138,7 +176,7 @@ const InteractiveSelector = ({ title, description, images }) => {
             </div>
           ))}
         </div>
-        
+
         {/* Custom animations */}
         <style>{`
           @keyframes fadeInFromTop {
@@ -186,21 +224,21 @@ const InteractiveSelector = ({ title, description, images }) => {
         `}</style>
       </div>
 
-      {/* Lightbox Modal */}
+      {/* Fullscreen Modal */}
       {modalImageIndex !== null && createPortal(
-        <div 
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 md:p-8 transition-opacity duration-300"
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-xl p-4 md:p-8 transition-opacity duration-300"
           onClick={() => setModalImageIndex(null)}
         >
-          <button 
+          <button
             className="absolute top-6 right-6 md:top-10 md:right-10 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-[110]"
             onClick={() => setModalImageIndex(null)}
             aria-label="Close modal"
           >
             <X size={24} />
           </button>
-          
-          <button 
+
+          <button
             className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-[110]"
             onClick={(e) => {
               e.stopPropagation();
@@ -210,8 +248,8 @@ const InteractiveSelector = ({ title, description, images }) => {
           >
             <ChevronLeft size={24} />
           </button>
-          
-          <button 
+
+          <button
             className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-[110]"
             onClick={(e) => {
               e.stopPropagation();
@@ -221,10 +259,10 @@ const InteractiveSelector = ({ title, description, images }) => {
           >
             <ChevronRight size={24} />
           </button>
-          
-          <img 
-            src={images[modalImageIndex]} 
-            alt="Project full view" 
+
+          <img
+            src={images[modalImageIndex]}
+            alt="Project full view"
             className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl animate-zoomIn"
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking the image itself
           />
