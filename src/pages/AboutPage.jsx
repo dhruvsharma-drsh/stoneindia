@@ -1,10 +1,43 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Header } from "@/components/ui/header-3";
 import Footer from "../components/Footer";
+import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
+
+/* Fractured stone edge — sits at the top of the scrolling content, pointing upward */
+const FractureEdge = ({ fill = '#FFFFFF' }) => (
+  <svg
+    className="absolute left-0 right-0 -top-[55px] w-full"
+    height="56"
+    viewBox="0 0 1440 56"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M0,40 L96,18 L188,34 L266,6 L344,28 L430,12 L512,36 L598,10 L676,30 L760,4 L842,26 L930,14 L1012,32 L1098,8 L1180,24 L1264,2 L1346,20 L1440,10 L1440,56 L0,56 Z"
+      fill={fill}
+    />
+  </svg>
+);
+
+/* ── Scroll-driven vaporize style calculator ── */
+const getVaporizeStyle = (scrollProgress, staggerStart = 0, staggerEnd = 1) => {
+  const localProgress = Math.min(1, Math.max(0, (scrollProgress - staggerStart) / (staggerEnd - staggerStart)));
+  const eased = localProgress < 0.5
+    ? 4 * localProgress * localProgress * localProgress
+    : 1 - Math.pow(-2 * localProgress + 2, 3) / 2;
+
+  return {
+    opacity: 1 - eased,
+    transform: `translateY(${-eased * 60}px) scale(${1 + eased * 0.08})`,
+    filter: `blur(${eased * 12}px)`,
+    transition: 'none',
+    willChange: 'opacity, transform, filter',
+  };
+};
 
 /* ────────────────────────────────────────────────────────────
    Animated Counter
@@ -77,15 +110,25 @@ const useTypewriter = (words, speed = 90, pause = 1800) => {
 const AboutPage = () => {
   const pageRef = useRef(null);
   const typed = useTypewriter(["Stone Processors.", "Stone Traders.", "Stone Exporters.", "Quality Crafters."], 80, 2000);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  const handleScroll = useCallback(() => {
+    const scrollY = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    const dissolveDistance = viewportHeight * 0.6;
+    const progress = Math.min(1, Math.max(0, scrollY / dissolveDistance));
+    setScrollProgress(progress);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     const ctx = gsap.context(() => {
-      // Hero entrance
-      gsap.fromTo(".hero-badge", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", delay: 0.2 });
-      gsap.fromTo(".hero-h1", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.4 });
-      gsap.fromTo(".hero-sub", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.7 });
-
       // Scroll-triggered blocks
       gsap.utils.toArray(".reveal-block").forEach((el, i) => {
         gsap.fromTo(el,
@@ -124,194 +167,91 @@ const AboutPage = () => {
   }, []);
 
   return (
-    <div ref={pageRef} className="bg-white min-h-screen font-sans">
+    <div ref={pageRef} className="min-h-screen font-sans">
       <Header />
 
       {/* ══════════════════════════════════════
-          HERO — Centered, frostrek-style
+          FIXED HERO — Stays in place while content scrolls over it
       ══════════════════════════════════════ */}
-      <section className="relative pt-40 pb-24 px-6 text-center overflow-hidden">
-        {/* ── Animated background: CSS injected via style tag ── */}
-        <style>{`
-          @keyframes floatA {
-            0%,100% { transform: translate(0,0) scale(1); }
-            33%      { transform: translate(40px,-30px) scale(1.08); }
-            66%      { transform: translate(-25px,20px) scale(0.95); }
-          }
-          @keyframes floatB {
-            0%,100% { transform: translate(0,0) scale(1); }
-            40%      { transform: translate(-50px,35px) scale(1.1); }
-            70%      { transform: translate(30px,-20px) scale(0.92); }
-          }
-          @keyframes floatC {
-            0%,100% { transform: translate(0,0) scale(1); }
-            50%      { transform: translate(20px,40px) scale(1.06); }
-          }
-          @keyframes shimmerGrid {
-            0%   { background-position: 0 0; }
-            100% { background-position: 56px 56px; }
-          }
-          @keyframes orbitDot {
-            0%   { transform: rotate(0deg) translateX(180px) rotate(0deg); }
-            100% { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
-          }
-          @keyframes orbitDot2 {
-            0%   { transform: rotate(120deg) translateX(240px) rotate(-120deg); }
-            100% { transform: rotate(480deg) translateX(240px) rotate(-480deg); }
-          }
-          @keyframes orbitDot3 {
-            0%   { transform: rotate(240deg) translateX(140px) rotate(-240deg); }
-            100% { transform: rotate(600deg) translateX(140px) rotate(-600deg); }
-          }
-          @keyframes pulseFade {
-            0%,100% { opacity: 0.3; transform: scale(1); }
-            50%      { opacity: 0.7; transform: scale(1.15); }
-          }
-        `}</style>
-
-        {/* ── Animated Grid overlay ── */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(184,149,93,0.07) 1px, transparent 1px)," +
-              "linear-gradient(90deg, rgba(184,149,93,0.07) 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-            animation: "shimmerGrid 6s linear infinite",
-          }}
-        />
-
-        {/* ── Floating blob A — top-left warm gold ── */}
-        <div
-          className="absolute pointer-events-none rounded-full"
-          style={{
-            width: 480,
-            height: 480,
-            top: "-80px",
-            left: "-100px",
-            background:
-              "radial-gradient(circle, rgba(184,149,93,0.22) 0%, rgba(184,149,93,0.06) 55%, transparent 75%)",
-            animation: "floatA 9s ease-in-out infinite",
-            filter: "blur(2px)",
-          }}
-        />
-
-        {/* ── Floating blob B — right-center ── */}
-        <div
-          className="absolute pointer-events-none rounded-full"
-          style={{
-            width: 520,
-            height: 520,
-            top: "10%",
-            right: "-120px",
-            background:
-              "radial-gradient(circle, rgba(210,175,117,0.18) 0%, rgba(184,149,93,0.05) 55%, transparent 75%)",
-            animation: "floatB 12s ease-in-out infinite",
-            filter: "blur(4px)",
-          }}
-        />
-
-        {/* ── Floating blob C — bottom-center subtle ── */}
-        <div
-          className="absolute pointer-events-none rounded-full"
-          style={{
-            width: 360,
-            height: 360,
-            bottom: "-60px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            background:
-              "radial-gradient(circle, rgba(184,149,93,0.14) 0%, transparent 65%)",
-            animation: "floatC 10s ease-in-out infinite",
-            filter: "blur(8px)",
-          }}
-        />
-
-        {/* ── Orbiting dots ── */}
-        <div
-          className="absolute pointer-events-none"
-          style={{ top: "50%", left: "50%", transform: "translate(-50%,-50%)" }}
-        >
-          <div
-            style={{
-              width: 10,
-              height: 10,
-              borderRadius: "50%",
-              background: "#B8955D",
-              opacity: 0.45,
-              position: "absolute",
-              animation: "orbitDot 18s linear infinite",
-            }}
+      <div className="fixed inset-0 w-full h-screen flex flex-col justify-end overflow-hidden z-0">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="img/about_hero_premium.png"
+            alt="About Stone India"
+            className="w-full h-full object-cover brightness-[0.55] contrast-[0.9] grayscale-[15%] motion-safe:animate-[projectHeroIn_1.4s_ease-out]"
           />
-          <div
-            style={{
-              width: 7,
-              height: 7,
-              borderRadius: "50%",
-              background: "#C5A880",
-              opacity: 0.35,
-              position: "absolute",
-              animation: "orbitDot2 24s linear infinite",
-            }}
-          />
-          <div
-            style={{
-              width: 5,
-              height: 5,
-              borderRadius: "50%",
-              background: "#947444",
-              opacity: 0.3,
-              position: "absolute",
-              animation: "orbitDot3 14s linear infinite",
-            }}
-          />
+          {/* Dark gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A08] via-[#0A0A08]/60 to-[#0A0A08]/10" />
         </div>
 
-        {/* ── Pulsing centre radial glow ── */}
-        <div
-          className="absolute pointer-events-none"
-          style={{
-            top: "50%",
-            left: "50%",
-            width: 700,
-            height: 340,
-            transform: "translate(-50%,-50%)",
-            background:
-              "radial-gradient(ellipse, rgba(184,149,93,0.10) 0%, transparent 65%)",
-            animation: "pulseFade 5s ease-in-out infinite",
-          }}
-        />
+        {/* Hero Content — each element vaporizes on scroll with staggered timing */}
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-24 md:pb-32 pt-32">
+          
+          {/* Back button — dissolves first (0.0 → 0.4) */}
+          <div style={getVaporizeStyle(scrollProgress, 0.0, 0.4)}>
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 text-white/90 hover:text-white transition-colors text-sm font-medium mb-8 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#DFBA73] rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md px-4 py-2 border border-white/10 shadow-sm"
+            >
+              <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Back to Home
+            </Link>
+          </div>
 
-        {/* ── Bottom gradient fade to white ── */}
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-white to-transparent pointer-events-none" />
-
-        <div className="relative z-10 max-w-4xl mx-auto">
-          {/* Badge */}
-          <div className="hero-badge inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#B8955D]/40 bg-[#B8955D]/5 mb-8">
-            <span className="w-2 h-2 rounded-full bg-[#B8955D] animate-pulse" />
-            <span className="text-[11px] tracking-[0.22em] text-[#B8955D] font-semibold uppercase">
-              25+ Years of Excellence · Natural Stone Leaders
+          {/* Badges — dissolves next (0.1 → 0.6) */}
+          <div 
+            className="flex flex-wrap gap-3 mb-6"
+            style={getVaporizeStyle(scrollProgress, 0.1, 0.6)}
+          >
+            <span className="inline-block px-4 py-1.5 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-xs font-semibold tracking-widest text-[#DFBA73] uppercase">
+              25+ Years of Excellence
+            </span>
+            <span className="inline-block px-4 py-1.5 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-xs font-semibold tracking-widest text-white uppercase">
+              Natural Stone Leaders
             </span>
           </div>
 
-          {/* Main Headline */}
-          <h1 className="hero-h1 text-[2.8rem] sm:text-6xl lg:text-7xl font-bold text-[#1A1A1A] leading-[1.08] tracking-tight mb-6">
+          {/* Main Headline — dissolves late (0.3 → 0.8) */}
+          <h1 
+            className="text-[2.8rem] sm:text-6xl lg:text-7xl font-bold text-white leading-[1.08] tracking-tight mb-8 drop-shadow-lg max-w-4xl"
+            style={getVaporizeStyle(scrollProgress, 0.3, 0.8)}
+          >
             India's Premier
             <br />
-            <span className="relative inline-block">
-              <span className="text-[#B8955D]">{typed}</span>
-              <span className="text-[#B8955D] animate-pulse">|</span>
-            </span>
+            <span className="text-[#DFBA73]">{typed}</span>
+            <span className="text-[#DFBA73] animate-pulse">|</span>
           </h1>
 
-          {/* Subtitle */}
-          <p className="hero-sub text-base sm:text-lg text-[#666] max-w-2xl mx-auto leading-relaxed">
-            STONE INDIA processes and exports premium Gwalior &amp; Kota stones — Sandstone,
-            Limestone, Slate, Granite and more — to clients across the world with
-            uncompromising quality and decades of expertise.
-          </p>
+          {/* Subtext and stats — dissolves last (0.5 → 1.0) */}
+          <div 
+            className="flex flex-col sm:flex-row gap-6 sm:items-center justify-between border-t border-white/10 pt-8"
+            style={getVaporizeStyle(scrollProgress, 0.5, 1.0)}
+          >
+            <p className="text-white/70 max-w-xl text-sm leading-relaxed">
+              STONE INDIA processes and exports premium Gwalior &amp; Kota stones — Sandstone,
+              Limestone, Slate, Granite and more — to clients across the world with
+              uncompromising quality and decades of expertise.
+            </p>
+            <div className="flex gap-6 shrink-0">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-[#DFBA73]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>
+                <span className="text-white/90 text-sm font-medium">Global Exports</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
+      </div>
+
+      {/* ══════════════════════════════════════
+          SCROLLING CONTENT — Slides up over the hero
+      ══════════════════════════════════════ */}
+      <div className="relative z-10 w-full bg-white mt-[100vh] rounded-t-[3rem] shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
+        <FractureEdge fill="#ffffff" />
 
       {/* ══════════════════════════════════════
           STATS BAR — frostrek style, colored numbers
@@ -564,7 +504,7 @@ const AboutPage = () => {
       {/* ══════════════════════════════════════
           SOURCES OF STONES — Timeline style (frostrek "Our Journey")
       ══════════════════════════════════════ */}
-      <section className="py-20 sm:py-28 px-6">
+      <section className="py-20 sm:py-28 px-6 pb-40">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="reveal-block text-center mb-16">
@@ -643,6 +583,9 @@ const AboutPage = () => {
       </section>
 
       <Footer />
+      
+      {/* End of scrolling content overlay */}
+      </div>
     </div>
   );
 };

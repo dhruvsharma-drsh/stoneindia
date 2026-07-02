@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import Footer from '@/components/Footer';
-import DotGrid from '@/components/ui/DotGrid';
+import { Header } from "@/components/ui/header-3";
 import { Package, ShieldCheck, Truck, Tag, Box, Settings, CheckCircle2, Globe } from 'lucide-react';
 
 const packagingFeatures = [
@@ -26,132 +27,145 @@ const packagingFeatures = [
   }
 ];
 
+/* Fractured stone edge — sits at the top of the scrolling content, pointing upward */
+const FractureEdge = ({ fill = '#FFFFFF' }) => (
+  <svg
+    className="absolute left-0 right-0 -top-[55px] w-full"
+    height="56"
+    viewBox="0 0 1440 56"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M0,40 L96,18 L188,34 L266,6 L344,28 L430,12 L512,36 L598,10 L676,30 L760,4 L842,26 L930,14 L1012,32 L1098,8 L1180,24 L1264,2 L1346,20 L1440,10 L1440,56 L0,56 Z"
+      fill={fill}
+    />
+  </svg>
+);
+
+/* ── Scroll-driven vaporize style calculator ── */
+const getVaporizeStyle = (scrollProgress, staggerStart = 0, staggerEnd = 1) => {
+  const localProgress = Math.min(1, Math.max(0, (scrollProgress - staggerStart) / (staggerEnd - staggerStart)));
+  const eased = localProgress < 0.5
+    ? 4 * localProgress * localProgress * localProgress
+    : 1 - Math.pow(-2 * localProgress + 2, 3) / 2;
+
+  return {
+    opacity: 1 - eased,
+    transform: `translateY(${-eased * 60}px) scale(${1 + eased * 0.08})`,
+    filter: `blur(${eased * 12}px)`,
+    transition: 'none',
+    willChange: 'opacity, transform, filter',
+  };
+};
+
 const PackagingPage = () => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [floatingIcons, setFloatingIcons] = useState([]);
-  
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    // Generate background floating icons (boxes for packaging theme)
-    const icons = Array.from({ length: 15 }).map((_, i) => ({
-      id: i,
-      left: `${Math.random() * 100}%`,
-      top: `${Math.random() * 100}%`,
-      size: Math.random() * 30 + 15,
-      animationDuration: `${Math.random() * 20 + 15}s`,
-      animationDelay: `-${Math.random() * 15}s`,
-    }));
-    setFloatingIcons(icons);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  const handleScroll = useCallback(() => {
+    const scrollY = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    const dissolveDistance = viewportHeight * 0.6;
+    const progress = Math.min(1, Math.max(0, scrollY / dissolveDistance));
+    setScrollProgress(progress);
   }, []);
 
-  const handleMouseMove = (e) => {
-    setMousePos({
-      x: e.clientX,
-      y: e.clientY,
-    });
-  };
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
-    <div className="bg-[#FAFAF8] min-h-screen font-sans text-[#111] relative" onMouseMove={handleMouseMove}>
-      
-      {/* GLOBAL INTERACTIVE BACKGROUND */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* Dynamic Cursor Light Flare */}
-        <div 
-          className="absolute w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,rgba(184,149,93,0.04)_0%,transparent_50%)] rounded-full transition-transform duration-75 ease-out"
-          style={{
-            transform: `translate(${mousePos.x - 400}px, ${mousePos.y - 400}px)`,
-          }}
-        />
-        {/* Floating Packaging Icons */}
-        {floatingIcons.map((icon) => (
-          <div
-            key={icon.id}
-            className="absolute animate-float-up opacity-20"
-            style={{
-              left: icon.left,
-              top: icon.top,
-              animationDuration: icon.animationDuration,
-              animationDelay: icon.animationDelay,
-              transform: `translate(${(mousePos.x - (typeof window !== 'undefined' ? window.innerWidth/2 : 0)) * (icon.size * -0.002)}px, ${(mousePos.y - (typeof window !== 'undefined' ? window.innerHeight/2 : 0)) * (icon.size * -0.002)}px)`,
-              transition: 'transform 0.1s ease-out'
-            }}
-          >
-            <Box size={icon.size} className="text-[#B8955D]" />
-          </div>
-        ))}
-      </div>
+    <div className="min-h-screen font-sans text-[#111] relative">
+      <Header />
 
-      {/* Hero Section */}
-      <div className="relative pt-40 pb-28 md:pt-56 md:pb-40 px-6 overflow-hidden bg-white border-b border-[#EDEDE9] min-h-[75vh] flex flex-col justify-center">
-        
-        {/* Interactive Dot Grid Background */}
-        <div className="absolute inset-0 z-0 opacity-40">
-          <DotGrid 
-            dotSize={3}
-            gap={24}
-            baseColor="#B8955D"
-            activeColor="#B8955D"
-            proximity={120}
-            shockRadius={250}
-            shockStrength={5}
-            resistance={750}
-            returnDuration={1.5}
+      {/* ══════════════════════════════════════
+          FIXED HERO — Stays in place while content scrolls over it
+      ══════════════════════════════════════ */}
+      <div className="fixed inset-0 w-full h-screen flex flex-col justify-end overflow-hidden z-0">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="img/packaging_hero_premium.png"
+            alt="Packaging and Export"
+            className="w-full h-full object-cover brightness-[0.55] contrast-[0.9] grayscale-[15%] motion-safe:animate-[projectHeroIn_1.4s_ease-out]"
           />
-        </div>
-        
-        {/* Floating Interactive Badges (Left & Right) */}
-        <div className="absolute top-[20%] left-[5%] hidden lg:flex items-center gap-3 px-5 py-3 rounded-2xl bg-white border border-[#EDEDE9] shadow-sm animate-float hover:shadow-[0_15px_30px_rgba(184,149,93,0.15)] hover:border-[#B8955D]/30 transition-all cursor-pointer group z-10 hover:scale-105">
-          <div className="p-2.5 rounded-xl bg-[#FAFAF8] text-[#B8955D] group-hover:scale-110 group-hover:bg-[#B8955D] group-hover:text-white transition-all">
-            <ShieldCheck size={20} />
-          </div>
-          <div className="text-left">
-            <div className="text-[#111] font-bold text-sm">Secure Packing</div>
-            <div className="text-[#666] text-xs font-medium">Zero Damage</div>
-          </div>
+          {/* Dark gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A08] via-[#0A0A08]/60 to-[#0A0A08]/10" />
         </div>
 
-        <div className="absolute top-[35%] right-[5%] hidden lg:flex items-center gap-3 px-5 py-3 rounded-2xl bg-white border border-[#EDEDE9] shadow-sm animate-float-delayed hover:shadow-[0_15px_30px_rgba(184,149,93,0.15)] hover:border-[#B8955D]/30 transition-all cursor-pointer group z-10 hover:scale-105">
-          <div className="p-2.5 rounded-xl bg-[#FAFAF8] text-[#B8955D] group-hover:scale-110 group-hover:bg-[#B8955D] group-hover:text-white transition-all">
-            <Globe size={20} />
+        {/* Hero Content — each element vaporizes on scroll with staggered timing */}
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-24 md:pb-32 pt-32">
+          
+          {/* Back button — dissolves first (0.0 → 0.4) */}
+          <div style={getVaporizeStyle(scrollProgress, 0.0, 0.4)}>
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 text-white/90 hover:text-white transition-colors text-sm font-medium mb-8 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#DFBA73] rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md px-4 py-2 border border-white/10 shadow-sm"
+            >
+              <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Back to Home
+            </Link>
           </div>
-          <div className="text-left">
-            <div className="text-[#111] font-bold text-sm">Global Export</div>
-            <div className="text-[#666] text-xs font-medium">Worldwide Shipping</div>
-          </div>
-        </div>
-        
-        <div className="absolute bottom-[15%] left-[10%] hidden lg:flex items-center gap-3 px-5 py-3 rounded-2xl bg-white border border-[#EDEDE9] shadow-sm animate-float-fast hover:shadow-[0_15px_30px_rgba(184,149,93,0.15)] hover:border-[#B8955D]/30 transition-all cursor-pointer group z-10 hover:scale-105">
-          <div className="p-2.5 rounded-xl bg-[#FAFAF8] text-[#B8955D] group-hover:scale-110 group-hover:bg-[#B8955D] group-hover:text-white transition-all">
-            <Box size={20} />
-          </div>
-          <div className="text-left">
-            <div className="text-[#111] font-bold text-sm">Custom Crates</div>
-            <div className="text-[#666] text-xs font-medium">ISPM-15 Certified</div>
-          </div>
-        </div>
-        
-        {/* Main Content */}
-        <div className="max-w-5xl mx-auto relative z-10 flex flex-col items-center text-center mt-4">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#EDEDE9] bg-white mb-6 shadow-sm animate-fade-in-up hover:scale-105 hover:border-[#B8955D]/40 transition-all duration-300">
-            <Package size={12} className="text-[#B8955D]" />
-            <span className="text-[10px] tracking-[0.2em] text-[#B8955D] font-bold uppercase">
+
+          {/* Badges — dissolves next (0.1 → 0.6) */}
+          <div 
+            className="flex flex-wrap gap-3 mb-6"
+            style={getVaporizeStyle(scrollProgress, 0.1, 0.6)}
+          >
+            <span className="inline-block px-4 py-1.5 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-xs font-semibold tracking-widest text-[#DFBA73] uppercase">
               Global Standards
             </span>
+            <span className="inline-block px-4 py-1.5 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-xs font-semibold tracking-widest text-white uppercase">
+              ISPM-15 Certified
+            </span>
           </div>
-          
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-5 animate-fade-in-up animation-delay-200">
-            Our <span className="text-[#B8955D] inline-block hover:scale-105 transition-transform duration-300">Packaging</span>
+
+          {/* Main Headline — dissolves late (0.3 → 0.8) */}
+          <h1 
+            className="text-[2.8rem] sm:text-6xl lg:text-7xl font-bold text-white leading-[1.08] tracking-tight mb-8 drop-shadow-lg max-w-4xl"
+            style={getVaporizeStyle(scrollProgress, 0.3, 0.8)}
+          >
+            Premium
+            <br />
+            <span className="text-[#DFBA73]">Packaging.</span>
           </h1>
-          
-          <p className="max-w-3xl text-base md:text-lg text-[#666] leading-relaxed animate-fade-in-up animation-delay-400">
-            At Stone India, we have a dedicated stone packaging unit with skilled staff ensuring that every stone is packed with extreme care and in compliance with international packaging standards. We understand that our business is built on aesthetics and quality, making secure and reliable packaging a top priority.
-          </p>
+
+          {/* Subtext and stats — dissolves last (0.5 → 1.0) */}
+          <div 
+            className="flex flex-col sm:flex-row gap-6 sm:items-center justify-between border-t border-white/10 pt-8"
+            style={getVaporizeStyle(scrollProgress, 0.5, 1.0)}
+          >
+            <p className="text-white/70 max-w-xl text-sm leading-relaxed">
+              At Stone India, we have a dedicated stone packaging unit with skilled staff ensuring that every stone is packed with extreme care and in compliance with international packaging standards. We understand that our business is built on aesthetics and quality, making secure and reliable packaging a top priority.
+            </p>
+            <div className="flex gap-6 shrink-0">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+                  <ShieldCheck className="w-4 h-4 text-[#DFBA73]" />
+                </div>
+                <span className="text-white/90 text-sm font-medium">Zero Damage</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Main Content Grid */}
-      <div className="max-w-6xl mx-auto px-6 py-20 relative z-10">
+      {/* ══════════════════════════════════════
+          SCROLLING CONTENT — Slides up over the hero
+      ══════════════════════════════════════ */}
+      <div className="relative z-10 w-full bg-white mt-[100vh] rounded-t-[3rem] shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
+        <FractureEdge fill="#ffffff" />
+        
+        {/* Main Content Grid */}
+        <div className="max-w-6xl mx-auto px-6 py-20 relative z-10">
         
         {/* Secure and Durable Section */}
         <div className="mb-20">
@@ -249,24 +263,8 @@ const PackagingPage = () => {
 
       <Footer />
       
-      <style>{`
-        @keyframes floatUp {
-          0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-          10% { opacity: 0.15; }
-          90% { opacity: 0.15; }
-          100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
-        .animate-float-up {
-          animation: floatUp linear infinite;
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-        .animate-float { animation: float 6s ease-in-out infinite; }
-        .animate-float-delayed { animation: float 6s ease-in-out 2s infinite; }
-        .animate-float-fast { animation: float 4s ease-in-out 1s infinite; }
-      `}</style>
+      {/* End of scrolling content overlay */}
+      </div>
     </div>
   );
 };

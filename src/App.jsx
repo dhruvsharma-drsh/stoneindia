@@ -14,6 +14,7 @@ import PackagingPage from "./pages/PackagingPage";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import ProductsPage from "./pages/ProductsPage";
 import ContactUsPage from "./pages/ContactUsPage";
 import DesignSystemPage from "./pages/DesignSystemPage";
 
@@ -41,7 +42,8 @@ function AppContent() {
     "/packaging",
     "/blog",
     "/contact",
-    "/design-system"
+    "/design-system",
+    "/products"
   ].includes(location.pathname) || location.pathname.startsWith("/blog/") || location.pathname.startsWith("/products/");
 
   return (
@@ -64,6 +66,7 @@ function AppContent() {
           <Route path="/packaging" element={<PackagingPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:id" element={<BlogPostPage />} />
+          <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/contact" element={<ContactUsPage />} />
           <Route path="/design-system" element={<DesignSystemPage />} />

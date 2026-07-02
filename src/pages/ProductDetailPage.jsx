@@ -2,8 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Footer from '@/components/Footer';
 import { CheckCircle2, ArrowRight, PhoneCall, ShieldCheck, Gem, Layers, ChevronRight, Play } from 'lucide-react';
+import StoneProductsView from './StoneProductsView';
 
-const ProductDetailPage = () => {
+const DefaultProductView = () => {
   const { slug } = useParams();
   
   // Parallax scroll effect for hero
@@ -227,6 +228,16 @@ const ProductDetailPage = () => {
       `}</style>
     </div>
   );
+};
+
+const ProductDetailPage = () => {
+  const { slug } = useParams();
+  
+  if (slug === 'stone-products') {
+    return <StoneProductsView />;
+  }
+  
+  return <DefaultProductView />;
 };
 
 export default ProductDetailPage;

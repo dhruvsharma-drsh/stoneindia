@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { MenuToggleIcon } from "@/components/ui/menu-toggle-icon";
@@ -29,6 +29,7 @@ import {
 export function Header() {
   const [open, setOpen] = React.useState(false);
   const scrolled = useScroll(20);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     if (open) {
@@ -73,27 +74,60 @@ export function Header() {
 
               {/* Mega Menu for Our Product */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white/80 hover:text-[#B8955D] font-medium text-sm">
+                <NavigationMenuTrigger 
+                  className="bg-transparent text-white/80 hover:text-[#B8955D] font-medium text-sm cursor-pointer"
+                  onClick={() => navigate('/products')}
+                >
                   Our Product
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="bg-[#141414] p-3 border border-white/10 shadow-2xl rounded-xl">
-                  <div className="grid w-[620px] grid-cols-2 gap-3 p-1">
-                    {productMegaLinks.map((item, i) => (
-                      <ListItem key={i} {...item} />
-                    ))}
+                <NavigationMenuContent className="bg-[#141414] border border-white/10 shadow-2xl rounded-xl">
+                  <div className="flex w-[1050px] gap-10 p-8">
+                    {/* Column 1 (Wider) */}
+                    <div className="flex-[2]">
+                      <h4 className="text-xs font-mono uppercase tracking-widest text-[#B8955D] mb-4 pb-3 border-b border-white/10">Stone Products</h4>
+                      <ul className="grid grid-cols-2 gap-x-6 gap-y-3">
+                        {megaMenuData.stoneProducts.map(item => (
+                          <li key={item}>
+                            <Link to="/products" className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all">{item}</Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    {/* Column 2 (Wider) */}
+                    <div className="flex-[2]">
+                      <h4 className="text-xs font-mono uppercase tracking-widest text-[#B8955D] mb-4 pb-3 border-b border-white/10">Sandstone</h4>
+                      <ul className="grid grid-cols-2 gap-x-6 gap-y-3">
+                        {megaMenuData.sandstone.map(item => (
+                          <li key={item}>
+                            <Link to="/products" className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all">{item}</Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    {/* Column 3 (Normal) */}
+                    <div className="flex-[1]">
+                      <h4 className="text-xs font-mono uppercase tracking-widest text-[#B8955D] mb-4 pb-3 border-b border-white/10">Stone Articrafts</h4>
+                      <ul className="flex flex-col gap-3">
+                        {megaMenuData.stoneArticrafts.map(item => (
+                          <li key={item}>
+                            <Link to="/products" className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all">{item}</Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                  <div className="mt-3 border-t border-white/10 pt-3 px-3 pb-1 flex items-center justify-between bg-white/[0.02] rounded-b-lg">
+                  <div className="border-t border-white/10 py-3 px-8 flex items-center justify-between bg-white/[0.02] rounded-b-xl">
                     <div className="flex flex-col">
-                      <span className="text-xs font-semibold text-white">Need bespoke stone cutting?</span>
-                      <span className="text-[11px] text-white/50">Custom CNC architectural fabrication available.</span>
+                      <span className="text-sm font-semibold text-white">Looking for something specific?</span>
+                      <span className="text-xs text-white/50">Contact us for custom sizes and finishes.</span>
                     </div>
                     <Link
-                    to="/contact"
-                    className="inline-flex items-center gap-1 text-xs font-mono text-[#B8955D] hover:underline"
-                  >
-                    <span>Contact Us</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </Link>
+                      to="/contact"
+                      className="inline-flex items-center gap-1 text-sm font-mono text-[#B8955D] hover:underline"
+                    >
+                      <span>Get a Quote</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -152,20 +186,30 @@ export function Header() {
           <Link to="/" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Home</Link>
           <Link to="/about" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">About Us</Link>
           
-          <div className="border-y border-white/10 py-3 my-1">
-            <span className="text-xs font-mono uppercase tracking-widest text-white/40 block mb-2">Our Product</span>
-            <div className="grid grid-cols-1 gap-2">
-              {productMegaLinks.map((link) => (
-                <a
-                  key={link.title}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5"
-                >
-                  <link.icon className="w-4 h-4 text-[#B8955D]" />
-                  <span className="text-sm font-medium text-white/90">{link.title}</span>
-                </a>
-              ))}
+          <div className="border-y border-white/10 py-4 my-2 flex flex-col gap-6">
+            <div>
+              <span className="text-xs font-mono uppercase tracking-widest text-[#B8955D] block mb-3 pb-2 border-b border-white/10">Stone Products</span>
+              <div className="grid grid-cols-1 gap-2.5">
+                {megaMenuData.stoneProducts.map((item) => (
+                  <Link key={item} to="/products" onClick={() => setOpen(false)} className="text-sm font-medium text-white/80 hover:text-white pl-2 border-l border-white/10 hover:border-[#B8955D] transition-colors">{item}</Link>
+                ))}
+              </div>
+            </div>
+            <div>
+              <span className="text-xs font-mono uppercase tracking-widest text-[#B8955D] block mb-3 pb-2 border-b border-white/10">Sandstone</span>
+              <div className="grid grid-cols-1 gap-2.5">
+                {megaMenuData.sandstone.map((item) => (
+                  <Link key={item} to="/products" onClick={() => setOpen(false)} className="text-sm font-medium text-white/80 hover:text-white pl-2 border-l border-white/10 hover:border-[#B8955D] transition-colors">{item}</Link>
+                ))}
+              </div>
+            </div>
+            <div>
+              <span className="text-xs font-mono uppercase tracking-widest text-[#B8955D] block mb-3 pb-2 border-b border-white/10">Stone Articrafts</span>
+              <div className="grid grid-cols-1 gap-2.5">
+                {megaMenuData.stoneArticrafts.map((item) => (
+                  <Link key={item} to="/products" onClick={() => setOpen(false)} className="text-sm font-medium text-white/80 hover:text-white pl-2 border-l border-white/10 hover:border-[#B8955D] transition-colors">{item}</Link>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -215,67 +259,24 @@ function MobileMenu({ open, children, className, ...props }) {
   );
 }
 
-function ListItem({ title, description, icon: Icon, className, href, ...props }) {
-  return (
-    <NavigationMenuLink
-      className={cn(
-        "w-full flex flex-row gap-x-3 hover:bg-white/5 focus:bg-white/5 rounded-lg p-3 transition-colors group",
-        className
-      )}
-      {...props}
-      asChild
-    >
-      <a href={href}>
-        <div className="bg-white/5 group-hover:bg-[#B8955D]/20 flex aspect-square size-11 items-center justify-center rounded-lg border border-white/10 transition-colors">
-          <Icon className="text-[#B8955D] size-5" />
-        </div>
-        <div className="flex flex-col items-start justify-center">
-          <span className="font-medium text-sm text-white group-hover:text-[#B8955D] transition-colors">{title}</span>
-          <span className="text-white/40 text-xs line-clamp-1">{description}</span>
-        </div>
-      </a>
-    </NavigationMenuLink>
-  );
-}
-
-const productMegaLinks = [
-  {
-    title: "Makrana White Marble",
-    href: "/#products",
-    description: "Ultra-pure white marble for luxury flooring",
-    icon: Gem,
-  },
-  {
-    title: "Royal Granite Slabs",
-    href: "/#products",
-    description: "High-density granite with lustrous finish",
-    icon: Layers,
-  },
-  {
-    title: "Exotic Onyx & Quartzite",
-    href: "/#products",
-    description: "Translucent backlit natural masterpieces",
-    icon: Sparkles,
-  },
-  {
-    title: "Architectural Sandstone",
-    href: "/#products",
-    description: "Weather-resistant facade & exterior stone",
-    icon: Building2,
-  },
-  {
-    title: "Custom CNC Sculptures",
-    href: "/#products",
-    description: "Intricate 3D carving & bespoke artifacts",
-    icon: Hammer,
-  },
-  {
-    title: "Landscaping & Cobbles",
-    href: "/#products",
-    description: "Premium exterior paving & garden stone",
-    icon: Trees,
-  },
-];
+const megaMenuData = {
+  stoneProducts: [
+    "Wall Panel", "Wall Cladding", "Mint Flagstone Tiles", "Sandstone Palisade",
+    "Sandstone Circle", "Mint Stone Blocks", "Mosaic Stone Tiles", "Gwalior Mint Cobbles",
+    "Stepping Stone Tiles", "Fossil Mint Natural Stone", "Gwalior Mint Stone Elevation",
+    "Gwalior Mint Sandstone Slabs", "Gwalior Mint Wall Panels Stone"
+  ],
+  sandstone: [
+    "Modak Sandstone", "Rainbow Sandstone", "Shivpuri Sandstone", "Teakwood Sandstone",
+    "Katni Grey Sandstone", "Sagar Black Sandstone", "Desert Mint Sandstone", 
+    "Katni Yellow Sandstone", "Lalitpur Yellow Sandstone", "Gwalior Mint White Sandstone",
+    "Gwalior Mint Yellow Sandstone", "Mint Fossil Indian Sandstone"
+  ],
+  stoneArticrafts: [
+    "Stone Figures", "Sandstone Jaali", "Stone Planters", "Sandstone Balls",
+    "Sandstone Benches", "Stone Waterfalls"
+  ]
+};
 
 function useScroll(threshold) {
   const [scrolled, setScrolled] = React.useState(false);

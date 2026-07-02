@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FaInstagram, FaEnvelope, FaWhatsapp, FaLinkedin, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import { Sparkles, ArrowUpRight } from "lucide-react";
 
@@ -82,10 +83,10 @@ const Footer = () => {
               <Sparkles className="w-4 h-4" /> Navigation
             </h4>
             <ul className="space-y-3.5 font-sans text-sm font-light text-white/80">
-              <li><a href="#" className="hover:text-[#B8955D] transition-colors flex items-center gap-1.5">Home <ArrowUpRight className="w-3.5 h-3.5 opacity-50" /></a></li>
-              <li><a href="#about" className="hover:text-[#B8955D] transition-colors flex items-center gap-1.5">Our Quarry Heritage <ArrowUpRight className="w-3.5 h-3.5 opacity-50" /></a></li>
-              <li><a href="#products" className="hover:text-[#B8955D] transition-colors flex items-center gap-1.5">Natural Stone Collection <ArrowUpRight className="w-3.5 h-3.5 opacity-50" /></a></li>
-              <li><a href="#feedback" className="hover:text-[#B8955D] transition-colors flex items-center gap-1.5">Client Testimonials <ArrowUpRight className="w-3.5 h-3.5 opacity-50" /></a></li>
+              <li><Link to="/" className="hover:text-[#B8955D] transition-colors flex items-center gap-1.5">Home <ArrowUpRight className="w-3.5 h-3.5 opacity-50" /></Link></li>
+              <li><Link to="/about" className="hover:text-[#B8955D] transition-colors flex items-center gap-1.5">Our Quarry Heritage <ArrowUpRight className="w-3.5 h-3.5 opacity-50" /></Link></li>
+              <li><Link to="/products" className="hover:text-[#B8955D] transition-colors flex items-center gap-1.5">Natural Stone Collection <ArrowUpRight className="w-3.5 h-3.5 opacity-50" /></Link></li>
+              <li><Link to="/design-system" className="hover:text-[#B8955D] transition-colors flex items-center gap-1.5">Design System <ArrowUpRight className="w-3.5 h-3.5 opacity-50" /></Link></li>
             </ul>
           </div>
 
