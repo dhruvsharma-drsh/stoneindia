@@ -230,11 +230,37 @@ const DefaultProductView = () => {
   );
 };
 
+import MosaicStoneTilesView from './MosaicStoneTilesView';
+import WallCladdingView from './WallCladdingView';
+import SandstoneCircleView from './SandstoneCircleView';
+import GwaliorMintCobblesView from './GwaliorMintCobblesView';
+import SteppingStoneTilesView from './SteppingStoneTilesView';
+
 const ProductDetailPage = () => {
   const { slug } = useParams();
   
   if (slug === 'stone-products') {
     return <StoneProductsView />;
+  }
+
+  if (slug === 'mosaic-stone-tiles') {
+    return <MosaicStoneTilesView />;
+  }
+
+  if (slug === 'wall-cladding') {
+    return <WallCladdingView />;
+  }
+
+  if (slug === 'sandstone-circle') {
+    return <SandstoneCircleView />;
+  }
+
+  if (slug === 'gwalior-mint-cobbles' || slug === 'mint-cobbles') {
+    return <GwaliorMintCobblesView />;
+  }
+
+  if (slug === 'stepping-stone-tiles' || slug === 'stepping-stones') {
+    return <SteppingStoneTilesView />;
   }
   
   return <DefaultProductView />;

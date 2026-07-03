@@ -88,7 +88,7 @@ const getVaporizeStyle = (scrollProgress, staggerStart = 0, staggerEnd = 1) => {
 const ProjectsPage = () => {
   const [copied, setCopied] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [expandedProjectIds, setExpandedProjectIds] = useState([projects[0].id]);
+  const [expandedProjectIds, setExpandedProjectIds] = useState([]);
   const heroContentRef = useRef(null);
 
   useEffect(() => {

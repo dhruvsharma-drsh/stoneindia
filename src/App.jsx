@@ -8,7 +8,6 @@ import Hero from "./components/Hero/Hero";
 import Footer from "./components/Footer";
 import SplashScreen from "./components/SplashScreen";
 import AboutPage from "./pages/AboutPage";
-import InfrastructurePage from "./pages/InfrastructurePage";
 import ProjectsPage from "./pages/ProjectsPage";
 import PackagingPage from "./pages/PackagingPage";
 import BlogPage from "./pages/BlogPage";
@@ -37,7 +36,6 @@ function AppContent() {
   // Define which pages should have a white background instead of the default dark one
   const isWhitePage = [
     "/about", 
-    "/infrastructure", 
     "/projects",
     "/packaging",
     "/blog",
@@ -61,7 +59,6 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/infrastructure" element={<InfrastructurePage />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/packaging" element={<PackagingPage />} />
           <Route path="/blog" element={<BlogPage />} />

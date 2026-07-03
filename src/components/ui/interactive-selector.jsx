@@ -6,21 +6,6 @@ const InteractiveSelector = ({ title, description, images }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animatedOptions, setAnimatedOptions] = useState([]);
   const [modalImageIndex, setModalImageIndex] = useState(null);
-  
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-  const [isHoveringImage, setIsHoveringImage] = useState(false);
-
-  useEffect(() => {
-    const handleGlobalMouseMove = (e) => {
-      if (isHoveringImage) {
-        setCursorPos({ x: e.clientX, y: e.clientY });
-      }
-    };
-    if (isHoveringImage) {
-      window.addEventListener('mousemove', handleGlobalMouseMove);
-    }
-    return () => window.removeEventListener('mousemove', handleGlobalMouseMove);
-  }, [isHoveringImage]);
 
   const handleOptionClick = (index) => {
     if (index !== activeIndex) {
@@ -77,23 +62,6 @@ const InteractiveSelector = ({ title, description, images }) => {
 
   return (
     <>
-      {/* Custom Cursor */}
-      {createPortal(
-        <div 
-          className={`fixed pointer-events-none z-[10000] flex items-center justify-center rounded-full bg-[#B8955D] text-white w-[84px] h-[84px] font-sans font-semibold text-[10px] tracking-[0.2em] uppercase shadow-2xl transition-[opacity,transform] duration-300 ease-out ${
-            isHoveringImage ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
-          }`}
-          style={{ 
-            left: cursorPos.x, 
-            top: cursorPos.y,
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          Zoom
-        </div>,
-        document.body
-      )}
-
       <div className="relative flex flex-col items-center justify-center py-16 md:py-24 overflow-hidden w-full border-b border-[#EDEDE9] bg-[#FAFAF8]">
 
         {/* Header Section */}
@@ -128,7 +96,7 @@ const InteractiveSelector = ({ title, description, images }) => {
                 minHeight: '100px',
                 margin: '0 4px',
                 borderRadius: '24px',
-                cursor: 'none',
+                cursor: 'zoom-in',
                 backgroundColor: '#EDEDE9',
                 boxShadow: activeIndex === index
                   ? '0 20px 50px rgba(184,149,93,0.3)'
@@ -137,12 +105,7 @@ const InteractiveSelector = ({ title, description, images }) => {
                 zIndex: activeIndex === index ? 10 : 1,
                 willChange: 'flex-grow, box-shadow'
               }}
-              onMouseEnter={(e) => {
-                setActiveIndex(index);
-                setIsHoveringImage(true);
-                setCursorPos({ x: e.clientX, y: e.clientY });
-              }}
-              onMouseLeave={() => setIsHoveringImage(false)}
+              onMouseEnter={() => setActiveIndex(index)}
               onClick={() => setModalImageIndex(index)}
             >
               {/* Shadow effect */}

@@ -1,204 +1,560 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { PhoneCall, ArrowRight, Play, CheckCircle2 } from 'lucide-react';
+import { PhoneCall, ArrowUpRight, ArrowRight, ArrowLeft, Globe, Layers } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { stoneProductsData } from '../data/stoneProductsData';
 import Footer from '@/components/Footer';
-import { cn } from "@/lib/utils";
 
-const StoneProductsView = () => {
-  const { hero, trust, brands, grid } = stoneProductsData;
-  const [scrollY, setScrollY] = useState(0);
+gsap.registerPlugin(ScrollTrigger);
+
+/* ── Fractured stone edge — same as ProjectsPage ── */
+const FractureEdge = ({ fill = '#FAFAF8' }) => (
+  <svg
+    className="absolute left-0 right-0 -top-[55px] w-full"
+    height="56"
+    viewBox="0 0 1440 56"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M0,40 L96,18 L188,34 L266,6 L344,28 L430,12 L512,36 L598,10 L676,30 L760,4 L842,26 L930,14 L1012,32 L1098,8 L1180,24 L1264,2 L1346,20 L1440,10 L1440,56 L0,56 Z"
+      fill={fill}
+    />
+  </svg>
+);
+
+/* ── Scroll-driven vaporize (matches ProjectsPage exactly) ── */
+const getVaporizeStyle = (scrollProgress, staggerStart = 0, staggerEnd = 1) => {
+  const localProgress = Math.min(1, Math.max(0, (scrollProgress - staggerStart) / (staggerEnd - staggerStart)));
+  const eased = localProgress < 0.5
+    ? 4 * localProgress * localProgress * localProgress
+    : 1 - Math.pow(-2 * localProgress + 2, 3) / 2;
+  return {
+    opacity: 1 - eased,
+    transform: `translateY(${-eased * 60}px) scale(${1 + eased * 0.08})`,
+    filter: `blur(${eased * 12}px)`,
+    transition: 'none',
+    willChange: 'opacity, transform, filter',
+  };
+};
+
+/**
+ * Signature element: a hand-drawn "vein" line — the fracture pattern you'd
+ * trace on a slab of stone — that draws itself in on scroll wherever it
+ * appears.
+ */
+const VeinDivider = ({ className = '', flip = false }) => {
+  const pathRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.scrollTo(0, 0);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const path = pathRef.current;
+    if (!path) return;
+    const length = path.getTotalLength();
+    gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+    gsap.to(path, {
+      strokeDashoffset: 0,
+      duration: 1.4,
+      ease: 'power2.inOut',
+      scrollTrigger: {
+        trigger: path,
+        start: 'top 85%',
+      },
+    });
   }, []);
 
   return (
-    <div className="bg-[#FAFAF8] min-h-screen font-sans text-[#111] overflow-x-hidden selection:bg-[#DFBA73] selection:text-white">
-      
-      {/* 1. Cinematic Fixed Hero - Light Premium Version */}
-      <div className="fixed inset-0 w-full h-[100vh] flex items-center justify-center overflow-hidden z-0 pointer-events-none">
-        {/* Background Image with Parallax & Fading */}
-        <div 
-          className="absolute inset-0 w-full h-full transition-transform duration-300 ease-out"
-          style={{ 
-            transform: `translateY(${scrollY * 0.3}px) scale(${1 + scrollY * 0.0005})`,
-            opacity: Math.max(0.1, 1 - scrollY * 0.0015) 
-          }}
-        >
-          <img 
-            src={hero.image} 
-            alt="Gwalior Stone" 
-            className="w-full h-full object-cover"
+    <svg
+      viewBox="0 0 400 24"
+      className={`w-24 h-6 ${flip ? 'scale-x-[-1]' : ''} ${className}`}
+      preserveAspectRatio="none"
+    >
+      <path
+        ref={pathRef}
+        d="M0 12 L38 12 L52 4 L68 18 L84 6 L102 16 L124 12 L146 20 L168 4 L190 12 L400 12"
+        stroke="#B4956C"
+        strokeWidth="2"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+const StoneProductsView = () => {
+  const { hero, trust, brands, grid } = stoneProductsData;
+
+  const rootRef = useRef(null);
+  const heroContentRef = useRef(null);
+  const heroCopyRef = useRef(null);
+  const heroImgRef = useRef(null);
+  const trustBgRef = useRef(null);
+  const trustCopyRef = useRef(null);
+  const brandsImgRef = useRef(null);
+  const brandsCopyRef = useRef(null);
+  const gridHeadRef = useRef(null);
+  const cardRefs = useRef([]);
+  cardRefs.current = [];
+
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  const addCardRef = (el) => {
+    if (el && !cardRefs.current.includes(el)) cardRefs.current.push(el);
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  /* ── Track scroll progress for vaporize (same as ProjectsPage) ── */
+  const handleScroll = useCallback(() => {
+    const scrollY = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    const dissolveDistance = viewportHeight * 0.6;
+    const progress = Math.min(1, Math.max(0, scrollY / dissolveDistance));
+    setScrollProgress(progress);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  /* ── GSAP animations for scrolling content sections ── */
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      /* Hero copy + image */
+      gsap.from(heroCopyRef.current.children, {
+        y: 28,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: heroCopyRef.current, start: 'top 80%' },
+      });
+
+      gsap.fromTo(
+        heroImgRef.current,
+        { clipPath: 'inset(0 0 100% 0)' },
+        {
+          clipPath: 'inset(0 0 0% 0)',
+          duration: 1.1,
+          ease: 'power4.inOut',
+          scrollTrigger: { trigger: heroImgRef.current, start: 'top 80%' },
+        }
+      );
+
+      /* Trust banner: parallax bg + copy reveal */
+      gsap.to(trustBgRef.current, {
+        yPercent: 18,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: trustBgRef.current.parentElement,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+
+      gsap.from(trustCopyRef.current.children, {
+        y: 24,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: trustCopyRef.current, start: 'top 78%' },
+      });
+
+      /* Brands: image scale-reveal + copy */
+      gsap.fromTo(
+        brandsImgRef.current,
+        { clipPath: 'inset(0 100% 0 0)' },
+        {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 1.1,
+          ease: 'power4.inOut',
+          scrollTrigger: { trigger: brandsImgRef.current, start: 'top 78%' },
+        }
+      );
+
+      gsap.from(brandsCopyRef.current.children, {
+        y: 24,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: brandsCopyRef.current, start: 'top 78%' },
+      });
+
+      /* Category grid: heading + staggered cards */
+      gsap.from(gridHeadRef.current.children, {
+        y: 20,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.08,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: gridHeadRef.current, start: 'top 82%' },
+      });
+
+      gsap.from(cardRefs.current, {
+        y: 48,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.14,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: cardRefs.current[0], start: 'top 85%' },
+      });
+
+      /* Card hover: magnetic tilt */
+      cardRefs.current.forEach((card) => {
+        const img = card.querySelector('img');
+        const onMove = (e) => {
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width - 0.5;
+          const py = (e.clientY - r.top) / r.height - 0.5;
+          gsap.to(card, {
+            rotateX: py * -4,
+            rotateY: px * 4,
+            duration: 0.4,
+            ease: 'power2.out',
+            transformPerspective: 800,
+          });
+          gsap.to(img, { x: px * 8, y: py * 8, duration: 0.6, ease: 'power2.out' });
+        };
+        const onLeave = () => {
+          gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: 'power3.out' });
+          gsap.to(img, { x: 0, y: 0, duration: 0.6, ease: 'power3.out' });
+        };
+        card.addEventListener('mousemove', onMove);
+        card.addEventListener('mouseleave', onLeave);
+      });
+    }, rootRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <div ref={rootRef} className="min-h-screen">
+
+      {/* ═══════════════════════════════════════════════════════
+          FIXED HERO — Stays in place while content scrolls over it
+          (Identical pattern to ProjectsPage)
+      ═══════════════════════════════════════════════════════ */}
+      <div className="fixed inset-0 w-full h-screen flex flex-col justify-end overflow-hidden z-0">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/img/product/Stone Products/Gwalior Stone/Stone-Product03.jpg"
+            alt="Gwalior Stone — Stone India"
+            className="w-full h-full object-cover brightness-[0.55] contrast-[0.9] grayscale-[15%] motion-safe:animate-[projectHeroIn_1.4s_ease-out]"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#FAFAF8]/40 via-[#FAFAF8]/70 to-[#FAFAF8]"></div>
+          {/* Dark gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A08] via-[#0A0A08]/60 to-[#0A0A08]/10" />
         </div>
 
-        {/* Hero Text Overlay */}
-        <div 
-          className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 flex flex-col items-start justify-center h-full pt-20"
-          style={{
-            transform: `translateY(${scrollY * -0.5}px)`,
-            opacity: Math.max(0, 1 - scrollY * 0.003)
-          }}
-        >
-          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-[#B8955D]/30 bg-white/60 backdrop-blur-md mb-8 animate-fade-in-up shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-[#B8955D] animate-pulse shadow-[0_0_10px_rgba(184,149,93,0.5)]"></span>
-            <span className="text-xs tracking-[0.25em] text-[#B8955D] font-bold uppercase">Ultra-Premium Collection</span>
+        {/* Hero Content — each element vaporizes on scroll with staggered timing */}
+        <div ref={heroContentRef} className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-24 md:pb-32 pt-32">
+
+          {/* Back button — dissolves first (0.0 → 0.4) */}
+          <div style={getVaporizeStyle(scrollProgress, 0.0, 0.4)}>
+            <Link
+              to="/products"
+              className="inline-flex items-center gap-2 text-white/90 hover:text-white transition-colors text-sm font-medium mb-8 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#DFBA73] rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md px-4 py-2 border border-white/10 shadow-sm"
+            >
+              <ArrowLeft
+                size={16}
+                className="group-hover:-translate-x-1 transition-transform"
+              />
+              All Products
+            </Link>
           </div>
-          
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-[#111] leading-[1.1] mb-6 tracking-tight animate-fade-in-up drop-shadow-sm" style={{ animationDelay: '100ms' }}>
-            {hero.title.split('-')[0].trim()} <br/>
-            <span className="text-[#B8955D] italic font-light">Natural Excellence</span>
-          </h1>
-          
-          <p className="text-lg md:text-xl lg:text-2xl text-[#444] font-medium max-w-2xl leading-relaxed animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-            {hero.title.split('-')[1]?.trim() || "Get an Enticing Look with This Product"}
-          </p>
-        </div>
-      </div>
 
-      {/* Main Scrolling Content */}
-      <div className="relative z-10 mt-[100vh] bg-[#FAFAF8] shadow-[0_-20px_50px_rgba(0,0,0,0.05)]">
-        
-        {/* Intro Text Section */}
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-32 border-b border-[#EDEDE9] relative">
-          <div className="absolute top-0 right-10 w-[500px] h-[500px] bg-[#B8955D]/5 blur-[150px] rounded-full pointer-events-none"></div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start relative z-10">
-            <h2 className="text-3xl md:text-5xl font-serif text-[#111] leading-tight">
-              An impressive aesthetic that adds <span className="text-[#B8955D] italic">luxury and beauty</span> to your space.
-            </h2>
-            <div className="flex flex-col gap-8">
-              <p className="text-lg text-[#666] font-light leading-relaxed">
-                {hero.desc1}
-              </p>
-              <div className="p-8 border border-[#EDEDE9] rounded-2xl bg-white shadow-xl relative overflow-hidden group">
-                <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#B8955D] to-[#DFBA73]"></div>
-                <p className="text-[#444] leading-relaxed italic text-lg font-serif">
-                  "{hero.desc2}"
-                </p>
+          {/* Category Tags — dissolves second (0.05 → 0.5) */}
+          <div className="flex items-center gap-3 mb-6 flex-wrap" style={getVaporizeStyle(scrollProgress, 0.05, 0.5)}>
+            <div className="px-4 py-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm">
+              <span className="text-[10px] tracking-[0.2em] text-[#DFBA73] font-bold uppercase font-mono">
+                Natural Stone
+              </span>
+            </div>
+            <div className="px-4 py-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm">
+              <span className="text-[10px] tracking-[0.2em] text-white/90 font-bold uppercase font-mono">
+                Gwalior
+              </span>
+            </div>
+            <div className="px-4 py-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm hidden md:block">
+              <span className="text-[10px] tracking-[0.2em] text-white/90 font-bold uppercase font-mono">
+                Premium Quality
+              </span>
+            </div>
+          </div>
+
+          {/* Main Title — dissolves third (0.1 → 0.65) */}
+          <h1
+            className="text-4xl md:text-5xl lg:text-[4.5rem] text-white tracking-tight mb-8 leading-[1.08] max-w-4xl drop-shadow-lg"
+            style={{ fontWeight: 500, ...getVaporizeStyle(scrollProgress, 0.1, 0.65) }}
+          >
+            Gwalior Stone —
+            <br />
+            <span className="italic font-light text-[#DFBA73]">Natural Excellence</span>
+          </h1>
+
+          {/* Meta Info Row — dissolves last (0.15 → 0.75) */}
+          <div
+            className="flex flex-wrap items-center gap-6 text-sm text-white/80 font-mono border-t border-white/20 pt-6 max-w-3xl"
+            style={getVaporizeStyle(scrollProgress, 0.15, 0.75)}
+          >
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-[#DFBA73]/20 flex items-center justify-center border border-[#DFBA73]/30">
+                <Globe size={14} className="text-[#DFBA73]" />
               </div>
+              <span className="font-medium">25+ Countries</span>
+            </div>
+            <div className="w-1 h-1 rounded-full bg-white/30 hidden md:block" />
+            <div className="flex items-center gap-2">
+              <Layers size={14} className="text-[#DFBA73]" />
+              {grid.length} Products
+            </div>
+            <div className="w-1 h-1 rounded-full bg-white/30 hidden md:block" />
+            <div className="flex items-center gap-2">
+              <span className="font-medium">20+ Years</span>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Trust Parallax Section (Keeping this one slightly dark/rich for contrast, or light with strong shadow) */}
-        <div className="relative py-40 flex items-center justify-center overflow-hidden border-b border-[#EDEDE9]">
-          <div className="absolute inset-0 z-0">
-            <img src={trust.image} alt="Trust Stone" className="w-full h-full object-cover opacity-15 grayscale" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#FAFAF8] via-transparent to-[#FAFAF8]"></div>
+      {/* Spacer — pushes scrollable content below the fixed hero */}
+      <div className="h-screen" aria-hidden="true" />
+
+      {/* ═══════════════════════════════════════════════════════
+          SCROLLABLE CONTENT — Slides up over the fixed hero
+      ═══════════════════════════════════════════════════════ */}
+      <div className="relative z-10 bg-[#FAFAF8]">
+        {/* Fractured Stone Edge — top of the content */}
+        <FractureEdge fill="#FAFAF8" />
+
+        {/* ═══════════════════════════════════════
+            ABOUT SECTION — Big typography + clip-path image
+        ═══════════════════════════════════════ */}
+        <section className="py-28 md:py-36">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+
+              <div ref={heroCopyRef} className="flex flex-col gap-7">
+                <div className="flex items-center gap-3">
+                  <span className="w-10 h-[2px] bg-[#B4956C]"></span>
+                  <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#B4956C]">About This Stone</span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-serif text-[#111] leading-[1.12]">
+                  {hero.title.split('-')[0].trim()} —{' '}
+                  <span className="italic text-[#B4956C]">{hero.title.split('-')[1]?.trim()}</span>
+                </h2>
+                <p className="text-[17px] text-[#555] font-light leading-[1.9]">
+                  {hero.desc1}
+                </p>
+                <blockquote className="relative pl-8 py-5 border-l-[3px] border-[#B4956C]/30 bg-gradient-to-r from-[#B4956C]/[0.04] to-transparent rounded-r-xl">
+                  <p className="text-[16px] text-[#444] italic leading-[1.85] font-serif">
+                    "{hero.desc2}"
+                  </p>
+                </blockquote>
+                <VeinDivider className="mt-2" />
+              </div>
+
+              <div className="w-full overflow-hidden rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.12)]">
+                <img
+                  ref={heroImgRef}
+                  src={hero.image}
+                  alt="Gwalior Stone"
+                  className="w-full h-[450px] lg:h-[580px] object-cover will-change-[clip-path]"
+                />
+              </div>
+            </div>
           </div>
-          
-          <div className="relative z-10 max-w-5xl mx-auto px-6 text-center flex flex-col items-center">
-            <CheckCircle2 size={56} className="text-[#B8955D] mb-8" />
-            <h3 className="text-sm font-mono text-[#B8955D] uppercase tracking-[0.4em] mb-6">{trust.subtitle}</h3>
-            <h2 className="text-5xl md:text-7xl font-serif text-[#111] mb-10">
-              {trust.title.replace('Trust!', '')} <span className="italic font-light text-[#B8955D]">Trust!</span>
-            </h2>
-            <p className="text-xl md:text-2xl text-[#555] font-light max-w-3xl mx-auto mb-12 leading-relaxed">
-              {trust.text}
-            </p>
-            <a href="#contact" className="px-10 py-5 rounded-full bg-gradient-to-r from-[#B8955D] to-[#DFBA73] text-white font-bold text-sm tracking-widest uppercase hover:scale-105 hover:shadow-[0_15px_30px_rgba(184,149,93,0.3)] transition-all duration-500 flex items-center gap-3">
-              Request A Quote <ArrowRight size={18} />
+        </section>
+
+        {/* ═══════════════════════════════════════
+            TRUST BANNER — Cinematic parallax
+        ═══════════════════════════════════════ */}
+        <div className="relative py-32 md:py-40 flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 z-0 overflow-hidden">
+            <img
+              ref={trustBgRef}
+              src={trust.image}
+              alt="Trust Background"
+              className="w-full h-[130%] object-cover brightness-[0.35] will-change-transform"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/50" />
+          </div>
+
+          <div className="relative z-10 max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between gap-12">
+            <div ref={trustCopyRef} className="flex flex-col items-start text-left max-w-2xl">
+              <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#DFBA73] mb-3">{trust.subtitle}</span>
+              <h2 className="text-4xl md:text-6xl font-serif text-white mb-6 leading-tight">
+                {trust.title.replace('Trust!', '')}
+                <span className="italic text-[#DFBA73]">Trust!</span>
+              </h2>
+              <p className="text-lg text-white/60 font-light leading-relaxed">{trust.text}</p>
+            </div>
+            <a
+              href="#contact"
+              className="group inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#DFBA73] hover:bg-white text-[#111] font-bold text-xs tracking-widest uppercase transition-all duration-400 shadow-[0_0_30px_rgba(223,186,115,0.25)] whitespace-nowrap flex-shrink-0"
+            >
+              CONTACT US
+              <ArrowUpRight
+                size={14}
+                className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
             </a>
           </div>
         </div>
 
-        {/* Brands Section (Asymmetric Bento) */}
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-32 border-b border-[#EDEDE9]">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 items-center">
-            <div className="lg:col-span-5 flex flex-col gap-10">
-              <h2 className="text-4xl md:text-6xl font-serif text-[#111] leading-[1.1]">
-                {brands.title.replace('Brands.', '')} <br />
-                <span className="text-[#B8955D] italic">Brands.</span>
+        {/* ═══════════════════════════════════════
+            BRANDS SECTION — Clip-path image + editorial text
+        ═══════════════════════════════════════ */}
+        <section className="py-28 md:py-36 bg-[#f9f9f7]">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+
+              <div className="w-full order-2 lg:order-1 overflow-hidden rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.12)]">
+                <img
+                  ref={brandsImgRef}
+                  src={brands.image}
+                  alt="Top Gwalior Stone Brands"
+                  className="w-full h-[450px] lg:h-[580px] object-cover will-change-[clip-path]"
+                />
+              </div>
+
+              <div ref={brandsCopyRef} className="flex flex-col gap-7 order-1 lg:order-2">
+                <div className="flex items-center gap-3">
+                  <span className="w-10 h-[2px] bg-[#B4956C]"></span>
+                  <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#B4956C]">Why Choose Us</span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-serif text-[#111] leading-[1.12]">
+                  {brands.title.replace('Brands.', '')}
+                  <span className="italic text-[#B4956C]">Brands.</span>
+                </h2>
+                <p className="text-[17px] text-[#555] font-light leading-[1.9]">{brands.text1}</p>
+                <p className="text-[17px] text-[#555] font-light leading-[1.9]">{brands.text2}</p>
+                <div className="pt-2 flex flex-wrap gap-4">
+                  <a
+                    href="tel:+919425112100"
+                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full border-2 border-[#B4956C] text-[#B4956C] font-bold text-xs tracking-widest uppercase hover:bg-[#B4956C] hover:text-white transition-all duration-400 group"
+                  >
+                    <PhoneCall size={16} className="group-hover:animate-pulse" />
+                    +91 94251 12100
+                  </a>
+                </div>
+                <VeinDivider flip className="mt-2" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════
+            PRODUCT GRID — Stone Collection Style
+        ═══════════════════════════════════════ */}
+        <section className="py-24 md:py-32 bg-white border-t border-b border-[#DFDDD8]">
+          <div className="max-w-[90rem] mx-auto px-6 md:px-12">
+            <div ref={gridHeadRef} className="text-center mb-16 md:mb-24">
+              <h2 className="text-6xl md:text-8xl font-serif text-[#222] mb-2 tracking-tight">
+                Stone
               </h2>
-              <div className="space-y-6">
-                <p className="text-[#666] leading-relaxed text-lg font-light">
-                  {brands.text1}
-                </p>
-                <p className="text-[#666] leading-relaxed text-lg font-light">
-                  {brands.text2}
-                </p>
-              </div>
-              <div className="pt-4">
-                <a href="tel:+919425112100" className="inline-flex items-center gap-4 px-8 py-4 rounded-full border-2 border-[#B8955D] text-[#B8955D] font-bold text-sm tracking-widest uppercase hover:bg-[#B8955D] hover:text-white transition-all duration-500 group">
-                  <PhoneCall size={18} className="text-[#B8955D] group-hover:text-white transition-colors" /> 
-                  +91 94251 12100
-                </a>
-              </div>
+              <h2 className="text-5xl md:text-7xl font-serif italic text-[#222] ml-12 md:ml-32">
+                Collection
+              </h2>
             </div>
-            
-            <div className="lg:col-span-7 relative h-[600px] lg:h-[800px] rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.15)] group">
-              <img src={brands.image} alt="Top Gwalior Stone Brands" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s] ease-out" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80"></div>
-              
-              <div className="absolute bottom-12 left-12 right-12">
-                <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/90 backdrop-blur-xl border border-white text-[#111] shadow-2xl">
-                  <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></span>
-                  <span className="text-sm font-bold tracking-wide">Available for immediate dispatch</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        {/* 4. What We Do - Luxury Grid */}
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-32">
-          <div className="text-center mb-24 relative">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#B8955D]/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
-            
-            <div className="relative z-10">
-              <h3 className="text-xs font-bold tracking-[0.3em] uppercase text-[#B8955D] mb-6 flex items-center justify-center gap-4">
-                <span className="w-8 h-px bg-[#B8955D]/50"></span>
-                WHAT WE DO
-                <span className="w-8 h-px bg-[#B8955D]/50"></span>
-              </h3>
-              <h2 className="text-5xl md:text-7xl font-serif text-[#111] mb-8">Our Main <span className="text-[#B8955D] italic">Category</span></h2>
-              <p className="text-[#666] text-lg max-w-2xl mx-auto font-light leading-relaxed">
-                Explore our exquisite collection of premium stone products, meticulously crafted for architectural brilliance.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 relative z-10">
-            {grid.map((item, idx) => (
-              <div key={idx} className="group flex flex-col h-full bg-white rounded-3xl overflow-hidden border border-[#EDEDE9] shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(184,149,93,0.15)] hover:border-[#B8955D]/30 transition-all duration-500 hover:-translate-y-2">
-                
-                {/* Image Container with inner shadow */}
-                <div className="relative w-full h-72 overflow-hidden bg-[#FAFAF8]">
-                  <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700 ease-out" />
-                  
-                  {/* Floating Action Button on Hover */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white/90 backdrop-blur-md shadow-2xl flex items-center justify-center text-[#B8955D] opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500 ease-out z-20">
-                    <ArrowRight size={24} className="-rotate-45" />
+            {/* Grid with ultra-subtle divider lines */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-black/[0.08]">
+              {grid.map((item, idx) => (
+                <Link
+                  key={idx}
+                  ref={addCardRef}
+                  to={`/products/${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                  className={`flex flex-col items-center text-center group py-12 px-5 md:px-8 no-underline border-b border-black/[0.08] border-r border-r-black/[0.08] ${
+                    (idx + 1) % 4 === 0 ? 'lg:border-r-0' : ''
+                  } ${
+                    (idx + 1) % 2 === 0 ? 'max-lg:border-r-0' : ''
+                  } hover:bg-[#F4F3EF] transition-colors duration-700`}
+                >
+                  {/* 3D hover effect on image */}
+                  <div className="relative w-[85%] md:w-[75%] aspect-[3/4] mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3)]">
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 brightness-[0.97] contrast-[0.95] group-hover:brightness-100 group-hover:contrast-100 saturate-[0.9] group-hover:saturate-100"
+                    />
+                    
+                    {/* Premium frosted glass INQUIRE button */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-700 flex items-end justify-center pb-6">
+                      <div className="px-6 py-2.5 border border-white/50 bg-white/10 backdrop-blur-md opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                        <span className="text-[9px] tracking-[0.4em] uppercase text-white font-semibold drop-shadow-sm">
+                          Inquire
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                
-                {/* Content */}
-                <div className="p-10 flex flex-col flex-grow items-start relative z-10 bg-white">
-                  <h4 className="text-2xl font-serif text-[#111] mb-4 group-hover:text-[#B8955D] transition-colors">{item.title}</h4>
-                  <p className="text-base text-[#666] font-light leading-relaxed mb-10 flex-grow">
-                    {item.desc}
-                  </p>
-                  
-                  <button className="inline-flex items-center gap-3 text-xs font-bold tracking-widest uppercase text-[#B8955D] group-hover:text-[#111] transition-colors mt-auto relative">
-                    <span className="relative z-10">Discover More</span>
-                    <span className="absolute bottom-0 left-0 w-0 h-px bg-[#111] transition-all duration-300 group-hover:w-full"></span>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
+                  {/* Refined Typography */}
+                  <h4 className="text-[12px] md:text-[14px] font-serif text-[#111] uppercase tracking-[0.2em] mb-2 group-hover:text-[#B4956C] transition-colors duration-500">
+                    {item.title}
+                  </h4>
+                  {/* Subtitle / SKU style */}
+                  <div className="flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="w-4 h-[1px] bg-[#B4956C]/50"></div>
+                    <p className="text-[8px] md:text-[9px] text-[#555] uppercase tracking-[0.3em] font-medium">
+                      {item.desc}
+                    </p>
+                    <div className="w-4 h-[1px] bg-[#B4956C]/50"></div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════
+            CTA STRIP
+        ═══════════════════════════════════════ */}
+        <section className="py-28 md:py-36">
+          <div className="max-w-5xl mx-auto px-6 text-center">
+            <VeinDivider className="mx-auto mb-8" />
+            <h3 className="text-5xl md:text-6xl font-serif text-[#111] mb-6 leading-tight">
+              Ready to transform <span className="italic text-[#B4956C]">your space?</span>
+            </h3>
+            <p className="text-lg text-[#888] font-light max-w-xl mx-auto mb-12 leading-relaxed">
+              Contact our expert team for a personalized consultation and premium stone selection.
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#111] text-white font-bold text-sm tracking-widest uppercase hover:bg-[#B4956C] transition-colors duration-400"
+              >
+                Get Free Quote <ArrowRight size={16} />
+              </Link>
+              <a
+                href="tel:+919425112100"
+                className="inline-flex items-center gap-3 px-10 py-5 rounded-full border-2 border-[#ddd] text-[#111] font-bold text-sm tracking-widest uppercase hover:border-[#B4956C] hover:text-[#B4956C] transition-all duration-400"
+              >
+                <PhoneCall size={16} /> Call Now
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <Footer />
       </div>
 
-      <Footer />
+      <style>{`
+        @keyframes projectHeroIn {
+          from { transform: scale(1.06); opacity: 0.85; }
+          to { transform: scale(1); opacity: 1; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .motion-safe\\:animate-\\[projectHeroIn_1\\.4s_ease-out\\] { animation: none !important; }
+        }
+      `}</style>
     </div>
   );
 };
