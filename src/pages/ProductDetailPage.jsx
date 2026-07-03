@@ -237,6 +237,11 @@ import GwaliorMintCobblesView from './GwaliorMintCobblesView';
 import SteppingStoneTilesView from './SteppingStoneTilesView';
 import MintFlagstoneTilesView from './MintFlagstoneTilesView';
 import GwaliorMintStoneElevationView from './GwaliorMintStoneElevationView';
+import MintStoneBlocksView from './MintStoneBlocksView';
+import SandstonePalisadeView from './SandstonePalisadeView';
+import GwaliorMintSandstoneSlabsView from './GwaliorMintSandstoneSlabsView';
+import WallPanelView from './WallPanelView';
+import FossilMintNaturalStoneView from './FossilMintNaturalStoneView';
 
 const ProductDetailPage = () => {
   const { slug } = useParams();
@@ -272,7 +277,27 @@ const ProductDetailPage = () => {
   if (slug === 'gwalior-mint-stone-elevation' || slug === 'mint-stone-elevation') {
     return <GwaliorMintStoneElevationView />;
   }
+
+  if (slug === 'wall-panel') {
+    return <WallPanelView />;
+  }
+
+  if (slug === 'fossil-mint-natural-stone') {
+    return <FossilMintNaturalStoneView />;
+  }
   
+  if (slug === 'mint-stone-blocks') {
+    return <MintStoneBlocksView />;
+  }
+
+  if (slug === 'sandstone-palisade') {
+    return <SandstonePalisadeView />;
+  }
+
+  if (slug === 'gwalior-mint-sandstone-slabs' || slug === 'mint-sandstone-slabs') {
+    return <GwaliorMintSandstoneSlabsView />;
+  }
+
   return <DefaultProductView />;
 };
 
