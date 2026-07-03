@@ -133,10 +133,6 @@ export function Header() {
               </NavigationMenuItem>
 
               <NavigationMenuLink className="px-3 py-2 text-sm font-medium text-white/80 hover:text-[#B8955D] transition-colors" asChild>
-                <Link to="/infrastructure">Infrastructure</Link>
-              </NavigationMenuLink>
-
-              <NavigationMenuLink className="px-3 py-2 text-sm font-medium text-white/80 hover:text-[#B8955D] transition-colors" asChild>
                 <Link to="/projects">Our Projects</Link>
               </NavigationMenuLink>
 
@@ -213,7 +209,6 @@ export function Header() {
             </div>
           </div>
 
-          <Link to="/infrastructure" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Infrastructure</Link>
           <Link to="/projects" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Our Projects</Link>
           <Link to="/packaging" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Packaging</Link>
           <Link to="/blog" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Blog</Link>

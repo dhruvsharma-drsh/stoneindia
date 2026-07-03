@@ -478,8 +478,8 @@ const StoneProductsView = () => {
                     (idx + 1) % 2 === 0 ? 'max-lg:border-r-0' : ''
                   } hover:bg-[#F4F3EF] transition-colors duration-700`}
                 >
-                  {/* Flat editorial image with color grade and frosted hover button */}
-                  <div className="relative w-[85%] md:w-[75%] aspect-[3/4] mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5">
+                  {/* 3D hover effect on image */}
+                  <div className="relative w-[85%] md:w-[75%] aspect-[3/4] mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3)]">
                     <img
                       src={item.img}
                       alt={item.title}

@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
+import "./AboutWave.css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Header } from "@/components/ui/header-3";
@@ -104,6 +105,41 @@ const useTypewriter = (words, speed = 90, pause = 1800) => {
   return displayed;
 };
 
+const facilities = [
+  {
+    id: "01",
+    label: "Processing Unit",
+    title: "State-of-the-Art Stone Processing",
+    body: "Our Gwalior-based processing unit is equipped with advanced CNC bridge saws, edge-profiling machines, and waterjet cutters that handle every stone variety with surgical precision — delivering hand-cut and machine-cut edges of exceptional quality.",
+    img: "img/infra_cutting.png",
+    tags: ["CNC Bridge Saws", "Waterjet Cutting", "Edge Profiling", "Surface Finishing"],
+  },
+  {
+    id: "02",
+    label: "Quality Control",
+    title: "Rigorous Multi-Stage Inspection",
+    body: "Every stone batch passes through our dedicated quality inspection zone before dispatch. Trained inspectors check for dimensional accuracy, surface finish, colour consistency, and structural integrity — ensuring zero compromise on standards.",
+    img: "img/infra_quality.png",
+    tags: ["Dimensional Accuracy", "Finish Grading", "Colour Matching", "Structural Testing"],
+  },
+  {
+    id: "03",
+    label: "Warehousing",
+    title: "Large-Scale Storage & Inventory",
+    body: "Our expansive warehouse facilities in Northern India safely store thousands of tonnes of finished and semi-finished stone slabs, ready for swift dispatch. Organised rack systems ensure zero damage and quick order fulfilment.",
+    img: "img/infra_warehouse.png",
+    tags: ["Slab Racking Systems", "Inventory Management", "Climate-Adapted Storage", "Swift Dispatch"],
+  },
+  {
+    id: "04",
+    label: "Packaging",
+    title: "Export-Grade Packaging",
+    body: "Stones are packed in seasoned wooden crates with foam-padded interiors, ensuring zero damage during transit. Our export-grade packaging meets international shipping standards for sea freight, ensuring safe delivery to all ports worldwide.",
+    img: "img/infra_packaging.png",
+    tags: ["Wooden Crating", "Foam Padding", "Sea-Freight Standards", "Custom Pack Sizes"],
+  },
+];
+
 /* ────────────────────────────────────────────────────────────
    Main Component
 ──────────────────────────────────────────────────────────── */
@@ -111,6 +147,7 @@ const AboutPage = () => {
   const pageRef = useRef(null);
   const typed = useTypewriter(["Stone Processors.", "Stone Traders.", "Stone Exporters.", "Quality Crafters."], 80, 2000);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
 
   const handleScroll = useCallback(() => {
     const scrollY = window.scrollY;
@@ -452,55 +489,6 @@ const AboutPage = () => {
           </div>
         </div>
       </section>
-
-      {/* ══════════════════════════════════════
-          WAREHOUSING & PACKAGING — 3-col cards
-      ══════════════════════════════════════ */}
-      <section className="py-20 sm:py-28 px-6 bg-[#FAFAF8]">
-        <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="reveal-block text-center mb-14">
-            <p className="text-[11px] tracking-[0.25em] font-semibold text-[#B8955D] uppercase mb-4">Warehousing &amp; Packaging</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A] leading-[1.2] mb-4">
-              Global <span className="text-[#B8955D]">Export Network</span>
-            </h2>
-            <p className="text-[15px] text-[#666] max-w-2xl mx-auto leading-relaxed">
-              All stones that are produced and processed in North India are normally exported
-              from the Mundra Ports while the stones that are processed in Southern India are
-              exported from the Chennai port in Tamil Nadu or from Mumbai port in Maharashtra.
-              Just as we ensure that we do not compromise our quality we are also very
-              particular about the delivery time and schedules.
-            </p>
-            <p className="text-[15px] text-[#666] max-w-2xl mx-auto leading-relaxed mt-4">
-              Since our experience and evidence show that these ports are extremely fast in
-              their dispatch processing activities and are very efficient, we decided towards
-              using these ports for our exports.
-            </p>
-          </div>
-
-          {/* 3 Port Cards */}
-          <div className="reveal-block grid grid-cols-1 md:grid-cols-3 gap-5">
-            {[
-              { port: "Mundra Port", region: "North India", state: "Gujarat", desc: "Primary export hub for stones processed in Northern India." },
-              { port: "Chennai Port", region: "South India", state: "Tamil Nadu", desc: "Key export channel for Southern India processed stones." },
-              { port: "Mumbai Port", region: "West India", state: "Maharashtra", desc: "Alternate fast-dispatch port for Western region exports." },
-            ].map((p, i) => (
-              <div key={i} className="group bg-white border border-[#EDEDE9] rounded-2xl p-7 hover:border-[#B8955D]/40 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                <div className="w-12 h-12 rounded-xl bg-[#B8955D]/10 flex items-center justify-center mb-5 group-hover:bg-[#B8955D] transition-colors duration-300">
-                  <svg className="w-5 h-5 text-[#B8955D] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                  </svg>
-                </div>
-                <h3 className="text-lg font-bold text-[#1A1A1A] mb-1 group-hover:text-[#B8955D] transition-colors duration-300">{p.port}</h3>
-                <p className="text-[12px] text-[#B8955D] font-semibold uppercase tracking-wider mb-3">{p.region} · {p.state}</p>
-                <p className="text-[14px] text-[#666] leading-relaxed">{p.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ══════════════════════════════════════
           SOURCES OF STONES — Timeline style (frostrek "Our Journey")
       ══════════════════════════════════════ */}
@@ -578,6 +566,372 @@ const AboutPage = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+      {/* ═══════════════════════════════════════════════════════
+          FACILITY TABS — Interactive, frostrek-phase-style
+      ═══════════════════════════════════════════════════════ */}
+      <section className="py-24 sm:py-32 px-6 bg-white border-y border-[#EDEDE9]">
+        <div className="max-w-6xl mx-auto">
+          <div className="reveal-block text-center mb-16">
+            <p className="text-[11px] tracking-[0.25em] font-semibold text-[#B8955D] uppercase mb-3">Our Facilities</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A]">
+              Inside Our <span className="text-[#B8955D]">Production World</span>
+            </h2>
+          </div>
+
+          {/* Tab layout — left list, right detail panel */}
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
+            {/* Left: Tab buttons */}
+            <div className="lg:w-72 flex-shrink-0 flex flex-row lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
+              {facilities.map((f, i) => (
+                <button
+                  key={f.id}
+                  onClick={() => setActiveTab(i)}
+                  className={`group flex items-center gap-4 p-4 rounded-2xl border text-left transition-all duration-300 flex-shrink-0 lg:flex-shrink w-48 lg:w-full ${
+                    activeTab === i
+                      ? "bg-[#B8955D]/8 border-[#B8955D]/40 shadow-md"
+                      : "bg-[#FAFAF8] border-[#EDEDE9] hover:border-[#B8955D]/25"
+                  }`}
+                >
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-300 ${
+                    activeTab === i ? "bg-[#B8955D] text-white" : "bg-[#EDEDE9] text-[#888]"
+                  }`}>
+                    <span className="text-[11px] font-bold tracking-wider">{f.id}</span>
+                  </div>
+                  <div>
+                    <span className={`block text-[10px] uppercase tracking-wider font-semibold mb-0.5 transition-colors ${
+                      activeTab === i ? "text-[#B8955D]" : "text-[#AAA]"
+                    }`}>Phase {f.id}</span>
+                    <span className={`text-[13px] font-semibold transition-colors ${
+                      activeTab === i ? "text-[#1A1A1A]" : "text-[#555]"
+                    }`}>{f.label}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Right: Detail panel */}
+            <div className="flex-1 bg-[#FAFAF8] border border-[#EDEDE9] rounded-3xl overflow-hidden shadow-sm">
+              {facilities.map((f, i) => (
+                <div
+                  key={f.id}
+                  className={`${activeTab === i ? "block tab-image-in" : "hidden"}`}
+                >
+                  {/* Image */}
+                  <div className="relative overflow-hidden h-56 sm:h-72 lg:h-80">
+                    <img
+                      src={f.img}
+                      alt={f.label}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-[#B8955D] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+                        Phase {f.id} — {f.label}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-7 sm:p-9">
+                    <h3 className="text-xl sm:text-2xl font-bold text-[#1A1A1A] mb-4">{f.title}</h3>
+                    <p className="text-[15px] text-[#555] leading-relaxed mb-6">{f.body}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {f.tags.map(tag => (
+                        <span key={tag} className="px-3 py-1.5 text-[12px] font-medium rounded-full bg-[#B8955D]/8 border border-[#B8955D]/20 text-[#B8955D]">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          PROCESS TIMELINE — The Wave Journey Section
+      ═══════════════════════════════════════════════════════ */}
+      <section className="journey pb-20">
+        {/* Background Decor */}
+        <div className="journey__bg-grid"></div>
+        <div className="journey__corner-decor hidden md:block">
+          <svg width="800" height="800" viewBox="0 0 800 800" fill="none">
+            <g stroke="rgba(184, 149, 93, 0.12)" strokeWidth="1.5">
+              <circle cx="800" cy="150" r="60" />
+              <circle cx="800" cy="150" r="110" />
+              <circle cx="800" cy="150" r="160" />
+              <circle cx="800" cy="150" r="210" />
+              <circle cx="800" cy="150" r="260" />
+              <circle cx="800" cy="150" r="310" />
+            </g>
+            <g fill="rgba(184, 149, 93, 0.4)">
+              {/* Carefully calculated scattered dots on the half-circles */}
+              <circle cx="740" cy="150" r="2.5" />
+              <circle cx="750" cy="248" r="2.5" />
+              <circle cx="687" cy="263" r="2.5" />
+              <circle cx="651" cy="299" r="2.5" />
+              <circle cx="616" cy="344" r="2.5" />
+              <circle cx="581" cy="369" r="2.5" />
+              <circle cx="800" cy="360" r="2.5" />
+              <circle cx="800" cy="460" r="2.5" />
+            </g>
+          </svg>
+        </div>
+
+        <div className="max-w-6xl mx-auto px-6 journey__container">
+          {/* Header */}
+          <div className="journey__header reveal-block mb-16 text-center mx-auto">
+            <p className="text-[11px] tracking-[0.25em] font-semibold text-[#B8955D] uppercase mb-3">How It Works</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A]">
+              From <span className="text-[#B8955D]">Quarry</span> to Your Door
+            </h2>
+            <p className="text-[15px] text-[#666] max-w-2xl mx-auto mt-4 leading-relaxed">
+              Our streamlined end-to-end process ensures every stone you receive meets our
+              exacting standards — from the quarry face to your project site.
+            </p>
+          </div>
+
+          {/* Wave Content Area - Scrollable on mobile/tablet */}
+          <div className="journey__wave-wrapper reveal-block overflow-x-auto pb-4">
+            <div className="min-w-[1100px] lg:min-w-0">
+              {/* The mathematical SVG wave */}
+              <div className="journey__wave-bg">
+                <svg viewBox="0 0 1500 200" preserveAspectRatio="none" width="100%" height="100%">
+                {/* Drop shadow / glow */}
+                <filter id="up-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="16" stdDeviation="16" floodColor="#B8955D" floodOpacity="0.4" />
+                </filter>
+
+                {/* Flat start + Going Up (01 to 02) */}
+                <path
+                  d="M 40,180 L 125,180 C 250,180 250,20 375,20"
+                  fill="none"
+                  stroke="#B8955D"
+                  strokeWidth="2.5"
+                  filter="url(#up-shadow)"
+                  opacity="1"
+                />
+
+                {/* Going Down (02 to 03) */}
+                <path
+                  d="M 375,20 C 500,20 500,180 625,180"
+                  fill="none"
+                  stroke="#B8955D"
+                  strokeWidth="2"
+                  opacity="0.4"
+                />
+
+                {/* Going Up (03 to 04) */}
+                <path
+                  d="M 625,180 C 750,180 750,20 875,20"
+                  fill="none"
+                  stroke="#B8955D"
+                  strokeWidth="2.5"
+                  filter="url(#up-shadow)"
+                  opacity="1"
+                />
+
+                {/* Going Down (04 to 05) */}
+                <path
+                  d="M 875,20 C 1000,20 1000,180 1125,180"
+                  fill="none"
+                  stroke="#B8955D"
+                  strokeWidth="2"
+                  opacity="0.4"
+                />
+
+                {/* Going Up (05 to 06) */}
+                <path
+                  d="M 1125,180 C 1250,180 1250,20 1375,20"
+                  fill="none"
+                  stroke="#B8955D"
+                  strokeWidth="2.5"
+                  filter="url(#up-shadow)"
+                  opacity="1"
+                />
+
+                {/* Glowing filter for the moving dots */}
+                <filter id="dot-glow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+
+                {/* Flowing animated dots */}
+                <circle r="5" fill="#B8955D" filter="url(#dot-glow)">
+                  <animateMotion dur="18s" begin="0s" repeatCount="indefinite" path="M 40,180 L 125,180 C 250,180 250,20 375,20 C 500,20 500,180 625,180 C 750,180 750,20 875,20 C 1000,20 1000,180 1125,180 C 1250,180 1250,20 1375,20" />
+                  <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0; 0.05; 0.5; 0.95; 1" dur="18s" begin="0s" repeatCount="indefinite" />
+                </circle>
+
+                <circle r="5" fill="#B8955D" filter="url(#dot-glow)">
+                  <animateMotion dur="18s" begin="-6s" repeatCount="indefinite" path="M 40,180 L 125,180 C 250,180 250,20 375,20 C 500,20 500,180 625,180 C 750,180 750,20 875,20 C 1000,20 1000,180 1125,180 C 1250,180 1250,20 1375,20" />
+                  <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0; 0.05; 0.5; 0.95; 1" dur="18s" begin="-6s" repeatCount="indefinite" />
+                </circle>
+
+                <circle r="5" fill="#B8955D" filter="url(#dot-glow)">
+                  <animateMotion dur="18s" begin="-12s" repeatCount="indefinite" path="M 40,180 L 125,180 C 250,180 250,20 375,20 C 500,20 500,180 625,180 C 750,180 750,20 875,20 C 1000,20 1000,180 1125,180 C 1250,180 1250,20 1375,20" />
+                  <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0; 0.05; 0.5; 0.95; 1" dur="18s" begin="-12s" repeatCount="indefinite" />
+                </circle>
+              </svg>
+            </div>
+
+            {/* Grid overlay containing nodes and text */}
+            <div className="journey__grid">
+              {[
+                {
+                  num: 1,
+                  title: 'Quarry\nSourcing',
+                  desc: "Field teams select premium quarry blocks evaluating grain and finish suitability.",
+                  icon: (
+                    <span className="text-2xl">⛏️</span>
+                  )
+                },
+                {
+                  num: 2,
+                  title: 'Raw\nProcessing',
+                  desc: 'Blocks are transported where CNC saws calibrate slabs to precise specs.',
+                  icon: (
+                    <span className="text-2xl">🔩</span>
+                  )
+                },
+                {
+                  num: 3,
+                  title: 'Surface\nFinishing',
+                  desc: 'Slabs pass through finish lines based on exact order specifications.',
+                  icon: (
+                    <span className="text-2xl">✨</span>
+                  )
+                },
+                {
+                  num: 4,
+                  title: 'Quality\nInspection',
+                  desc: "Every batch goes through multi-point inspection and structural testing.",
+                  icon: (
+                    <span className="text-2xl">🔬</span>
+                  )
+                },
+                {
+                  num: 5,
+                  title: 'Export\nPackaging',
+                  desc: "Approved stones are packed in foam-padded seasoned wooden crates.",
+                  icon: (
+                    <span className="text-2xl">📦</span>
+                  )
+                },
+                {
+                  num: 6,
+                  title: 'Global\nDelivery',
+                  desc: "Dispatched via India's fastest ports for customs clearance in 50+ countries.",
+                  icon: (
+                    <span className="text-2xl">🚢</span>
+                  )
+                }
+              ].map((step, index) => {
+                const isCrest = index % 2 !== 0; // 0, 2, 4 are troughs. 1, 3, 5 are crests.
+                return (
+                  <div key={step.num} className="journey__col group cursor-pointer">
+                    {/* Background Number */}
+                    <div className={`journey__bg-number ${isCrest ? 'journey__bg-number--low' : 'journey__bg-number--high'}`}>
+                      0{step.num}
+                    </div>
+
+                    {/* Node Area */}
+                    <div className="journey__node-area">
+                      <div className={`journey__icon-circle transition-all duration-500 group-hover:scale-110 group-hover:border-[#B8955D]/40 group-hover:shadow-[0_12px_32px_rgba(184,149,93,0.3)] ${isCrest ? 'journey__icon-circle--top' : 'journey__icon-circle--bottom'}`}>
+                        {step.icon}
+                      </div>
+                    </div>
+
+                    {/* Text Area */}
+                    <div className="journey__text-area relative z-10 bg-white/60 lg:bg-transparent p-4 lg:p-0 rounded-2xl lg:rounded-none backdrop-blur-sm lg:backdrop-blur-none border lg:border-none border-[#EDEDE9]/50 transition-transform duration-500 group-hover:-translate-y-2">
+                      <h3 className="journey__step-title transition-colors duration-300 group-hover:text-[#B8955D]">
+                        {step.title.split('\n').map((line, i) => (
+                          <span key={i}>{line}{i < step.title.split('\n').length - 1 && <br className="hidden lg:block" />}</span>
+                        ))}
+                      </h3>
+                      <div className="journey__step-rule hidden lg:block transition-all duration-500 group-hover:w-16"></div>
+                      <p className="journey__step-desc">{step.desc}</p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          IMAGE GALLERY STRIP
+      ═══════════════════════════════════════════════════════ */}
+      <section className="py-16 px-6 bg-[#FAFAF8] border-t border-[#EDEDE9]">
+        <div className="max-w-6xl mx-auto">
+          <div className="reveal-block text-center mb-10">
+            <p className="text-[11px] tracking-[0.25em] font-semibold text-[#B8955D] uppercase mb-2">Our Facility</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#1A1A1A]">A Glimpse Inside</h2>
+          </div>
+          <div className="reveal-block grid grid-cols-2 md:grid-cols-4 gap-3">
+            {[
+              { img: "img/infra_cutting.png", cap: "CNC Cutting" },
+              { img: "img/stone_craft.png", cap: "Stone Crafting" },
+              { img: "img/infra_warehouse.png", cap: "Warehousing" },
+              { img: "img/infra_packaging.png", cap: "Packaging" },
+            ].map((g, i) => (
+              <div key={i} className="relative overflow-hidden rounded-2xl group cursor-pointer">
+                <img
+                  src={g.img}
+                  alt={g.cap}
+                  className="w-full h-40 sm:h-52 object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                  <span className="text-white text-[13px] font-semibold">{g.cap}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          CTA BANNER
+      ═══════════════════════════════════════════════════════ */}
+      <section className="py-24 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="reveal-block bg-gradient-to-br from-[#B8955D]/8 via-[#FAFAF8] to-white border border-[#B8955D]/20 rounded-3xl px-10 py-16 shadow-sm">
+            <p className="text-[11px] tracking-[0.25em] font-semibold text-[#B8955D] uppercase mb-4">Ready to Order?</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A] mb-5 leading-[1.2]">
+              Premium Stone,{" "}
+              <span className="text-[#B8955D]">Precision Delivered</span>
+            </h2>
+            <p className="text-[15px] text-[#666] max-w-xl mx-auto leading-relaxed mb-10">
+              Our infrastructure is designed to handle bulk orders, custom specifications,
+              and time-sensitive shipments — with quality guaranteed at every step.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                to="/contact"
+                className="group inline-flex items-center gap-3 bg-[#1A1A1A] text-white font-semibold text-sm uppercase tracking-wider px-8 py-4 rounded-full hover:bg-[#B8955D] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+              >
+                Request a Quote
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </Link>
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-2 border border-[#EDEDE9] text-[#555] font-semibold text-sm uppercase tracking-wider px-8 py-4 rounded-full hover:border-[#B8955D]/40 hover:text-[#B8955D] transition-all duration-300 hover:-translate-y-1"
+              >
+                Learn About Us
+              </Link>
+            </div>
           </div>
         </div>
       </section>

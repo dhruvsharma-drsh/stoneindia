@@ -1,0 +1,247 @@
+/* ═══════════════════════════════════════════════════════════
+   The Wave Journey Section (From Quarry to Your Door)
+   ═══════════════════════════════════════════════════════════ */
+
+.journey {
+  padding: 60px 0 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .journey {
+    padding: clamp(40px, 6vh, 80px) 0 0;
+  }
+}
+
+/* --- Background Decorations ------------------------------ */
+.journey__bg-grid {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: radial-gradient(rgba(184, 149, 93, 0.15) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.journey__corner-decor {
+  position: absolute;
+  top: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.journey__container {
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* --- Wave & Grid Area ----------------------------------- */
+.journey__wave-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+@media (min-width: 1024px) {
+  .journey__wave-wrapper {
+    padding-bottom: clamp(20px, 4vh, 60px);
+  }
+}
+
+.journey__wave-bg {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .journey__wave-bg {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: clamp(180px, 30vh, 300px);
+    z-index: 1;
+    pointer-events: none;
+  }
+}
+
+.journey__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  position: relative;
+  z-index: 2;
+  gap: 48px 24px;
+}
+
+@media (min-width: 768px) {
+  .journey__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .journey__grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    min-width: 1100px;
+  }
+}
+
+.journey__col {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* The upper block containing the wave node */
+.journey__node-area {
+  position: relative;
+  height: auto;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .journey__node-area {
+    height: clamp(180px, 30vh, 300px);
+    margin-bottom: 0;
+  }
+}
+
+/* Background Numbers */
+.journey__bg-number {
+  position: absolute;
+  top: 50%;
+  left: 40px;
+  transform: translateY(-50%);
+  font-family: inherit;
+  font-size: clamp(80px, 12vh, 140px);
+  font-weight: 700;
+  color: rgba(184, 149, 93, 0.05); /* Gold tint for Stone India */
+  line-height: 1;
+  z-index: -1;
+  pointer-events: none;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 1024px) {
+  .journey__bg-number {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .journey__bg-number--high {
+    top: 10%;
+  }
+  .journey__bg-number--low {
+    top: 34%;
+  }
+}
+
+@keyframes float-circle {
+  0%, 100% {
+    transform: translate(-50%, -50%);
+    box-shadow: 0 12px 32px rgba(184, 149, 93, 0.12), 0 4px 12px rgba(184, 149, 93, 0.05);
+  }
+  50% {
+    transform: translate(-50%, calc(-50% - 8px));
+    box-shadow: 0 20px 40px rgba(184, 149, 93, 0.2), 0 8px 20px rgba(184, 149, 93, 0.1);
+  }
+}
+
+/* Icon Circles */
+.journey__icon-circle {
+  position: relative;
+  width: clamp(72px, 10vh, 96px);
+  height: clamp(72px, 10vh, 96px);
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 12px 32px rgba(184, 149, 93, 0.12), 0 4px 12px rgba(184, 149, 93, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #B8955D;
+  z-index: 10;
+  border: 1px solid rgba(184, 149, 93, 0.15);
+}
+
+@media (min-width: 1024px) {
+  .journey__icon-circle {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: float-circle 6s ease-in-out infinite;
+  }
+  .journey__icon-circle--top {
+    top: 10%;
+  }
+  .journey__icon-circle--bottom {
+    top: 90%;
+  }
+}
+
+/* Stagger circle animation per column */
+@media (min-width: 1024px) {
+  .journey__col:nth-child(1) .journey__icon-circle { animation-delay: 0s; }
+  .journey__col:nth-child(2) .journey__icon-circle { animation-delay: 1.5s; }
+  .journey__col:nth-child(3) .journey__icon-circle { animation-delay: 3s; }
+  .journey__col:nth-child(4) .journey__icon-circle { animation-delay: 4.5s; }
+  .journey__col:nth-child(5) .journey__icon-circle { animation-delay: 6s; }
+  .journey__col:nth-child(6) .journey__icon-circle { animation-delay: 7.5s; }
+}
+
+/* Text Content Area */
+.journey__text-area {
+  padding: 0;
+}
+
+@media (min-width: 1024px) {
+  .journey__text-area {
+    padding: 0 16px;
+    margin-top: clamp(12px, 2vh, 16px);
+  }
+}
+
+.journey__step-title {
+  font-size: clamp(16px, 1.5vw, 18px);
+  font-weight: 700;
+  color: #1A1A1A;
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+@media (min-width: 1024px) {
+  .journey__step-title {
+    margin-bottom: clamp(8px, 1.5vh, 16px);
+  }
+}
+
+.journey__step-rule {
+  width: 32px;
+  height: 2px;
+  background: #B8955D;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 1024px) {
+  .journey__step-rule {
+    margin-bottom: clamp(12px, 2vh, 20px);
+  }
+}
+
+.journey__step-desc {
+  font-size: clamp(12px, 1vw, 13px);
+  font-weight: 400;
+  color: #666;
+  line-height: 1.5;
+}
