@@ -235,6 +235,8 @@ import WallCladdingView from './WallCladdingView';
 import SandstoneCircleView from './SandstoneCircleView';
 import GwaliorMintCobblesView from './GwaliorMintCobblesView';
 import SteppingStoneTilesView from './SteppingStoneTilesView';
+import MintFlagstoneTilesView from './MintFlagstoneTilesView';
+import GwaliorMintStoneElevationView from './GwaliorMintStoneElevationView';
 
 const ProductDetailPage = () => {
   const { slug } = useParams();
@@ -261,6 +263,14 @@ const ProductDetailPage = () => {
 
   if (slug === 'stepping-stone-tiles' || slug === 'stepping-stones') {
     return <SteppingStoneTilesView />;
+  }
+
+  if (slug === 'mint-flagstone-tiles' || slug === 'mint-flagstones-tiles' || slug === 'mint-flagstones') {
+    return <MintFlagstoneTilesView />;
+  }
+
+  if (slug === 'gwalior-mint-stone-elevation' || slug === 'mint-stone-elevation') {
+    return <GwaliorMintStoneElevationView />;
   }
   
   return <DefaultProductView />;
