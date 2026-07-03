@@ -235,6 +235,8 @@ import WallCladdingView from './WallCladdingView';
 import SandstoneCircleView from './SandstoneCircleView';
 import GwaliorMintCobblesView from './GwaliorMintCobblesView';
 import SteppingStoneTilesView from './SteppingStoneTilesView';
+import WallPanelView from './WallPanelView';
+import FossilMintNaturalStoneView from './FossilMintNaturalStoneView';
 
 const ProductDetailPage = () => {
   const { slug } = useParams();
@@ -261,6 +263,14 @@ const ProductDetailPage = () => {
 
   if (slug === 'stepping-stone-tiles' || slug === 'stepping-stones') {
     return <SteppingStoneTilesView />;
+  }
+
+  if (slug === 'wall-panel') {
+    return <WallPanelView />;
+  }
+
+  if (slug === 'fossil-mint-natural-stone') {
+    return <FossilMintNaturalStoneView />;
   }
   
   return <DefaultProductView />;
