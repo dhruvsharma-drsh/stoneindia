@@ -238,6 +238,8 @@ import SteppingStoneTilesView from './SteppingStoneTilesView';
 import MintStoneBlocksView from './MintStoneBlocksView';
 import SandstonePalisadeView from './SandstonePalisadeView';
 import GwaliorMintSandstoneSlabsView from './GwaliorMintSandstoneSlabsView';
+import WallPanelView from './WallPanelView';
+import FossilMintNaturalStoneView from './FossilMintNaturalStoneView';
 
 const ProductDetailPage = () => {
   const { slug } = useParams();
@@ -264,6 +266,14 @@ const ProductDetailPage = () => {
 
   if (slug === 'stepping-stone-tiles' || slug === 'stepping-stones') {
     return <SteppingStoneTilesView />;
+  }
+
+  if (slug === 'wall-panel') {
+    return <WallPanelView />;
+  }
+
+  if (slug === 'fossil-mint-natural-stone') {
+    return <FossilMintNaturalStoneView />;
   }
   
   if (slug === 'mint-stone-blocks') {
