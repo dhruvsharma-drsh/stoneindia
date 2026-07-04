@@ -30,5 +30,13 @@ export const stoneProductsData = {
     { title: "Wall Panel", desc: "The sandstone wall panel is popularly used for interior and exterior wall cladding. It is available with acid finish...", img: "/img/product/Stone Products/Gwalior Stone/Sandstone-Circle1.webp" },
     { title: "Fossil Mint Natural Stone", desc: "Fossil Mint Natural Stone is our most premium stone product with natural surface and dressed edges that comes at a commercial price...", img: "/img/product/Stone Products/Gwalior Stone/Flagstones-Tiles1.webp" },
     { title: "Gwalior Mint Stone Elevation", desc: "We are a leading Gwalior mint stone elevation manufacturer with a large manufacturing facility in India. Our stone is acclaimed for its quality...", img: "/img/product/Stone Products/Gwalior Stone/Stepping-Stone-Tiles1.jpg" }
+  ],
+  stoneArticrafts: [
+    { title: "Stone Figures", desc: "Top quality handicrafts Indian stone figures...", img: "/img/product/Stone Products/Stone Figures/image.png" },
+    { title: "Sandstone Jaali", desc: "Beautifully carved natural stone jaalis...", img: "/img/product/Stone Products/Stone Figures/image copy.png" },
+    { title: "Stone Planters", desc: "Handcrafted stone planters for your garden...", img: "/img/product/Stone Products/Stone Figures/image copy 2.png" },
+    { title: "Sandstone Balls", desc: "Decorative sandstone balls for outdoor spaces...", img: "/img/product/Stone Products/Stone Figures/image copy 3.png" },
+    { title: "Sandstone Benches", desc: "Durable and elegant sandstone benches...", img: "/img/product/Stone Products/Stone Figures/image.png" },
+    { title: "Stone Waterfalls", desc: "Mesmerizing stone waterfalls for your lawn...", img: "/img/product/Stone Products/Stone Figures/image copy.png" }
   ]
 };

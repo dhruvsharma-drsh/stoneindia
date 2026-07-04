@@ -242,6 +242,12 @@ import SandstonePalisadeView from './SandstonePalisadeView';
 import GwaliorMintSandstoneSlabsView from './GwaliorMintSandstoneSlabsView';
 import WallPanelView from './WallPanelView';
 import FossilMintNaturalStoneView from './FossilMintNaturalStoneView';
+import StoneFiguresView from './StoneFiguresView';
+import SandstoneJaaliView from './SandstoneJaaliView';
+import StonePlantersView from './StonePlantersView';
+import SandstoneBallsView from './SandstoneBallsView';
+import SandstoneBenchesView from './SandstoneBenchesView';
+import StoneWaterfallsView from './StoneWaterfallsView';
 
 const ProductDetailPage = () => {
   const { slug } = useParams();
@@ -296,6 +302,30 @@ const ProductDetailPage = () => {
 
   if (slug === 'gwalior-mint-sandstone-slabs' || slug === 'mint-sandstone-slabs') {
     return <GwaliorMintSandstoneSlabsView />;
+  }
+
+  if (slug === 'stone-figures') {
+    return <StoneFiguresView />;
+  }
+
+  if (slug === 'sandstone-jaali') {
+    return <SandstoneJaaliView />;
+  }
+
+  if (slug === 'stone-planters') {
+    return <StonePlantersView />;
+  }
+
+  if (slug === 'sandstone-balls') {
+    return <SandstoneBallsView />;
+  }
+
+  if (slug === 'sandstone-benches') {
+    return <SandstoneBenchesView />;
+  }
+
+  if (slug === 'stone-waterfalls') {
+    return <StoneWaterfallsView />;
   }
 
   return <DefaultProductView />;

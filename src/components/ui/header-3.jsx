@@ -88,7 +88,7 @@ export function Header() {
                       <ul className="grid grid-cols-2 gap-x-6 gap-y-3">
                         {megaMenuData.stoneProducts.map(item => (
                           <li key={item}>
-                            <Link to="/products" className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all">{item}</Link>
+                            <Link to={`/products/stone-products/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all">{item}</Link>
                           </li>
                         ))}
                       </ul>
@@ -99,7 +99,7 @@ export function Header() {
                       <ul className="grid grid-cols-2 gap-x-6 gap-y-3">
                         {megaMenuData.sandstone.map(item => (
                           <li key={item}>
-                            <Link to="/products" className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all">{item}</Link>
+                            <Link to={`/products/sandstone/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all">{item}</Link>
                           </li>
                         ))}
                       </ul>
@@ -110,7 +110,7 @@ export function Header() {
                       <ul className="flex flex-col gap-3">
                         {megaMenuData.stoneArticrafts.map(item => (
                           <li key={item}>
-                            <Link to="/products" className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all">{item}</Link>
+                            <Link to={`/products/stone-articrafts/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all">{item}</Link>
                           </li>
                         ))}
                       </ul>
@@ -187,7 +187,7 @@ export function Header() {
               <span className="text-xs font-mono uppercase tracking-widest text-[#B8955D] block mb-3 pb-2 border-b border-white/10">Stone Products</span>
               <div className="grid grid-cols-1 gap-2.5">
                 {megaMenuData.stoneProducts.map((item) => (
-                  <Link key={item} to="/products" onClick={() => setOpen(false)} className="text-sm font-medium text-white/80 hover:text-white pl-2 border-l border-white/10 hover:border-[#B8955D] transition-colors">{item}</Link>
+                  <Link key={item} to={`/products/stone-products/${item.toLowerCase().replace(/\s+/g, '-')}`} onClick={() => setOpen(false)} className="text-sm font-medium text-white/80 hover:text-white pl-2 border-l border-white/10 hover:border-[#B8955D] transition-colors">{item}</Link>
                 ))}
               </div>
             </div>
@@ -195,7 +195,7 @@ export function Header() {
               <span className="text-xs font-mono uppercase tracking-widest text-[#B8955D] block mb-3 pb-2 border-b border-white/10">Sandstone</span>
               <div className="grid grid-cols-1 gap-2.5">
                 {megaMenuData.sandstone.map((item) => (
-                  <Link key={item} to="/products" onClick={() => setOpen(false)} className="text-sm font-medium text-white/80 hover:text-white pl-2 border-l border-white/10 hover:border-[#B8955D] transition-colors">{item}</Link>
+                  <Link key={item} to={`/products/sandstone/${item.toLowerCase().replace(/\s+/g, '-')}`} onClick={() => setOpen(false)} className="text-sm font-medium text-white/80 hover:text-white pl-2 border-l border-white/10 hover:border-[#B8955D] transition-colors">{item}</Link>
                 ))}
               </div>
             </div>
@@ -203,7 +203,7 @@ export function Header() {
               <span className="text-xs font-mono uppercase tracking-widest text-[#B8955D] block mb-3 pb-2 border-b border-white/10">Stone Articrafts</span>
               <div className="grid grid-cols-1 gap-2.5">
                 {megaMenuData.stoneArticrafts.map((item) => (
-                  <Link key={item} to="/products" onClick={() => setOpen(false)} className="text-sm font-medium text-white/80 hover:text-white pl-2 border-l border-white/10 hover:border-[#B8955D] transition-colors">{item}</Link>
+                  <Link key={item} to={`/products/stone-articrafts/${item.toLowerCase().replace(/\s+/g, '-')}`} onClick={() => setOpen(false)} className="text-sm font-medium text-white/80 hover:text-white pl-2 border-l border-white/10 hover:border-[#B8955D] transition-colors">{item}</Link>
                 ))}
               </div>
             </div>
