@@ -231,6 +231,7 @@ const DefaultProductView = () => {
 };
 
 import MosaicStoneTilesView from './MosaicStoneTilesView';
+import StoneArticraftsView from './StoneArticraftsView';
 import WallCladdingView from './WallCladdingView';
 import SandstoneCircleView from './SandstoneCircleView';
 import GwaliorMintCobblesView from './GwaliorMintCobblesView';
@@ -268,6 +269,10 @@ const ProductDetailPage = () => {
   
   if (slug === 'stone-products') {
     return <StoneProductsView />;
+  }
+
+  if (slug === 'stone-articrafts') {
+    return <StoneArticraftsView />;
   }
 
   if (slug === 'shivpuri-sandstone') {

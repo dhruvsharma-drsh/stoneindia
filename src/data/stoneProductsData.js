@@ -48,10 +48,10 @@ export const stoneProductsData = {
   ],
   stoneArticrafts: [
     { title: "Stone Figures", desc: "Top quality handicrafts Indian stone figures...", img: "/img/product/Stone Products/Stone Figures/image.png" },
-    { title: "Sandstone Jaali", desc: "Beautifully carved natural stone jaalis...", img: "/img/product/Stone Products/Stone Figures/image copy.png" },
-    { title: "Stone Planters", desc: "Handcrafted stone planters for your garden...", img: "/img/product/Stone Products/Stone Figures/image copy 2.png" },
-    { title: "Sandstone Balls", desc: "Decorative sandstone balls for outdoor spaces...", img: "/img/product/Stone Products/Stone Figures/image copy 3.png" },
-    { title: "Sandstone Benches", desc: "Durable and elegant sandstone benches...", img: "/img/product/Stone Products/Stone Figures/image.png" },
-    { title: "Stone Waterfalls", desc: "Mesmerizing stone waterfalls for your lawn...", img: "/img/product/Stone Products/Stone Figures/image copy.png" }
+    { title: "Sandstone Jaali", desc: "Beautifully carved natural stone jaalis...", img: "/img/product/Stone Products/Sandstone Jaali/image.png" },
+    { title: "Stone Planters", desc: "Handcrafted stone planters for your garden...", img: "/img/product/Stone Products/Stone Planters/image.png" },
+    { title: "Sandstone Balls", desc: "Decorative sandstone balls for outdoor spaces...", img: "/img/product/Stone Products/Sandstone Balls/image.png" },
+    { title: "Sandstone Benches", desc: "Durable and elegant sandstone benches...", img: "/img/product/Stone Products/Sandstone Benches/image.png" },
+    { title: "Stone Waterfalls", desc: "Mesmerizing stone waterfalls for your lawn...", img: "/img/product/Stone Products/Stone Waterfalls/image.png" }
   ]
 };

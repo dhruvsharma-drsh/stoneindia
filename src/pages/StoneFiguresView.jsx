@@ -463,7 +463,6 @@ const StoneFiguresView = () => {
           <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-black/[0.08]">
             {stoneProductsData.stoneArticrafts
               .filter(item => item.title !== "Stone Figures")
-              .slice(0, 8)
               .map((item, idx) => (
               <Link
                 key={idx}
