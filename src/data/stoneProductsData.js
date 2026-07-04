@@ -17,6 +17,21 @@ export const stoneProductsData = {
     text2: "We provide stones in a variety of sizes and striking patterns to satisfy the client's outdoors space needs, as well as to the customer requirements and color preferences. These stones are utilized for both indoor and outdoor decoration. You can contact our expert and quality control team to keep an eye on the whole processing of these attractive stones.",
     image: "/img/product/Stone Products/Gwalior Stone/Stone-Product02.jpg"
   },
+  sandstoneProducts: [
+    { title: "Shivpuri Sandstone", desc: "If you have been looking for the best quality Natural Stone, you can trust Stone India.", img: "/img/product/Stone Products/Shivpuri Sandstone/shivpuri-sand-stone-1.jpg" },
+    { title: "Desert Mint Sandstone", desc: "If you have been looking for the best quality Natural Stone, you can trust Stone India.", img: "/img/product/Stone Products/Desert Mint Sandstone/Desert-Mint-Sandstone.webp" },
+    { title: "Rainbow Sandstone", desc: "If you have been looking for the best quality Natural Stone, you can trust Stone India.", img: "/img/product/Stone Products/Rainbow Sandstone/Rainbow-Sandstone-04.webp" },
+    { title: "Teakwood Sandstone", desc: "If you have been looking for the best quality Natural Stone, you can trust Stone India.", img: "/img/product/Stone Products/Teakwood Sandstone/Teakwood-Sandstone-04.webp" },
+    { title: "Sagar Black Sandstone", desc: "If you have been looking for the best quality Natural Stone, you can trust Stone India.", img: "/img/product/Stone Products/Sagar Black sandstone/Sagar-Black-sandstone.webp" },
+    { title: "Modak Sandstone", desc: "If you have been looking for the best quality Natural Stone, you can trust Stone India.", img: "/img/product/Stone Products/Modak Sandstone/Modak-Sandstone.jpg" },
+    { title: "Mint Fossil Indian Sandstone", desc: "If you have been looking for the best quality Natural Stone, you can trust Stone India.", img: "/img/product/Mint Fossil Indian Sandstone/Mint-Fossil-Indian-Sandstone.webp" },
+    { title: "Lalitpur Yellow Sandstone", desc: "If you have been looking for the best quality Yellow Sandstone, you can trust Stone India.", img: "/img/product/Stone Products/Lalitpur yellow sandstone/LalitPur-yellow-sand-stone.webp" },
+    { title: "Katni Yellow Sandstone", desc: "If you have been looking for the best quality Natural Stone, you can trust Stone India.", img: "/img/product/Stone Products/Katni Yellow Sandstone/Lalitpur-yellow-sandstone.webp" },
+    { title: "Katni Grey Sandstone", desc: "If you have been looking for the best quality Katni Grey Sandstone, you can trust Stone India.", img: "/img/product/Stone Products/Katni Grey Sandstone/Katni-grey-sand-stone-1.webp" },
+    { title: "Gwalior Mint Yellow Sandstone", desc: "If you have been looking for the best quality Natural Stone, you can trust Stone India.", img: "/img/product/Stone Products/Gwalior Mint Yellow Sandstone/gwalior-mint-yellow-sand-stone-1.webp" },
+    { title: "Gwalior Mint White Sandstone", desc: "If you have been looking for the best quality Gwalior Mint Sand Stone, you can trust Stone India.", img: "/img/product/Stone Products/Gwalior Mint White Sandstone/Gwalior-mint-white-sand-stone-1.webp" },
+    { title: "Gwalior Sandstone", desc: "If you have been looking for the best quality Gwalior Sandstone, you can trust Stone India.", img: "/img/product/Stone Products/Gwalior Sandstone/Sandstone03.webp" }
+  ],
   grid: [
     { title: "Mosaic Stone Tiles", desc: "Among the most precious gift that nature offers, rocks and minerals stand tall...", img: "/img/product/Stone Products/Gwalior Stone/Mosaic-Stone-Tiles1.webp" },
     { title: "Wall Cladding", desc: "Stone India offers a variety of manufactured stone products, thin brick, tile, and precast products...", img: "/img/product/Stone Products/Gwalior Stone/wall-cladding1.webp" },

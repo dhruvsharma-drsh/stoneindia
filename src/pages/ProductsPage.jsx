@@ -87,7 +87,7 @@ const ProductsPage = () => {
               </Link>
 
               {/* Card 2: Sandstone */}
-              <Link to="/products/sandstone" className="block bg-white rounded-xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col items-center text-center pb-10 transition-all hover:-translate-y-2 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] duration-300 group">
+              <Link to="/products/gwalior-sandstone" className="block bg-white rounded-xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col items-center text-center pb-10 transition-all hover:-translate-y-2 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] duration-300 group">
                 <div className="w-full h-56 mb-8 overflow-hidden">
                   <img src="/img/product/pro-1.webp" alt="Sandstone" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </div>

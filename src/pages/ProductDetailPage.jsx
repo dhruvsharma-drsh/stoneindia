@@ -249,11 +249,77 @@ import SandstoneBallsView from './SandstoneBallsView';
 import SandstoneBenchesView from './SandstoneBenchesView';
 import StoneWaterfallsView from './StoneWaterfallsView';
 
+import GwaliorSandstoneView from './GwaliorSandstoneView';
+import GwaliorMintWhiteSandstoneView from './GwaliorMintWhiteSandstoneView';
+import GwaliorMintYellowSandstoneView from './GwaliorMintYellowSandstoneView';
+import KatniGreySandstoneView from './KatniGreySandstoneView';
+import KatniYellowSandstoneView from './KatniYellowSandstoneView';
+import LalitpurYellowSandstoneView from './LalitpurYellowSandstoneView';
+import MintFossilIndianSandstoneView from './MintFossilIndianSandstoneView';
+import ModakSandstoneView from './ModakSandstoneView';
+import SagarBlackSandstoneView from './SagarBlackSandstoneView';
+import TeakwoodSandstoneView from './TeakwoodSandstoneView';
+import RainbowSandstoneView from './RainbowSandstoneView';
+import DesertMintSandstoneView from './DesertMintSandstoneView';
+import ShivpuriSandstoneView from './ShivpuriSandstoneView';
+
 const ProductDetailPage = () => {
   const { slug } = useParams();
   
   if (slug === 'stone-products') {
     return <StoneProductsView />;
+  }
+
+  if (slug === 'shivpuri-sandstone') {
+    return <ShivpuriSandstoneView />;
+  }
+
+  if (slug === 'desert-mint-sandstone') {
+    return <DesertMintSandstoneView />;
+  }
+
+  if (slug === 'rainbow-sandstone') {
+    return <RainbowSandstoneView />;
+  }
+
+  if (slug === 'teakwood-sandstone') {
+    return <TeakwoodSandstoneView />;
+  }
+
+  if (slug === 'sagar-black-sandstone') {
+    return <SagarBlackSandstoneView />;
+  }
+
+  if (slug === 'modak-sandstone') {
+    return <ModakSandstoneView />;
+  }
+
+  if (slug === 'mint-fossil-indian-sandstone') {
+    return <MintFossilIndianSandstoneView />;
+  }
+
+  if (slug === 'lalitpur-yellow-sandstone') {
+    return <LalitpurYellowSandstoneView />;
+  }
+
+  if (slug === 'katni-yellow-sandstone') {
+    return <KatniYellowSandstoneView />;
+  }
+
+  if (slug === 'katni-grey-sandstone') {
+    return <KatniGreySandstoneView />;
+  }
+
+  if (slug === 'gwalior-mint-yellow-sandstone') {
+    return <GwaliorMintYellowSandstoneView />;
+  }
+
+  if (slug === 'gwalior-mint-white-sandstone') {
+    return <GwaliorMintWhiteSandstoneView />;
+  }
+
+  if (slug === 'gwalior-sandstone') {
+    return <GwaliorSandstoneView />;
   }
 
   if (slug === 'mosaic-stone-tiles') {
