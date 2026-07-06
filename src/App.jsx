@@ -2,7 +2,9 @@ import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Header } from "@/components/ui/header-3";
 import About from "./components/About";
-import EliteStone from "./components/EliteStone";
+import CategoryShowcase from "./components/CategoryShowcase";
+import VerticalProductShowcase from "./components/VerticalProductShowcase";
+import Features from "./components/Features";
 import Feedback from "./components/Feedback";
 import Hero from "./components/Hero/Hero";
 import Footer from "./components/Footer";
@@ -22,7 +24,9 @@ function HomePage() {
     <>
       <Hero />
       <About />
-      <EliteStone />
+      <CategoryShowcase />
+      <VerticalProductShowcase />
+      <Features />
       <Feedback />
       <Footer />
     </>

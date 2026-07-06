@@ -355,7 +355,7 @@ const ProductDetailPage = () => {
     return <GwaliorMintStoneElevationView />;
   }
 
-  if (slug === 'wall-panel') {
+  if (slug === 'wall-panel' || slug === 'gwalior-mint-wall-panels-stone') {
     return <WallPanelView />;
   }
 

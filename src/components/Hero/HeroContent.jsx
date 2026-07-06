@@ -5,15 +5,18 @@ import gsap from "gsap";
 import "./hero.css";
 
 /* ── Split text into individual character spans ── */
-const splitIntoChars = (text, activeColor = "#ffffff") => {
+const splitIntoChars = (text, activeColor = "#ffffff", isInteractive = true) => {
   return text.split("").map((char, i) => (
     <span
       key={i}
       className="hero-char inline-block"
       data-active-color={activeColor}
-      data-revealed="false"
+      data-revealed={isInteractive ? "false" : "true"}
+      data-interactive={isInteractive.toString()}
       style={{
-        color: activeColor === "#B8955D" ? "rgba(184,149,93,0.18)" : "rgba(255,255,255,0.15)",
+        color: isInteractive 
+          ? (activeColor === "#B8955D" ? "rgba(184,149,93,0.18)" : "rgba(255,255,255,0.15)")
+          : activeColor,
         willChange: "color, transform, text-shadow",
       }}
     >
@@ -72,7 +75,7 @@ const HeroContent = () => {
   /* ── GSAP: Hover reveals chars permanently (paint effect) ── */
   const handleCharHover = useCallback((e) => {
     const target = e.target;
-    if (!target.classList.contains("hero-char")) return;
+    if (!target.classList.contains("hero-char") || target.dataset.interactive === "false") return;
 
     const allChars = Array.from(
       headingRef.current.querySelectorAll(".hero-char")
@@ -81,53 +84,44 @@ const HeroContent = () => {
     const radius = 4;
 
     allChars.forEach((char, i) => {
+      if (char.dataset.interactive === "false") return;
       const distance = Math.abs(i - idx);
       if (distance > radius) return;
 
-      // Mark as permanently revealed
-      char.dataset.revealed = "true";
+      // If already fully painted, we don't need to re-paint
+      if (char.dataset.painted === "true") return;
 
-      const intensity = 1 - distance / (radius + 1);
+      char.dataset.revealed = "true";
+      char.dataset.painted = "true";
+      
       const activeColor = char.dataset.activeColor || "#ffffff";
       const isGold = activeColor === "#B8955D";
 
+      // Paint it permanently with a full glow and a subtle pop
       gsap.to(char, {
         color: activeColor,
         textShadow: isGold
-          ? `0 0 ${30 * intensity}px rgba(184,149,93,${0.5 * intensity}), 0 0 ${60 * intensity}px rgba(184,149,93,${0.15 * intensity})`
-          : `0 0 ${25 * intensity}px rgba(255,255,255,${0.4 * intensity}), 0 0 ${50 * intensity}px rgba(255,255,255,${0.1 * intensity})`,
-        scale: 1 + 0.06 * intensity,
-        duration: 0.25,
+          ? `0 0 25px rgba(184,149,93,0.6), 0 0 50px rgba(184,149,93,0.2)`
+          : `0 0 20px rgba(255,255,255,0.5), 0 0 40px rgba(255,255,255,0.1)`,
+        scale: 1.1,
+        duration: 0.2,
         ease: "power2.out",
         overwrite: true,
+      });
+
+      // Gently scale back to normal size, but keep the color and glow permanently
+      gsap.to(char, {
+        scale: 1,
+        duration: 0.4,
+        delay: 0.2,
+        ease: "power2.out",
       });
     });
   }, []);
 
-  /* ── On mouse leave: only un-revealed chars stay muted ── */
+  /* ── On mouse leave: do nothing, we want the paint to stay permanently ── */
   const handleMouseLeave = useCallback(() => {
-    const allChars = headingRef.current.querySelectorAll(".hero-char");
-
-    allChars.forEach((char) => {
-      const wasRevealed = char.dataset.revealed === "true";
-      const activeColor = char.dataset.activeColor || "#ffffff";
-      const isGold = activeColor === "#B8955D";
-
-      if (wasRevealed) {
-        // Stay colored — just remove the glow & scale
-        gsap.to(char, {
-          color: activeColor,
-          textShadow: isGold
-            ? "0 0 8px rgba(184,149,93,0.2)"
-            : "0 0 6px rgba(255,255,255,0.1)",
-          scale: 1,
-          duration: 0.4,
-          ease: "power2.inOut",
-          overwrite: true,
-        });
-      }
-      // Un-revealed chars stay muted — no change needed
-    });
+    // Intentionally empty. Once a user paints the text, it stays beautifully painted forever!
   }, []);
 
   /* ── Description text ── */
@@ -157,10 +151,10 @@ const HeroContent = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="relative z-20 flex flex-col justify-center px-6 sm:px-12 lg:px-16 xl:px-24 max-w-2xl xl:max-w-3xl"
+      className="relative z-20 flex flex-col justify-center px-5 sm:px-12 lg:px-16 xl:px-24 max-w-2xl xl:max-w-3xl"
     >
       {/* ── Subtitle Tag ── */}
-      <motion.div variants={itemVariants} className="flex items-center gap-4 mb-8">
+      <motion.div variants={itemVariants} className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-8">
         <span className="font-sans text-xs sm:text-[13px] tracking-[0.3em] font-semibold text-[#B8955D] uppercase italic">
           Natural By Nature
         </span>
@@ -173,16 +167,16 @@ const HeroContent = () => {
         variants={itemVariants}
         onMouseMove={handleCharHover}
         onMouseLeave={handleMouseLeave}
-        className="font-editorial text-[2.75rem] sm:text-6xl md:text-7xl xl:text-[5.5rem] leading-[1.05] tracking-tight font-light mb-8 lg:mb-10 cursor-default select-none"
+        className="font-editorial text-[2.2rem] sm:text-5xl md:text-6xl xl:text-[5.5rem] leading-[1.08] tracking-tight font-light mb-5 sm:mb-8 lg:mb-10 cursor-default select-none"
         style={{ perspective: "800px" }}
       >
         <span className="block">
-          {splitIntoChars("Timeless Stones.", "#ffffff")}
+          {splitIntoChars("Timeless Stones.", "#ffffff", false)}
         </span>
         <span className="block">
-          {splitIntoChars("Endless ", "#ffffff")}
+          {splitIntoChars("Endless ", "#ffffff", false)}
           <span className="italic font-normal relative inline-block">
-            {splitIntoChars("Possibilities.", "#B8955D")}
+            {splitIntoChars("Possibilities.", "#B8955D", true)}
             <span className="absolute bottom-1 left-0 right-0 h-[1px] bg-[#B8955D]/40 gold-underline-anim" />
           </span>
         </span>
@@ -192,7 +186,7 @@ const HeroContent = () => {
       <motion.p
         ref={descRef}
         variants={itemVariants}
-        className="font-sans font-light text-[#9A9A9A] text-sm sm:text-base md:text-lg leading-relaxed max-w-[440px] mb-10 lg:mb-12"
+        className="font-sans font-light text-[#9A9A9A] text-[13px] sm:text-base md:text-lg leading-relaxed max-w-[440px] mb-7 sm:mb-10 lg:mb-12"
       >
         {descWords.map((word, i) => (
           <span key={i} className="desc-word inline-block mr-[0.3em] opacity-0">
@@ -204,25 +198,25 @@ const HeroContent = () => {
       {/* ── CTA Buttons ── */}
       <motion.div
         variants={itemVariants}
-        className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-5"
+        className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-5"
       >
         <motion.a
-          href="#products"
+          href="/products"
           whileHover={{ y: -3, scale: 1.02 }}
           whileTap={{ scale: 0.97 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
-          className="group flex items-center justify-center gap-3 bg-[#B8955D] text-white font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.15em] px-8 py-4 rounded-full gold-glow-shadow transition-all duration-300 hover:bg-[#a6834d]"
+          className="group flex items-center justify-center gap-3 bg-[#B8955D] text-white font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.15em] px-6 sm:px-8 py-3.5 sm:py-4 rounded-full gold-glow-shadow transition-all duration-300 hover:bg-[#a6834d]"
         >
           <span>Explore Products</span>
           <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
         </motion.a>
 
         <motion.a
-          href="#contact"
+          href="/contact"
           whileHover={{ y: -3, scale: 1.02 }}
           whileTap={{ scale: 0.97 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
-          className="group flex items-center justify-center gap-3 bg-transparent text-white font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.15em] px-8 py-4 rounded-full border border-white/30 backdrop-blur-sm transition-all duration-300 hover:bg-white hover:text-[#111111] hover:border-white"
+          className="group flex items-center justify-center gap-3 bg-transparent text-white font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.15em] px-6 sm:px-8 py-3.5 sm:py-4 rounded-full border border-white/30 backdrop-blur-sm transition-all duration-300 hover:bg-white hover:text-[#111111] hover:border-white"
         >
           <span>Get a Quote</span>
           <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />

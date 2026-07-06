@@ -293,7 +293,7 @@ const EliteStone = () => {
         {/* ── Diamond Grid (items-start ensures straight horizontal line) ── */}
         <div
           ref={cardsRef}
-          className="flex flex-wrap justify-center items-start gap-8 sm:gap-12 lg:gap-16 mb-20 sm:mb-24 pt-4"
+          className="flex overflow-x-auto sm:overflow-visible sm:flex-wrap justify-start sm:justify-center items-start gap-6 sm:gap-12 lg:gap-16 mb-20 sm:mb-24 pt-4 pb-2 -mx-6 px-6 sm:mx-0 sm:px-0 snap-x snap-mandatory"
         >
           {categories.map((cat, idx) => {
             const isActive = activeIndex === idx;
@@ -303,7 +303,7 @@ const EliteStone = () => {
                 onMouseEnter={(e) => handleCardMouseEnter(e, idx)}
                 onMouseMove={handleCardMouseMove}
                 onMouseLeave={handleCardMouseLeave}
-                className="diamond-wrapper flex flex-col items-center gap-5 sm:gap-6 cursor-pointer select-none group"
+                className="diamond-wrapper flex-shrink-0 snap-center flex flex-col items-center gap-5 sm:gap-6 cursor-pointer select-none group"
               >
                 {/* Index Number Tag */}
                 <span className={`font-sans text-[11px] font-bold tracking-widest transition-colors duration-300 ${
@@ -403,7 +403,7 @@ const EliteStone = () => {
             {/* Right Action Button */}
             <div className="lg:col-span-4 flex justify-start lg:justify-end">
               <a
-                href="#products"
+                href="/products"
                 className="group relative inline-flex items-center gap-3 bg-[#1A1A1A] text-white font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.14em] px-7 py-4 rounded-full border border-black transition-all duration-300 hover:bg-[#B8955D] hover:border-[#B8955D] hover:shadow-lg hover:shadow-[#B8955D]/25 active:scale-95"
               >
                 <span>Explore {currentCategory.name.replace("\n", " ")}</span>

@@ -236,13 +236,13 @@ const StoneProductsView = () => {
   }, []);
 
   return (
-    <div ref={rootRef} className="min-h-screen">
+    <div ref={rootRef} className="min-h-[100svh]">
 
       {/* ═══════════════════════════════════════════════════════
           FIXED HERO — Stays in place while content scrolls over it
           (Identical pattern to ProjectsPage)
       ═══════════════════════════════════════════════════════ */}
-      <div className="fixed inset-0 w-full h-screen flex flex-col justify-end overflow-hidden z-0">
+      <div className="fixed inset-0 w-full h-[100svh] flex flex-col justify-end overflow-hidden z-0">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img
@@ -255,7 +255,7 @@ const StoneProductsView = () => {
         </div>
 
         {/* Hero Content — each element vaporizes on scroll with staggered timing */}
-        <div ref={heroContentRef} className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-24 md:pb-32 pt-32">
+        <div ref={heroContentRef} className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pb-16 sm:pb-24 md:pb-32 pt-24 sm:pt-32">
 
           {/* Back button — dissolves first (0.0 → 0.4) */}
           <div style={getVaporizeStyle(scrollProgress, 0.0, 0.4)}>
@@ -292,7 +292,7 @@ const StoneProductsView = () => {
 
           {/* Main Title — dissolves third (0.1 → 0.65) */}
           <h1
-            className="text-4xl md:text-5xl lg:text-[4.5rem] text-white tracking-tight mb-8 leading-[1.08] max-w-4xl drop-shadow-lg"
+            className="text-2xl sm:text-4xl md:text-5xl lg:text-[4.5rem] text-white tracking-tight mb-6 sm:mb-8 leading-[1.08] max-w-4xl drop-shadow-lg"
             style={{ fontWeight: 500, ...getVaporizeStyle(scrollProgress, 0.1, 0.65) }}
           >
             Gwalior Stone —
@@ -302,7 +302,7 @@ const StoneProductsView = () => {
 
           {/* Meta Info Row — dissolves last (0.15 → 0.75) */}
           <div
-            className="flex flex-wrap items-center gap-6 text-sm text-white/80 font-mono border-t border-white/20 pt-6 max-w-3xl"
+            className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm text-white/80 font-mono border-t border-white/20 pt-4 sm:pt-6 max-w-3xl"
             style={getVaporizeStyle(scrollProgress, 0.15, 0.75)}
           >
             <div className="flex items-center gap-2">
@@ -325,7 +325,7 @@ const StoneProductsView = () => {
       </div>
 
       {/* Spacer — pushes scrollable content below the fixed hero */}
-      <div className="h-screen" aria-hidden="true" />
+      <div className="h-[100svh]" aria-hidden="true" />
 
       {/* ═══════════════════════════════════════════════════════
           SCROLLABLE CONTENT — Slides up over the fixed hero
@@ -337,7 +337,7 @@ const StoneProductsView = () => {
         {/* ═══════════════════════════════════════
             ABOUT SECTION — Big typography + clip-path image
         ═══════════════════════════════════════ */}
-        <section className="py-28 md:py-36">
+        <section className="py-16 sm:py-28 md:py-36">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
 
@@ -346,7 +346,7 @@ const StoneProductsView = () => {
                   <span className="w-10 h-[2px] bg-[#B4956C]"></span>
                   <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#B4956C]">About This Stone</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-serif text-[#111] leading-[1.12]">
+                <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif text-[#111] leading-[1.12]">
                   {hero.title.split('-')[0].trim()} —{' '}
                   <span className="italic text-[#B4956C]">{hero.title.split('-')[1]?.trim()}</span>
                 </h2>
@@ -457,10 +457,10 @@ const StoneProductsView = () => {
         <section className="py-24 md:py-32 bg-white border-t border-b border-[#DFDDD8]">
           <div className="max-w-[90rem] mx-auto px-6 md:px-12">
             <div ref={gridHeadRef} className="text-center mb-16 md:mb-24">
-              <h2 className="text-6xl md:text-8xl font-serif text-[#222] mb-2 tracking-tight">
+              <h2 className="text-4xl sm:text-6xl md:text-8xl font-serif text-[#222] mb-2 tracking-tight">
                 Stone
               </h2>
-              <h2 className="text-5xl md:text-7xl font-serif italic text-[#222] ml-12 md:ml-32">
+              <h2 className="text-3xl sm:text-5xl md:text-7xl font-serif italic text-[#222] ml-4 sm:ml-12 md:ml-32">
                 Collection
               </h2>
             </div>
@@ -472,14 +472,14 @@ const StoneProductsView = () => {
                   key={idx}
                   ref={addCardRef}
                   to={`/products/${item.title.toLowerCase().replace(/\s+/g, '-')}`}
-                  className={`flex flex-col items-center text-center group py-12 px-5 md:px-8 no-underline border-b border-black/[0.08] border-r border-r-black/[0.08] ${
+                  className={`flex flex-col items-center text-center group py-6 sm:py-12 px-3 sm:px-5 md:px-8 no-underline border-b border-black/[0.08] border-r border-r-black/[0.08] ${
                     (idx + 1) % 4 === 0 ? 'lg:border-r-0' : ''
                   } ${
                     (idx + 1) % 2 === 0 ? 'max-lg:border-r-0' : ''
                   } hover:bg-[#F4F3EF] transition-colors duration-700`}
                 >
                   {/* 3D hover effect on image */}
-                  <div className="relative w-[85%] md:w-[75%] aspect-[3/4] mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3)]">
+                  <div className="relative w-full sm:w-[85%] md:w-[75%] aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3)]">
                     <img
                       src={item.img}
                       alt={item.title}
@@ -497,11 +497,11 @@ const StoneProductsView = () => {
                   </div>
 
                   {/* Refined Typography */}
-                  <h4 className="text-[12px] md:text-[14px] font-serif text-[#111] uppercase tracking-[0.2em] mb-2 group-hover:text-[#B4956C] transition-colors duration-500">
+                  <h4 className="text-[10px] sm:text-[12px] md:text-[14px] font-serif text-[#111] uppercase tracking-[0.1em] sm:tracking-[0.2em] mb-1 sm:mb-2 group-hover:text-[#B4956C] transition-colors duration-500">
                     {item.title}
                   </h4>
                   {/* Subtitle / SKU style */}
-                  <div className="flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="hidden sm:flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
                     <div className="w-4 h-[1px] bg-[#B4956C]/50"></div>
                     <p className="text-[8px] md:text-[9px] text-[#555] uppercase tracking-[0.3em] font-medium">
                       {item.desc}
@@ -520,7 +520,7 @@ const StoneProductsView = () => {
         <section className="py-28 md:py-36">
           <div className="max-w-5xl mx-auto px-6 text-center">
             <VeinDivider className="mx-auto mb-8" />
-            <h3 className="text-5xl md:text-6xl font-serif text-[#111] mb-6 leading-tight">
+            <h3 className="text-3xl sm:text-5xl md:text-6xl font-serif text-[#111] mb-6 leading-tight">
               Ready to transform <span className="italic text-[#B4956C]">your space?</span>
             </h3>
             <p className="text-lg text-[#888] font-light max-w-xl mx-auto mb-12 leading-relaxed">

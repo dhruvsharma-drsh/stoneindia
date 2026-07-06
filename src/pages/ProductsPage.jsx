@@ -20,29 +20,26 @@ const ProductsPage = () => {
           overflow: "hidden",
         }}
       >
-        {/* Background image that gets revealed */}
+        {/* BASE LAYER: Clear sharp image — always visible behind the canvas */}
         <img
           src="/img/project_udaipur_palace.png"
-          alt="Stone craftsmanship"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            filter: "brightness(0.4)"
-          }}
+          alt="Stone craftsmanship clear"
+          className="absolute inset-0 w-full h-full object-cover brightness-[0.4]"
         />
 
-        {/* InkReveal mask overlay */}
+        {/* TOP LAYER: InkReveal Canvas. 
+            It draws a heavily faded image onto a solid background.
+            When you move the mouse, it carves transparent holes, revealing the bright, clear image beneath! */}
         <InkReveal
+          imageSrc="/img/project_udaipur_palace.png"
+          imageFilter="opacity(25%) grayscale(80%)"
           maskColor={[250, 250, 248]}
           brushSize={300}
-          lifetime={800}
+          lifetime={1200}
           rStart={12}
           rVary={0.5}
           stampStep={8}
-          maxStamps={300}
+          maxStamps={400}
         />
 
         {/* All page content sits on top */}

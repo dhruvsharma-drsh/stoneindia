@@ -127,7 +127,7 @@ const ProjectsPage = () => {
       {/* ---------------------------------------------------------------
           FIXED HERO — Stays in place while content scrolls over it
       ---------------------------------------------------------------- */}
-      <div className="fixed inset-0 w-full h-screen flex flex-col justify-end overflow-hidden z-0">
+      <div className="fixed inset-0 w-full h-[100svh] flex flex-col justify-end overflow-hidden z-0">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img
@@ -140,7 +140,7 @@ const ProjectsPage = () => {
         </div>
 
         {/* Hero Content — each element vaporizes on scroll with staggered timing */}
-        <div ref={heroContentRef} className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-24 md:pb-32 pt-32">
+        <div ref={heroContentRef} className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pb-16 sm:pb-24 md:pb-32 pt-24 sm:pt-32">
           
           {/* Back button — dissolves first (0.0 → 0.4) */}
           <div style={getVaporizeStyle(scrollProgress, 0.0, 0.4)}>
@@ -177,7 +177,7 @@ const ProjectsPage = () => {
 
           {/* Main Title — dissolves third (0.1 → 0.65) */}
           <h1
-            className="text-4xl md:text-5xl lg:text-[4.5rem] text-white tracking-tight mb-8 leading-[1.08] max-w-4xl drop-shadow-lg"
+            className="text-3xl sm:text-5xl md:text-[4.5rem] text-white tracking-tight leading-[1.08] max-w-4xl drop-shadow-lg"
             style={{ fontWeight: 500, ...getVaporizeStyle(scrollProgress, 0.1, 0.65) }}
           >
             Our Award-Winning
@@ -187,19 +187,14 @@ const ProjectsPage = () => {
 
           {/* Meta Info Row — dissolves last (0.15 → 0.75) */}
           <div
-            className="flex flex-wrap items-center gap-6 text-sm text-white/80 font-mono border-t border-white/20 pt-6 max-w-3xl"
+            className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm text-white/80 font-mono border-t border-white/20 pt-4 sm:pt-6 max-w-3xl"
             style={getVaporizeStyle(scrollProgress, 0.15, 0.75)}
           >
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-[#DFBA73]/20 flex items-center justify-center border border-[#DFBA73]/30">
-                <User size={14} className="text-[#DFBA73]" />
+                <Globe size={14} className="text-[#DFBA73]" />
               </div>
-              <span className="font-medium">Stone India Team</span>
-            </div>
-            <div className="w-1 h-1 rounded-full bg-white/30 hidden md:block" />
-            <div className="flex items-center gap-2">
-              <Globe size={14} className="text-[#DFBA73]" />
-              25+ Countries
+              <span className="font-medium">25+ Countries</span>
             </div>
             <div className="w-1 h-1 rounded-full bg-white/30 hidden md:block" />
             <div className="flex items-center gap-2">
@@ -230,7 +225,7 @@ const ProjectsPage = () => {
       </div>
 
       {/* Spacer — pushes scrollable content below the fixed hero */}
-      <div className="h-screen" aria-hidden="true" />
+      <div className="h-[100svh]" aria-hidden="true" />
 
       {/* ---------------------------------------------------------------
           SCROLLABLE CONTENT — Slides up over the fixed hero
@@ -240,8 +235,15 @@ const ProjectsPage = () => {
         <FractureEdge fill="#FFFFFF" />
 
 
-
         {/* ── Detailed Project Sections (Accordion) ── */}
+        <div className="text-center pt-20 pb-10 sm:pt-28 sm:pb-16 px-6">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-serif text-[#111] mb-4">
+            Featured Global Projects
+          </h2>
+          <p className="text-sm sm:text-base md:text-lg text-[#666] max-w-2xl mx-auto font-light mb-8 sm:mb-12">
+            Explore our portfolio of premium natural stone installations across residential, commercial, and hospitality sectors.
+          </p>
+        </div>
         <div className="flex flex-col border-t border-gray-200 min-h-[100vh]">
           {projects.map((project, index) => {
             const isExpanded = expandedProjectIds.includes(project.id);

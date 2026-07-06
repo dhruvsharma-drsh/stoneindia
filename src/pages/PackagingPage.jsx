@@ -87,7 +87,7 @@ const PackagingPage = () => {
       {/* ══════════════════════════════════════
           FIXED HERO — Stays in place while content scrolls over it
       ══════════════════════════════════════ */}
-      <div className="fixed inset-0 w-full h-screen flex flex-col justify-end overflow-hidden z-0">
+      <div className="fixed inset-0 w-full h-[100svh] flex flex-col justify-end overflow-hidden z-0">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img
@@ -100,7 +100,7 @@ const PackagingPage = () => {
         </div>
 
         {/* Hero Content — each element vaporizes on scroll with staggered timing */}
-        <div className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-24 md:pb-32 pt-32">
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pb-16 sm:pb-24 md:pb-32 pt-24 sm:pt-32">
           
           {/* Back button — dissolves first (0.0 → 0.4) */}
           <div style={getVaporizeStyle(scrollProgress, 0.0, 0.4)}>
@@ -130,7 +130,7 @@ const PackagingPage = () => {
 
           {/* Main Headline — dissolves late (0.3 → 0.8) */}
           <h1 
-            className="text-[2.8rem] sm:text-6xl lg:text-7xl font-bold text-white leading-[1.08] tracking-tight mb-8 drop-shadow-lg max-w-4xl"
+            className="text-[2.2rem] sm:text-5xl lg:text-7xl font-bold text-white leading-[1.08] tracking-tight mb-6 sm:mb-8 drop-shadow-lg max-w-4xl"
             style={getVaporizeStyle(scrollProgress, 0.3, 0.8)}
           >
             Premium
@@ -165,7 +165,7 @@ const PackagingPage = () => {
         <FractureEdge fill="#ffffff" />
         
         {/* Main Content Grid */}
-        <div className="max-w-6xl mx-auto px-6 py-20 relative z-10">
+        <section className="pt-20 sm:pt-32 pb-16 sm:pb-20 max-w-5xl mx-auto px-6 text-center">
         
         {/* Secure and Durable Section */}
         <div className="mb-20">
@@ -252,19 +252,18 @@ const PackagingPage = () => {
             <div className="w-16 h-16 mx-auto rounded-full bg-[#B8955D]/10 flex items-center justify-center mb-6 border border-[#B8955D]/30 group-hover:scale-110 transition-transform duration-500">
                <CheckCircle2 size={32} className="text-[#B8955D]" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight tracking-tight">Commitment to Excellence</h2>
-            <p className="text-base md:text-lg text-white/70 leading-relaxed font-light">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-white leading-[1.12]">Commitment to Excellence</h2>
+            <p className="text-sm sm:text-base md:text-xl text-white/80 font-light max-w-2xl mx-auto mt-6 leading-relaxed">
               At Stone India, we go the extra mile to ensure safe, secure, and premium-quality packaging, reinforcing our commitment to excellence in every shipment.
             </p>
           </div>
         </div>
-
+        </section>
       </div>
 
       <Footer />
       
       {/* End of scrolling content overlay */}
-      </div>
     </div>
   );
 };

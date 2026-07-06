@@ -1,8 +1,10 @@
 "use client";
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 
 export default function InkReveal({
   maskColor = [252, 250, 248],
+  imageSrc,
+  imageFilter = "none",
   brushSize = 128,
   lifetime = 600,
   rStart = 10,
@@ -14,7 +16,6 @@ export default function InkReveal({
   gradientInnerRadius = 0.2,
   gradientStops = [0.95, 0.88, 0],
   className,
-  
   style,
 }) {
   const canvasRef = useRef(null);
@@ -22,8 +23,37 @@ export default function InkReveal({
   const runningRef = useRef(false);
   const lastPosRef = useRef(null);
   const dimsRef = useRef({ w: 0, h: 0 });
+  
+  const imgRef = useRef(null);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   const mc = maskColor;
+
+  useEffect(() => {
+    if (imageSrc) {
+      const img = new Image();
+      img.src = imageSrc;
+      img.onload = () => {
+        imgRef.current = img;
+        setImgLoaded(true);
+      };
+    }
+  }, [imageSrc]);
+
+  const drawBackground = useCallback((ctx, w, h) => {
+    ctx.globalCompositeOperation = "source-over";
+    
+    // Always fill with solid mask color first (so we have an opaque base and clear previous frames)
+    ctx.fillStyle = `rgb(${mc[0]},${mc[1]},${mc[2]})`;
+    ctx.fillRect(0, 0, w, h);
+
+    // Then draw the image on top (allowing opacity/filters to blend with the mask color)
+    if (imgRef.current) {
+      if (imageFilter !== "none") ctx.filter = imageFilter;
+      ctx.drawImage(imgRef.current, 0, 0, w, h);
+      ctx.filter = "none";
+    }
+  }, [mc, imageFilter]);
 
   const resize = useCallback(() => {
     const canvas = canvasRef.current;
@@ -43,10 +73,8 @@ export default function InkReveal({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.globalCompositeOperation = "source-over";
-    ctx.fillStyle = `rgb(${mc[0]},${mc[1]},${mc[2]})`;
-    ctx.fillRect(0, 0, w, h);
-  }, [mc]);
+    drawBackground(ctx, w, h);
+  }, [drawBackground]);
 
   const carveInk = useCallback(
     (ctx, x, y, r, seed, alpha) => {
@@ -120,9 +148,8 @@ export default function InkReveal({
     const now = performance.now();
     const stamps = stampsRef.current;
 
-    ctx.globalCompositeOperation = "source-over";
-    ctx.fillStyle = `rgb(${mc[0]},${mc[1]},${mc[2]})`;
-    ctx.fillRect(0, 0, w, h);
+    drawBackground(ctx, w, h);
+    
     ctx.globalCompositeOperation = "destination-out";
 
     for (let i = stamps.length - 1; i >= 0; i--) {
@@ -142,7 +169,7 @@ export default function InkReveal({
     } else {
       runningRef.current = false;
     }
-  }, [carveInk, mc, lifetime, rStart]);
+  }, [drawBackground, carveInk, lifetime, rStart]);
 
   const startLoop = useCallback(() => {
     if (!runningRef.current) {
@@ -155,7 +182,7 @@ export default function InkReveal({
     resize();
     window.addEventListener("resize", resize);
     return () => window.removeEventListener("resize", resize);
-  }, [resize]);
+  }, [resize, imgLoaded]);
 
   const getRelativePos = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();

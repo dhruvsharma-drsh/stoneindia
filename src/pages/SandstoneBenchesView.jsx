@@ -139,10 +139,10 @@ const SandstoneBenchesView = () => {
   };
 
   return (
-    <div ref={pageRef} className="bg-[#FAFAF8] min-h-screen font-sans text-[#111]">
+    <div ref={pageRef} className="bg-[#FAFAF8] min-h-[100svh] font-sans text-[#111]">
 
       {/* 1. HERO */}
-      <section className="relative h-screen w-full overflow-hidden bg-[#111]">
+      <section className="relative h-[100svh] min-h-[500px] sm:min-h-[600px] w-full overflow-hidden bg-[#111]">
         <div className="absolute inset-0" style={{ transform: `translateY(${scrollY * 0.15}px)` }}>
           <div
             className="grid gap-[2px] bg-black w-full h-full"
@@ -168,25 +168,25 @@ const SandstoneBenchesView = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-[#111]/70 via-transparent to-transparent" />
         </div>
 
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto">
+        <div className="relative z-10 h-full flex flex-col items-center justify-end sm:justify-center text-center px-4 sm:px-6 pb-20 sm:pb-0 max-w-5xl mx-auto">
           <div ref={heroBadgeRef} className="opacity-0 inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md mb-8">
             <span className="w-2 h-2 rounded-full bg-[#DFBA73] animate-pulse" />
             <span className="text-xs tracking-[0.2em] text-[#DFBA73] font-bold uppercase">Exquisite Stone Art</span>
           </div>
 
-          <h1 ref={heroTitleRef} className="opacity-0 text-5xl md:text-7xl lg:text-8xl font-serif text-white tracking-tight mb-6 drop-shadow-2xl">
+          <h1 ref={heroTitleRef} className="opacity-0 text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-serif text-white tracking-tight mb-4 sm:mb-6 drop-shadow-2xl">
             Sandstone Benches
           </h1>
 
-          <p ref={heroSubRef} className="opacity-0 text-lg md:text-2xl text-white/80 font-light max-w-2xl mx-auto leading-relaxed mb-10">
+          <p ref={heroSubRef} className="opacity-0 text-sm sm:text-lg md:text-2xl text-white/80 font-light max-w-2xl mx-auto leading-relaxed mb-6 sm:mb-10">
             Elegantly crafted sandstone benches offering a royal look, durable structure, and resistance to adverse climatic conditions.
           </p>
 
-          <div ref={heroCtaRef} className="opacity-0 flex flex-col sm:flex-row items-center justify-center gap-6">
-            <a href="#contact" className="px-8 py-4 rounded-full bg-gradient-to-r from-[#B8955D] to-[#DFBA73] text-black font-bold text-sm tracking-wider uppercase hover:scale-105 hover:shadow-[0_0_40px_rgba(184,149,93,0.5)] transition-all duration-300 flex items-center gap-2">
+          <div ref={heroCtaRef} className="opacity-0 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 w-full sm:w-auto">
+            <a href="#contact" className="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-gradient-to-r from-[#B8955D] to-[#DFBA73] text-black font-bold text-xs sm:text-sm tracking-wider uppercase hover:scale-105 hover:shadow-[0_0_40px_rgba(184,149,93,0.5)] transition-all duration-300 flex items-center gap-2">
               <PhoneCall size={18} /> Request Wholesale Quote
             </a>
-            <a href="#patterns" className="px-8 py-4 rounded-full border border-white/30 text-white font-medium text-sm hover:bg-white hover:text-black transition-colors backdrop-blur-sm flex items-center gap-2">
+            <a href="#patterns" className="px-6 sm:px-8 py-3 sm:py-4 rounded-full border border-white/30 text-white font-medium text-xs sm:text-sm hover:bg-white hover:text-black transition-colors backdrop-blur-sm flex items-center gap-2">
               Explore More <ArrowRight size={16} />
             </a>
           </div>
@@ -451,11 +451,11 @@ const SandstoneBenchesView = () => {
       {/* 7. EXPLORE MORE */}
       <section className="reveal-block py-24 sm:py-32 bg-white border-t border-b border-[#DFDDD8]">
         <div className="max-w-[90rem] mx-auto px-6 md:px-12">
-          <div className="text-center mb-16 md:mb-24">
-            <h2 className="text-5xl md:text-7xl font-serif text-[#222] mb-2 tracking-tight">
+          <div className="text-center mb-12 sm:mb-16 md:mb-24">
+            <h2 className="text-3xl sm:text-5xl md:text-7xl font-serif text-[#222] mb-2 tracking-tight">
               Explore More
             </h2>
-            <h2 className="text-4xl md:text-6xl font-serif italic text-[#B4956C] ml-12 md:ml-32">
+            <h2 className="text-2xl sm:text-4xl md:text-6xl font-serif italic text-[#B4956C] ml-4 sm:ml-12 md:ml-32">
               Stone Articrafts
             </h2>
           </div>
@@ -467,13 +467,13 @@ const SandstoneBenchesView = () => {
               <Link
                 key={idx}
                 to={`/products/stone-articrafts/${item.title.toLowerCase().replace(/\s+/g, '-')}`}
-                className={`flex flex-col items-center text-center group py-12 px-5 md:px-8 no-underline border-b border-black/[0.08] border-r border-r-black/[0.08] ${
+                className={`flex flex-col items-center text-center group py-6 sm:py-12 px-3 sm:px-5 md:px-8 no-underline border-b border-black/[0.08] border-r border-r-black/[0.08] ${
                   (idx + 1) % 4 === 0 ? 'lg:border-r-0' : ''
                 } ${
                   (idx + 1) % 2 === 0 ? 'max-lg:border-r-0' : ''
                 } hover:bg-[#F4F3EF] transition-colors duration-700`}
               >
-                <div className="relative w-[85%] md:w-[75%] aspect-[3/4] mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3)]">
+                <div className="relative w-full sm:w-[85%] md:w-[75%] aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3)]">
                   <img
                     src={item.img}
                     alt={item.title}
@@ -487,10 +487,10 @@ const SandstoneBenchesView = () => {
                     </div>
                   </div>
                 </div>
-                <h4 className="text-[12px] md:text-[14px] font-serif text-[#111] uppercase tracking-[0.2em] mb-2 group-hover:text-[#B4956C] transition-colors duration-500">
+                <h4 className="text-[10px] sm:text-[12px] md:text-[14px] font-serif text-[#111] uppercase tracking-[0.1em] sm:tracking-[0.2em] mb-1 sm:mb-2 group-hover:text-[#B4956C] transition-colors duration-500">
                   {item.title}
                 </h4>
-                <div className="flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="hidden sm:flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
                   <div className="w-4 h-[1px] bg-[#B4956C]/50" />
                   <p className="text-[8px] md:text-[9px] text-[#555] uppercase tracking-[0.3em] font-medium">
                     {item.desc}
@@ -519,7 +519,7 @@ const SandstoneBenchesView = () => {
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center flex flex-col items-center">
           <Gem size={44} className="text-[#B8955D] mb-8" />
           <h3 className="text-sm font-mono text-[#DFBA73] uppercase tracking-[0.3em] mb-4">Stone India</h3>
-          <h2 className="text-4xl md:text-6xl font-serif text-white mb-8">
+          <h2 className="text-2xl sm:text-4xl md:text-6xl font-serif text-white mb-6 sm:mb-8">
             Elevate Your <span className="italic font-light">Architecture</span>
           </h2>
           <p className="text-lg md:text-xl text-white/70 font-light max-w-2xl mx-auto mb-10 leading-relaxed">

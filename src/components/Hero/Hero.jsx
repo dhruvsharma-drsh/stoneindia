@@ -23,14 +23,14 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative w-full h-screen min-h-[700px] overflow-hidden bg-[#111111] select-none"
+      className="relative w-full h-[100svh] min-h-[560px] sm:min-h-[640px] md:min-h-[700px] overflow-hidden bg-[#111111] select-none"
     >
       {/* ── Full-screen Background Slideshow ── */}
       <HeroImage activeIndex={activeSlide} />
 
       {/* ── Cinematic Gradient Overlays ── */}
       <div className="absolute inset-0 z-10 pointer-events-none">
-        <div className="absolute inset-y-0 left-0 w-[70%] hero-vignette-left" />
+        <div className="absolute inset-y-0 left-0 w-full sm:w-[70%] hero-vignette-left" />
         <div className="absolute inset-x-0 top-0 h-44 hero-vignette-top" />
         <div className="absolute inset-x-0 bottom-0 h-40 hero-vignette-bottom" />
       </div>
@@ -47,8 +47,8 @@ const Hero = () => {
 
 
       {/* ── Hero Content (left overlay) ── */}
-      <div className="absolute inset-0 z-20 flex items-center pointer-events-none">
-        <div className="w-full lg:w-[55%] xl:w-[50%] pt-20 sm:pt-24 pb-12 pointer-events-auto">
+      <div className="absolute inset-0 z-20 flex items-end sm:items-center pointer-events-none">
+        <div className="w-full lg:w-[55%] xl:w-[50%] pt-16 sm:pt-24 pb-28 sm:pb-12 pointer-events-auto">
           <HeroContent />
         </div>
       </div>

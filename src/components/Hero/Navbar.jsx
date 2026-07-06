@@ -6,14 +6,13 @@ import Button from "../Button";
 import "./hero.css";
 
 const navLinks = [
-  { name: "Home", href: "#" },
-  { name: "About", href: "#about" },
-  { name: "Products", href: "#products" },
-  { name: "Applications", href: "#applications" },
-  { name: "Gallery", href: "#gallery" },
-  { name: "Export", href: "#export" },
-  { name: "Sustainability", href: "#sustainability" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Products", href: "/products" },
+  { name: "Projects", href: "/projects" },
+  { name: "Blog", href: "/blog" },
+  { name: "Packaging", href: "/packaging" },
+  { name: "Contact", href: "/contact" },
 ];
 
 const Navbar = () => {
@@ -65,7 +64,7 @@ const Navbar = () => {
       >
         {/* Logo Section */}
         <a
-          href="#"
+          href="/"
           className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-[#B8955D] rounded-lg p-1"
           aria-label="Gwalior Stone Homepage"
         >
@@ -123,7 +122,7 @@ const Navbar = () => {
         <div className="hidden sm:flex items-center gap-3">
           <Button
             title="Get a Quote"
-            onClick={() => (window.location.href = "#contact")}
+            onClick={() => (window.location.href = "/contact")}
           />
         </div>
 
@@ -173,7 +172,7 @@ const Navbar = () => {
               ))}
               <div className="mt-4 pt-4 border-t border-black/5 flex flex-col sm:hidden">
                 <a
-                  href="#contact"
+                  href="/contact"
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-full flex items-center justify-center gap-2 bg-[#B8955D] text-white text-xs font-sans font-semibold uppercase tracking-wider py-3.5 rounded-full gold-glow-shadow"
                 >

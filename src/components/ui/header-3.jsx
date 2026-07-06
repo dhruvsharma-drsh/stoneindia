@@ -88,7 +88,9 @@ export function Header() {
                       <ul className="grid grid-cols-2 gap-x-6 gap-y-3">
                         {megaMenuData.stoneProducts.map(item => (
                           <li key={item}>
-                            <Link to={`/products/stone-products/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all">{item}</Link>
+                            <NavigationMenuLink asChild>
+                              <Link to={`/products/stone-products/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all block py-1">{item}</Link>
+                            </NavigationMenuLink>
                           </li>
                         ))}
                       </ul>
@@ -99,7 +101,9 @@ export function Header() {
                       <ul className="grid grid-cols-2 gap-x-6 gap-y-3">
                         {megaMenuData.sandstone.map(item => (
                           <li key={item}>
-                            <Link to={`/products/sandstone/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all">{item}</Link>
+                            <NavigationMenuLink asChild>
+                              <Link to={`/products/sandstone/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all block py-1">{item}</Link>
+                            </NavigationMenuLink>
                           </li>
                         ))}
                       </ul>
@@ -110,7 +114,9 @@ export function Header() {
                       <ul className="flex flex-col gap-3">
                         {megaMenuData.stoneArticrafts.map(item => (
                           <li key={item}>
-                            <Link to={`/products/stone-articrafts/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all">{item}</Link>
+                            <NavigationMenuLink asChild>
+                              <Link to={`/products/stone-articrafts/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all block py-1">{item}</Link>
+                            </NavigationMenuLink>
                           </li>
                         ))}
                       </ul>
@@ -154,7 +160,7 @@ export function Header() {
         {/* CTA Button */}
         <div className="hidden items-center gap-4 lg:flex">
           <a
-            href="/#contact"
+            href="/contact"
             className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#B8955D] to-[#DFBA73] text-black font-semibold text-xs tracking-wider uppercase hover:shadow-[0_0_20px_rgba(184,149,93,0.5)] transition-all hover:scale-105 active:scale-95"
           >
             Get Quote
@@ -212,12 +218,12 @@ export function Header() {
           <Link to="/projects" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Our Projects</Link>
           <Link to="/packaging" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Packaging</Link>
           <Link to="/blog" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Blog</Link>
-          <a href="/#contact" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Contact Us</a>
+          <Link to="/contact" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Contact Us</Link>
         </div>
 
         <div className="flex flex-col gap-3 mt-auto pt-6 border-t border-white/10">
           <a
-            href="/#contact"
+            href="/contact"
             onClick={() => setOpen(false)}
             className="w-full text-center py-3 rounded-full bg-gradient-to-r from-[#B8955D] to-[#DFBA73] text-black font-semibold text-sm tracking-wider uppercase"
           >

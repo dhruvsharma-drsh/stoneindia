@@ -210,7 +210,7 @@ const AboutPage = () => {
       {/* ══════════════════════════════════════
           FIXED HERO — Stays in place while content scrolls over it
       ══════════════════════════════════════ */}
-      <div className="fixed inset-0 w-full h-screen flex flex-col justify-end overflow-hidden z-0">
+      <div className="fixed inset-0 w-full h-[100svh] flex flex-col justify-end overflow-hidden z-0">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img
@@ -223,7 +223,7 @@ const AboutPage = () => {
         </div>
 
         {/* Hero Content — each element vaporizes on scroll with staggered timing */}
-        <div className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-24 md:pb-32 pt-32">
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pb-16 sm:pb-24 md:pb-32 pt-24 sm:pt-32">
           
           {/* Back button — dissolves first (0.0 → 0.4) */}
           <div style={getVaporizeStyle(scrollProgress, 0.0, 0.4)}>
@@ -253,7 +253,7 @@ const AboutPage = () => {
 
           {/* Main Headline — dissolves late (0.3 → 0.8) */}
           <h1 
-            className="text-[2.8rem] sm:text-6xl lg:text-7xl font-bold text-white leading-[1.08] tracking-tight mb-8 drop-shadow-lg max-w-4xl"
+            className="text-[2.2rem] sm:text-5xl lg:text-[5.5rem] font-bold text-white leading-[1.08] tracking-tight mb-6 sm:mb-8 drop-shadow-lg max-w-4xl"
             style={getVaporizeStyle(scrollProgress, 0.3, 0.8)}
           >
             India's Premier
@@ -497,7 +497,7 @@ const AboutPage = () => {
           {/* Header */}
           <div className="reveal-block text-center mb-16">
             <p className="text-[11px] tracking-[0.25em] font-semibold text-[#B8955D] uppercase mb-4">Sources of Stones</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A] leading-[1.2]">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-[#111] leading-[1.12]">
               Directly from India's{" "}
               <span className="text-[#B8955D]">Finest Quarries</span>
             </h2>
@@ -903,8 +903,7 @@ const AboutPage = () => {
       {/* ═══════════════════════════════════════════════════════
           CTA BANNER
       ═══════════════════════════════════════════════════════ */}
-      <section className="py-24 px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="pt-20 sm:pt-32 pb-16 sm:pb-20 max-w-5xl mx-auto px-6 text-center">
           <div className="reveal-block bg-gradient-to-br from-[#B8955D]/8 via-[#FAFAF8] to-white border border-[#B8955D]/20 rounded-3xl px-10 py-16 shadow-sm">
             <p className="text-[11px] tracking-[0.25em] font-semibold text-[#B8955D] uppercase mb-4">Ready to Order?</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A] mb-5 leading-[1.2]">
@@ -933,7 +932,6 @@ const AboutPage = () => {
               </Link>
             </div>
           </div>
-        </div>
       </section>
 
       <Footer />

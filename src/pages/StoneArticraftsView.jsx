@@ -236,13 +236,13 @@ const StoneArticraftsView = () => {
   }, []);
 
   return (
-    <div ref={rootRef} className="min-h-screen">
+    <div ref={rootRef} className="min-h-[100svh]">
 
       {/* ═══════════════════════════════════════════════════════
           FIXED HERO — Stays in place while content scrolls over it
           (Identical pattern to ProjectsPage)
       ═══════════════════════════════════════════════════════ */}
-      <div className="fixed inset-0 w-full h-screen flex flex-col justify-end overflow-hidden z-0">
+      <div className="fixed inset-0 w-full h-[100svh] flex flex-col justify-end overflow-hidden z-0">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img
@@ -325,7 +325,7 @@ const StoneArticraftsView = () => {
       </div>
 
       {/* Spacer — pushes scrollable content below the fixed hero */}
-      <div className="h-screen" aria-hidden="true" />
+      <div className="h-[100svh]" aria-hidden="true" />
 
       {/* ═══════════════════════════════════════════════════════
           SCROLLABLE CONTENT — Slides up over the fixed hero

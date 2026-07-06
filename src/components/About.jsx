@@ -269,7 +269,7 @@ const About = () => {
             {/* CTA Button */}
             <div className="pt-2">
               <a
-                href="#products"
+                href="/about"
                 className="group relative inline-flex items-center gap-4 bg-[#141414] text-white font-sans text-xs sm:text-[13px] font-semibold uppercase tracking-[0.16em] pl-7 pr-3 py-3 rounded-full border border-[#B8955D]/35 overflow-hidden shadow-md transition-all duration-500 hover:border-[#B8955D] hover:shadow-[0_12px_30px_rgba(184,149,93,0.28)] hover:-translate-y-1 active:scale-95"
               >
                 {/* Expanding Luxury Gold Sheen Background on Hover */}
@@ -308,7 +308,7 @@ const About = () => {
 
               <img
                 ref={stoneImgRef}
-                src="img/stone_logo_rock.png"
+                src="img/about_gwalior_stone.png"
                 alt="Natural stone with Stone India logo carved"
                 className="w-full h-auto object-contain drop-shadow-2xl relative z-10"
               />
