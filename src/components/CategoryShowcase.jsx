@@ -51,7 +51,7 @@ const CategoryShowcase = () => {
   const [flippedCardIndex, setFlippedCardIndex] = useState(null);
 
   return (
-    <section id="categories-showcase" className="relative w-full bg-[#FAF9F5] text-[#111111] py-24 sm:py-36 overflow-hidden border-t border-black/5">
+    <section id="categories-showcase" className="relative w-full bg-[#FAF9F5] text-[#111111] pt-24 pb-12 sm:pt-36 sm:pb-16 overflow-hidden border-t border-black/5">
       {/* Subtle ambient lighting */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[75vw] h-[45vw] bg-[#B8955D]/[0.06] rounded-full blur-[160px] pointer-events-none" />
 
@@ -106,6 +106,7 @@ const CategoryShowcase = () => {
                           <img
                             src={cat.img}
                             alt={cat.name}
+                            loading="lazy"
                             className="w-full h-full object-cover object-center brightness-[0.9] transition-transform duration-700 group-hover:scale-105"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/40 to-transparent opacity-90" />
@@ -156,17 +157,17 @@ const CategoryShowcase = () => {
                         </div>
 
                         {/* Middle Spec Details */}
-                        <div className="my-auto py-4 relative z-10">
-                          <h4 className="font-editorial text-3xl sm:text-4xl text-[#DFBA73] font-light mb-4 leading-tight">
+                        <div className="my-auto py-2 relative z-10">
+                          <h4 className="font-editorial text-3xl sm:text-4xl text-[#DFBA73] font-light mb-3 leading-tight">
                             {cat.name}
                           </h4>
-                          <p className="font-sans text-xs sm:text-sm text-white/70 font-light mb-8 leading-relaxed">
+                          <p className="font-sans text-xs sm:text-sm text-white/70 font-light mb-4 leading-relaxed line-clamp-2">
                             {cat.description}
                           </p>
 
-                          <div className="space-y-4 text-sm sm:text-base font-sans">
+                          <div className="space-y-3 text-sm sm:text-base font-sans">
                             {/* ORIGIN */}
-                            <div className="flex items-center justify-between py-3 border-b border-white/10">
+                            <div className="flex items-center justify-between py-2.5 border-b border-white/10">
                               <span className="text-white/60 font-mono text-xs uppercase tracking-widest flex items-center gap-2.5 font-medium whitespace-nowrap">
                                 <MapPin className="w-4 h-4 text-[#DFBA73]" /> ORIGIN
                               </span>
@@ -176,7 +177,7 @@ const CategoryShowcase = () => {
                             </div>
 
                             {/* FINISH */}
-                            <div className="flex items-center justify-between py-3 border-b border-white/10">
+                            <div className="flex items-center justify-between py-2.5 border-b border-white/10">
                               <span className="text-white/60 font-mono text-xs uppercase tracking-widest flex items-center gap-2.5 font-medium whitespace-nowrap">
                                 <Award className="w-4 h-4 text-[#DFBA73]" /> FINISH
                               </span>
@@ -186,7 +187,7 @@ const CategoryShowcase = () => {
                             </div>
 
                             {/* QUALITY */}
-                            <div className="flex items-center justify-between py-3 border-b border-white/10">
+                            <div className="flex items-center justify-between py-2.5 border-b border-white/10">
                               <span className="text-white/60 font-mono text-xs uppercase tracking-widest flex items-center gap-2.5 font-medium whitespace-nowrap">
                                 <ShieldCheck className="w-4 h-4 text-[#DFBA73]" /> QUALITY
                               </span>
@@ -198,8 +199,8 @@ const CategoryShowcase = () => {
                         </div>
 
                         {/* Bottom Full Catalog Button */}
-                        <div className="pt-6 relative z-10">
-                          <div className="group/btn relative w-full rounded-full border border-[#B8955D] bg-transparent py-4 px-6 flex items-center justify-between text-xs font-sans font-bold uppercase tracking-[0.15em] text-[#B8955D] transition-all duration-500 overflow-hidden hover:border-white hover:text-[#111111] hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(255,255,255,0.4)]">
+                        <div className="pt-2 relative z-10 mt-auto">
+                          <div className="group/btn relative w-full rounded-full border border-[#B8955D] bg-transparent py-3 px-6 flex items-center justify-between text-xs font-sans font-bold uppercase tracking-[0.15em] text-[#B8955D] transition-all duration-500 overflow-hidden hover:border-white hover:text-[#111111] hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(255,255,255,0.4)]">
                             {/* The sweeping gradient fill background */}
                             <div className="absolute inset-0 bg-gradient-to-r from-white to-white translate-x-[-100%] group-hover/btn:translate-x-0 transition-transform duration-500 ease-out z-0" />
                             

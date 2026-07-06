@@ -1,7 +1,9 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, Suspense } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, Gem, Globe, Layers, Sparkles } from "lucide-react";
+import { Canvas } from "@react-three/fiber";
+import { useGLTF, OrbitControls, Environment, Float, Center } from "@react-three/drei";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,6 +27,20 @@ const statsData = [
     label: "Natural Stone Varieties",
   },
 ];
+
+const RockModel = () => {
+  const { scene } = useGLTF("/3D/rock 3d model.glb");
+  return (
+    <Float speed={2.5} rotationIntensity={0.4} floatIntensity={1.2}>
+      <Center>
+        <primitive object={scene} scale={2.8} />
+      </Center>
+    </Float>
+  );
+};
+
+// Preload the 3D model as early as possible
+useGLTF.preload("/3D/rock 3d model.glb");
 
 const About = () => {
   const sectionRef = useRef(null);
@@ -105,16 +121,7 @@ const About = () => {
         }
       );
 
-      // 4. Upward/downward floating oscillation for center stone
-      gsap.to(stoneImgRef.current, {
-        y: -34,
-        rotateZ: 3,
-        scale: 1.03,
-        duration: 3.8,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
+      // 4. Removed static image oscillation (now handled natively by <Float> in 3D)
 
       // 5. Dynamic GSAP Geometric Shapes Animations
       const shapes = shapesContainerRef.current.querySelectorAll(".auto-shape");
@@ -172,35 +179,7 @@ const About = () => {
     return () => ctx.revert();
   }, []);
 
-  /* ── 3D Interactive Mouse Tilt on Center Stone ── */
-  const handleMouseMove = (e) => {
-    if (!imageWrapperRef.current) return;
-    const rect = imageWrapperRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const rotateX = ((e.clientY - centerY) / (rect.height / 2)) * -16;
-    const rotateY = ((e.clientX - centerX) / (rect.width / 2)) * 16;
-
-    gsap.to(imageWrapperRef.current, {
-      rotateX,
-      rotateY,
-      scale: 1.06,
-      duration: 0.4,
-      ease: "power2.out",
-      transformPerspective: 800,
-    });
-  };
-
-  const handleMouseLeave = () => {
-    if (!imageWrapperRef.current) return;
-    gsap.to(imageWrapperRef.current, {
-      rotateX: 0,
-      rotateY: 0,
-      scale: 1,
-      duration: 0.7,
-      ease: "power2.out",
-    });
-  };
+  /* ── 3D Interactive Mouse Tilt (Removed, now using OrbitControls) ── */
 
   return (
     <section
@@ -299,18 +278,19 @@ const About = () => {
 
             <div
               ref={imageWrapperRef}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-              className="relative w-56 sm:w-64 lg:w-72 xl:w-80 cursor-pointer select-none transition-shadow z-10 py-6"
+              className="relative z-10 w-full max-w-[320px] h-[320px] sm:max-w-[400px] sm:h-[400px] cursor-grab active:cursor-grabbing"
             >
-              <div className="absolute inset-4 bg-[#B8955D]/20 rounded-full blur-2xl pointer-events-none" />
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-5 bg-black/15 rounded-full blur-md pointer-events-none" />
-
-              <img
-                ref={stoneImgRef}
-                src="img/about_gwalior_stone.png"
-                alt="Natural stone with Stone India logo carved"
-                className="w-full h-auto object-contain drop-shadow-2xl relative z-10"
+              <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+                <ambientLight intensity={0.6} />
+                <directionalLight position={[10, 10, 10]} intensity={1.5} />
+                <Environment preset="city" />
+                <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1.5} />
+                <Suspense fallback={null}>
+                  <RockModel />
+                </Suspense>
+              </Canvas>
+              <div
+                className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent mix-blend-overlay rounded-full blur-xl pointer-events-none"
               />
             </div>
           </div>

@@ -186,6 +186,7 @@ const Features = () => {
                   <img
                     src={activeProject.image}
                     alt={activeProject.title}
+                    loading="lazy"
                     className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                   />
                   {/* Subtle Gradient Overlay for readability */}

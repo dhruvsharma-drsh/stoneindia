@@ -25,7 +25,7 @@ const VerticalProductShowcase = () => {
   }, []);
 
   return (
-    <section className="w-full bg-[#FAF9F5] py-24 relative overflow-hidden">
+    <section className="w-full bg-[#FAF9F5] pt-12 pb-24 relative overflow-hidden">
       {/* Light Decorative Background */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#B8955D]/5 rounded-full blur-[120px] pointer-events-none" />
 

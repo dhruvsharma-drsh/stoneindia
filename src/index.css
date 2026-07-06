@@ -6,7 +6,7 @@ body {
   width: 100dvw;
   overflow-x: hidden;
   background-color: #F7F6F0;
-  font-family: ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Quicksand', ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 @layer base {

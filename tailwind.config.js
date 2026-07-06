@@ -4,16 +4,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        editorial: ['ui-rounded', '"SF Pro Rounded"', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-        playfair: ['ui-rounded', '"SF Pro Rounded"', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-        sans: ['ui-rounded', '"SF Pro Rounded"', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-        zentry: ['ui-rounded', '"SF Pro Rounded"', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-        general: ['ui-rounded', '"SF Pro Rounded"', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-        "circular-web": ['ui-rounded', '"SF Pro Rounded"', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-        "robert-medium": ['ui-rounded', '"SF Pro Rounded"', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-        "robert-regular": ['ui-rounded', '"SF Pro Rounded"', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-        serif: ['ui-rounded', '"SF Pro Rounded"', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-        mono: ['ui-rounded', '"SF Pro Rounded"', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+        editorial: ['"Quicksand"', 'ui-rounded', '"SF Pro Rounded"', 'system-ui', 'sans-serif'],
+        playfair: ['"Quicksand"', 'ui-rounded', '"SF Pro Rounded"', 'system-ui', 'sans-serif'],
+        sans: ['"Quicksand"', 'ui-rounded', '"SF Pro Rounded"', 'system-ui', 'sans-serif'],
+        zentry: ['"Quicksand"', 'ui-rounded', '"SF Pro Rounded"', 'system-ui', 'sans-serif'],
+        general: ['"Quicksand"', 'ui-rounded', '"SF Pro Rounded"', 'system-ui', 'sans-serif'],
+        "circular-web": ['"Quicksand"', 'ui-rounded', '"SF Pro Rounded"', 'system-ui', 'sans-serif'],
+        "robert-medium": ['"Quicksand"', 'ui-rounded', '"SF Pro Rounded"', 'system-ui', 'sans-serif'],
+        "robert-regular": ['"Quicksand"', 'ui-rounded', '"SF Pro Rounded"', 'system-ui', 'sans-serif'],
+        serif: ['"Quicksand"', 'ui-rounded', '"SF Pro Rounded"', 'system-ui', 'sans-serif'],
+        mono: ['"Quicksand"', 'ui-rounded', '"SF Pro Rounded"', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         'xs':   ['0.75rem',  { lineHeight: '1rem' }],
