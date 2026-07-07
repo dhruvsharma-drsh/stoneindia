@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState, createElement, useMemo, useCallback, memo } from "react";
+import { FONT_FAMILY } from "@/config/fonts";
 
 // ── Tag enum replacement ──
 export const Tag = {
@@ -255,7 +256,7 @@ const SeoElement = memo(({ tag = Tag.P, texts }) => {
 // ══════════════════════════════════════════════════════
 export default function VaporizeTextCycle({
   texts = ["Next.js", "React"],
-  font = { fontFamily: "ui-rounded, 'SF Pro Rounded', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif", fontSize: "50px", fontWeight: 400 },
+  font = { fontFamily: FONT_FAMILY, fontSize: "50px", fontWeight: 400 },
   color = "rgb(255, 255, 255)",
   spread = 5,
   density = 5,

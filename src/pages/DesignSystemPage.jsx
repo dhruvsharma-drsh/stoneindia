@@ -193,15 +193,8 @@ const FontHoverElement = () => (
         <h4 className="font-bold text-sm uppercase tracking-widest text-[#111]">Active Stack</h4>
       </div>
       <p className="font-mono text-xs leading-loose text-[#666] bg-gray-50 p-4 rounded-xl border border-gray-100">
-        <span className="text-black font-bold">ui-rounded</span>, <br />
-        "SF Pro Rounded", <br />
-        system-ui, <br />
-        -apple-system, <br />
-        "Segoe UI", <br />
-        Roboto, <br />
-        Helvetica, <br />
-        Arial, <br />
-        sans-serif
+        <span className="text-black font-bold">"Libre Baskerville"</span>, <br />
+        serif
       </p>
     </div>
   </div>

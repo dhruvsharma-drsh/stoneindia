@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { FONT_FAMILY } from '@/config/fonts';
 
 /* ── Hover-Reveal Project Index ──
    Minimal text list with cursor-following image reveal on hover.
@@ -85,7 +86,7 @@ const ProjectHoverIndex = ({ projects }) => {
       <div className="text-center mb-8 md:mb-14 px-6 shrink-0">
         <h2
           className="text-4xl md:text-5xl lg:text-6xl text-[#1A1A18] tracking-tight"
-          style={{ fontFamily: "'Playfair Display', 'Georgia', serif", fontWeight: 400 }}
+          style={{ fontFamily: FONT_FAMILY, fontWeight: 400 }}
         >
           Our <em className="not-italic" style={{ fontStyle: 'italic' }}>Projects</em>
         </h2>
@@ -110,7 +111,7 @@ const ProjectHoverIndex = ({ projects }) => {
                 <span
                   className="text-2xl md:text-3xl lg:text-4xl text-center transition-all duration-500 ease-out"
                   style={{
-                    fontFamily: "'Playfair Display', 'Georgia', serif",
+                    fontFamily: FONT_FAMILY,
                     fontWeight: 400,
                     color: hoveredId === project.id ? '#1A1A18' : 'rgba(26,26,24,0.25)',
                     letterSpacing: '-0.02em',
@@ -120,7 +121,7 @@ const ProjectHoverIndex = ({ projects }) => {
                   <sup
                     className="ml-1 text-xs md:text-sm relative -top-4 md:-top-6 transition-colors duration-500"
                     style={{
-                      fontFamily: "'Inter', sans-serif",
+                      fontFamily: FONT_FAMILY,
                       fontWeight: 500,
                       color: hoveredId === project.id ? '#B8955D' : 'rgba(26,26,24,0.2)',
                     }}

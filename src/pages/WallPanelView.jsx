@@ -1,4 +1,4 @@
-﻿// src/pages/WallPanelView.jsx
+// src/pages/WallPanelView.jsx
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -167,13 +167,13 @@ const WallPanelView = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-[#111]/70 via-transparent to-transparent" />
         </div>
 
-        <div className="relative z-10 h-full flex flex-col items-center justify-end sm:justify-center text-center px-4 sm:px-6 pb-20 sm:pb-0 max-w-5xl mx-auto">
-          <div ref={heroBadgeRef} className="opacity-0 inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md mb-8">
+        <div className="relative z-10 h-full flex flex-col items-center justify-end sm:justify-center text-center px-4 sm:px-6 pb-12 sm:pb-0 pt-20 sm:pt-0 max-w-5xl mx-auto">
+          <div ref={heroBadgeRef} className="opacity-0 hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md mb-8">
             <span className="w-2 h-2 rounded-full bg-[#DFBA73] animate-pulse" />
             <span className="text-xs tracking-[0.2em] text-[#DFBA73] font-bold uppercase">Architectural Excellence</span>
           </div>
 
-          <h1 ref={heroTitleRef} className="opacity-0 text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-serif text-white tracking-tight mb-4 sm:mb-6 drop-shadow-2xl">
+          <h1 ref={heroTitleRef} className="opacity-0 text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-serif text-white tracking-tight mb-3 sm:mb-6 drop-shadow-2xl">
             Wall Panel
           </h1>
 

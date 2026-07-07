@@ -62,42 +62,6 @@ const Footer = () => {
               >
                 <FaWhatsapp className="text-sm" />
               </a>
-              <a
-                href="https://www.facebook.com/stoneindiaco"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#DFBA73] hover:border-[#DFBA73] hover:text-[#111111] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(223,186,115,0.4)]"
-                aria-label="Facebook"
-              >
-                <FaFacebookF className="text-[13px]" />
-              </a>
-              <a
-                href="https://in.pinterest.com/stone_india/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#DFBA73] hover:border-[#DFBA73] hover:text-[#111111] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(223,186,115,0.4)]"
-                aria-label="Pinterest"
-              >
-                <FaPinterestP className="text-sm" />
-              </a>
-              <a
-                href="https://x.com/StoneIndia4"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#DFBA73] hover:border-[#DFBA73] hover:text-[#111111] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(223,186,115,0.4)]"
-                aria-label="X (Twitter)"
-              >
-                <FaXTwitter className="text-[13px]" />
-              </a>
-              <a
-                href="https://www.instagram.com/stoneindia_/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#DFBA73] hover:border-[#DFBA73] hover:text-[#111111] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(223,186,115,0.4)]"
-                aria-label="Instagram"
-              >
-                <FaInstagram className="text-[13px]" />
-              </a>
             </div>
           </div>
 
@@ -132,9 +96,9 @@ const Footer = () => {
               
               <div className="flex items-center gap-2 group relative z-20">
                 <FaPhoneAlt className="text-[#B8955D] flex-shrink-0 text-[10px] transition-transform duration-300 group-hover:scale-125 group-hover:text-[#DFBA73]" />
-                <span className="transition-colors duration-300 group-hover:text-white">
+                <span className="transition-colors duration-300 group-hover:text-white flex flex-wrap gap-x-1">
                   <a href="tel:+919371013666" className="hover:underline underline-offset-4 decoration-white/50">+91 937 101 3666</a> 
-                  {" "}/{" "} 
+                  <span className="hidden sm:inline">/</span>
                   <a href="tel:+919826058456" className="hover:underline underline-offset-4 decoration-white/50">+91 982 605 8456</a>
                 </span>
               </div>

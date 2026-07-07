@@ -170,10 +170,8 @@ const HeroContent = () => {
         className="font-editorial text-[2.2rem] sm:text-5xl md:text-6xl xl:text-[5.5rem] leading-[1.08] tracking-tight font-light mb-5 sm:mb-8 lg:mb-10 cursor-default select-none"
         style={{ perspective: "800px" }}
       >
-        <span className="block">
-          <span className="whitespace-nowrap">{splitIntoChars("Timeless", "#ffffff", false)}</span>
-          {splitIntoChars(" ", "#ffffff", false)}
-          <span className="whitespace-nowrap">{splitIntoChars("Stones.", "#ffffff", false)}</span>
+        <span className="block whitespace-nowrap">
+          {splitIntoChars("Timeless Stones.", "#ffffff", false)}
         </span>
         <span className="block mt-1 sm:mt-0">
           <span className="whitespace-nowrap">{splitIntoChars("Endless", "#ffffff", false)}</span>

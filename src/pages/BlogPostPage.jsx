@@ -13,6 +13,7 @@ import {
   Link2
 } from 'lucide-react';
 import { blogPosts } from '@/data/blogPosts';
+import { FONT_FAMILY, GOOGLE_FONTS_URL } from '@/config/fonts';
 
 /* -----------------------------------------------------------------------
    DESIGN SYSTEM — "Core Sample"
@@ -33,8 +34,7 @@ import { blogPosts } from '@/data/blogPosts';
    stone      #8A8580  captions / muted meta
 ------------------------------------------------------------------------ */
 
-const FONTS_HREF =
-  'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap';
+const FONTS_HREF = GOOGLE_FONTS_URL;
 
 function useGoogleFonts() {
   useEffect(() => {
@@ -215,14 +215,14 @@ const BlogPostPage = () => {
     return (
       <div
         className="min-h-screen flex flex-col items-center justify-center text-center px-6"
-        style={{ background: '#F7F5F0', fontFamily: "'Inter', sans-serif" }}
+        style={{ background: '#F7F5F0', fontFamily: FONT_FAMILY }}
       >
         <span className="font-mono text-xs tracking-[0.3em] text-[#8A8580] mb-4">
           404 — NO SAMPLE FOUND
         </span>
         <h1
           className="text-4xl mb-4 text-[#14140F]"
-          style={{ fontFamily: "'Fraunces', serif" }}
+          style={{ fontFamily: FONT_FAMILY }}
         >
           This page isn&apos;t in the archive.
         </h1>
@@ -242,7 +242,7 @@ const BlogPostPage = () => {
   return (
     <div
       className="min-h-screen text-[#14140F]"
-      style={{ background: '#F7F5F0', fontFamily: "'Inter', sans-serif" }}
+      style={{ background: '#F7F5F0', fontFamily: FONT_FAMILY }}
     >
       <CircularProgressButton progress={progress} />
 
@@ -286,7 +286,7 @@ const BlogPostPage = () => {
 
           <h1
             className="text-4xl md:text-5xl lg:text-[4.5rem] text-white tracking-tight mb-8 leading-[1.08] max-w-4xl drop-shadow-lg"
-            style={{ fontFamily: "'Fraunces', serif", fontWeight: 500 }}
+            style={{ fontFamily: FONT_FAMILY, fontWeight: 500 }}
           >
             {post.title}
           </h1>
@@ -324,7 +324,7 @@ const BlogPostPage = () => {
             <VeinMark />
             <p
               className="text-2xl md:text-3xl text-[#1F3A30] leading-snug"
-              style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontWeight: 500 }}
+              style={{ fontFamily: FONT_FAMILY, fontStyle: 'italic', fontWeight: 500 }}
             >
               {post.excerpt}
             </p>
@@ -334,12 +334,12 @@ const BlogPostPage = () => {
             ref={articleContentRef}
             className="[&_p]:mb-6 [&_p]:text-[#3A3630] [&_p]:leading-[1.85] [&_p]:text-[1.125rem] [&_p]:font-sans
                        [&_h2]:mt-14 [&_h2]:mb-6 [&_h2]:pb-4 [&_h2]:border-b [&_h2]:border-[#E4E0D8]
-                       [&_h2]:text-[#14140F] [&_h2]:text-[2.2rem] [&_h2]:font-medium [&_h2]:font-['Fraunces']
-                       [&_h3]:mt-10 [&_h3]:mb-4 [&_h3]:text-[#14140F] [&_h3]:text-[1.5rem] [&_h3]:font-medium [&_h3]:font-['Fraunces']
+                       [&_h2]:text-[#14140F] [&_h2]:text-[2.2rem] [&_h2]:font-medium
+                       [&_h3]:mt-10 [&_h3]:mb-4 [&_h3]:text-[#14140F] [&_h3]:text-[1.5rem] [&_h3]:font-medium
                        [&_a]:text-[#B8955D] [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-[#14140F]
                        [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-6 [&_li]:text-[#3A3630] [&_li]:mb-2 [&_li]:leading-[1.8] [&_li]:font-sans
                        [&_strong]:text-[#14140F] [&_strong]:font-semibold
-                       [&>p:first-of-type]:first-letter:font-['Fraunces'] [&>p:first-of-type]:first-letter:text-[5rem]
+                       [&>p:first-of-type]:first-letter:text-[5rem]
                        [&>p:first-of-type]:first-letter:font-medium [&>p:first-of-type]:first-letter:text-[#1F3A30]
                        [&>p:first-of-type]:first-letter:float-left [&>p:first-of-type]:first-letter:mr-3
                        [&>p:first-of-type]:first-letter:mt-1 [&>p:first-of-type]:first-letter:leading-[0.85]"
@@ -409,7 +409,7 @@ const BlogPostPage = () => {
               </span>
               <h3
                 className="text-3xl md:text-4xl text-white mt-4 leading-tight max-w-xl"
-                style={{ fontFamily: "'Fraunces', serif", fontWeight: 500 }}
+                style={{ fontFamily: FONT_FAMILY, fontWeight: 500 }}
               >
                 {nextPost.title}
               </h3>

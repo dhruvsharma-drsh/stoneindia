@@ -23,7 +23,7 @@ export default defineConfig({
       },
     },
     // Target modern browsers for smaller output
-    target: 'es2020',
+    target: ['es2020', 'safari14'],
     // Enable CSS code splitting
     cssCodeSplit: true,
   },

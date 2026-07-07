@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import VaporizeTextCycle, { Tag } from "./ui/VaporizeText";
+import { FONT_FAMILY } from "@/config/fonts";
 
 // Subtle floating luxury golden stardust motes
 const goldDustParticles = Array.from({ length: 16 }, (_, i) => ({
@@ -161,7 +162,7 @@ const SplashScreen = ({ onComplete }) => {
         <VaporizeTextCycle
           texts={["Gwalior Stone", "Premium Marble", "Natural Granite", "Exotic Onyx", "Timeless Luxury"]}
           font={{
-            fontFamily: "ui-rounded, 'SF Pro Rounded', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+            fontFamily: FONT_FAMILY,
             fontSize: "60px",
             fontWeight: 700,
           }}

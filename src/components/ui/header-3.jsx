@@ -185,7 +185,7 @@ export function Header() {
       </nav>
 
       {/* Mobile Portal Menu */}
-      <MobileMenu open={open} className="flex flex-col justify-between gap-4 overflow-y-auto bg-[#0a0a0a]/95 backdrop-blur-2xl px-6 py-8">
+      <MobileMenu open={open} className="flex flex-col justify-between gap-4 overflow-y-auto bg-[#0a0a0a]/95 backdrop-blur-2xl px-6 py-8" style={{ WebkitBackdropFilter: 'blur(40px)' }}>
         <div className="flex flex-col gap-1 mt-4">
           <span className="text-xs font-mono uppercase tracking-widest text-[#B8955D] mb-3">Menu</span>
           <Link to="/" onClick={() => setOpen(false)} className={`text-lg font-medium py-2.5 border-b border-white/5 transition-colors ${pathname === '/' ? 'text-[#B8955D]' : 'text-white hover:text-[#B8955D]'}`}>Home</Link>

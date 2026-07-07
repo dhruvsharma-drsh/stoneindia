@@ -1,13 +1,18 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useGLTF, OrbitControls, Environment, Float, Center } from "@react-three/drei";
 
 const RockModel = () => {
   const { scene } = useGLTF("/3D/rock 3d model.glb");
+  const groupRef = useRef();
+
   return (
-    <Float speed={2} rotationIntensity={0.8} floatIntensity={1.2}>
+    <Float speed={2.5} rotationIntensity={0.2} floatIntensity={1.2}>
       <Center>
-        <primitive object={scene} scale={2.8} rotation={[0, -Math.PI / 2, 0]} />
+        {/* Changed from Math.PI / 2 to -Math.PI / 2 to show the other side where 'S' should be */}
+        <group ref={groupRef} rotation={[0, -Math.PI / 2, 0]}>
+          <primitive object={scene} scale={2.8} />
+        </group>
       </Center>
     </Float>
   );
@@ -25,10 +30,13 @@ export default function About3D() {
       <OrbitControls 
         enableZoom={false} 
         enablePan={false}
-        minAzimuthAngle={-Math.PI / 4} 
+        enableRotate={true}
+        /* Limit left/right rotation to 45 degrees in either direction */
+        minAzimuthAngle={-Math.PI / 4}
         maxAzimuthAngle={Math.PI / 4}
-        minPolarAngle={Math.PI / 3}
-        maxPolarAngle={Math.PI / 2}
+        /* Limit up/down rotation */
+        minPolarAngle={Math.PI / 2 - 0.2}
+        maxPolarAngle={Math.PI / 2 + 0.2}
       />
       <Suspense fallback={null}>
         <RockModel />

@@ -71,7 +71,7 @@ export const Contact2 = ({
   title = "Get in Touch",
   description = "We are available for questions, feedback, or collaboration opportunities. Let us know how we can help!",
   phone = "(123) 345-67890",
-  email = "hello@studio.co",
+  email = import.meta.env.VITE_CONTACT_EMAIL || "dhruv.sharma@frostrek.com",
   address,
   web,
 }) => {
@@ -103,17 +103,19 @@ export const Contact2 = ({
     setStatus("sending");
     
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
         body: JSON.stringify({
-          name: `${form.firstname} ${form.lastname}`,
+          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+          name: `${form.firstname} ${form.lastname}`.trim(),
           email: form.email,
-          subject: form.subject || "New Contact Form Submission",
+          subject: form.subject || "New Contact Form Submission — Gwalior Stone",
           message: form.message,
+          from_name: "Gwalior Stone Website",
         }),
       });
 
@@ -274,7 +276,7 @@ export const Contact2 = ({
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
 
         {/* ═══ SECTION HEADING ═══ */}
-        <div ref={headingRef} className="mb-8 sm:mb-10">
+        <div ref={headingRef} className="mb-10 sm:mb-14 max-w-3xl">
           {/* Main heading */}
           <h1 className="font-editorial text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-[4rem] leading-[1.08] tracking-tight text-[#1A1A1A] font-light max-w-2xl">
             {title.split(",").length > 1 ? (
@@ -290,94 +292,24 @@ export const Contact2 = ({
               </>
             )}
           </h1>
+          
+          <p className="font-sans text-[15px] sm:text-base text-[#6B6B6B] leading-relaxed mt-6 max-w-md">
+            {description}
+          </p>
         </div>
 
         {/* ═══ TWO-COLUMN LAYOUT ═══ */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 xl:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 xl:gap-12 items-stretch">
 
-          {/* ── LEFT: Description + Contact Details ── */}
-          <div ref={leftColRef} className="lg:col-span-5 xl:col-span-5">
-
-            {/* Description */}
-            <p className="font-sans text-[15px] sm:text-base text-[#6B6B6B] leading-relaxed max-w-md mb-6">
-              {description}
-            </p>
-
-            {/* Contact Detail Cards */}
-            <div className="space-y-0 border-t border-black/[0.06]">
-              {contactRows.map((row, i) => {
-                const Icon = row.icon;
-                const Tag = row.href ? "a" : "div";
-                return (
-                  <Tag
-                    key={row.label}
-                    href={row.href || undefined}
-                    target={row.label === "Web" ? "_blank" : undefined}
-                    rel={row.label === "Web" ? "noopener noreferrer" : undefined}
-                    className="group relative flex items-center gap-4 sm:gap-5 py-5 border-b border-black/[0.06] no-underline text-inherit overflow-hidden"
-                    style={{ cursor: row.href ? "pointer" : "default" }}
-                  >
-                    {/* Hover sheen */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#B8955D]/[0.04] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
-
-                    {/* Number */}
-                    <span className="font-sans text-[11px] font-medium text-[#C5C0B8] group-hover:text-[#B8955D] transition-colors duration-300 tabular-nums w-6 shrink-0">
-                      0{i + 1}
-                    </span>
-
-                    {/* Icon circle */}
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#F7F3ED] border border-[#B8955D]/15 flex items-center justify-center group-hover:bg-[#B8955D] group-hover:border-[#B8955D] transition-all duration-300">
-                      <Icon className="w-4 h-4 text-[#B8955D] group-hover:text-white stroke-[1.75] transition-colors duration-300" />
-                    </div>
-
-                    {/* Label + Value */}
-                    <div className="flex-1 min-w-0">
-                      <span className="block font-sans text-[10px] tracking-[0.12em] uppercase text-[#B8955D] font-semibold mb-0.5">
-                        {row.label}
-                      </span>
-                      <span className="block font-sans text-sm text-[#4A4A4A] group-hover:text-[#1A1A1A] transition-colors duration-300 truncate">
-                        {row.value}
-                      </span>
-                    </div>
-
-                    {/* Arrow */}
-                    {row.href && (
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full border border-black/[0.06] flex items-center justify-center group-hover:border-[#B8955D]/30 group-hover:bg-[#FAF7F2] transition-all duration-300">
-                        <ArrowUpRight className="w-3.5 h-3.5 text-[#9A9A9A] group-hover:text-[#B8955D] transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                      </div>
-                    )}
-                  </Tag>
-                );
-              })}
-            </div>
-
-            {/* Location Map */}
-            <div className="mt-10 h-48 w-full rounded-2xl overflow-hidden border border-[#B8955D]/20 shadow-sm relative group">
-              <div className="absolute inset-0 z-10 pointer-events-none rounded-2xl shadow-[inset_0_0_20px_rgba(0,0,0,0.05)]" />
-              <Map
-                viewport={{ center: [78.1828, 26.2183], zoom: 12, pitch: 0, bearing: 0 }}
-                theme="light"
-                className="w-full h-full transition-transform duration-1000 group-hover:scale-105"
-              >
-                <MapMarker longitude={78.1828} latitude={26.2183}>
-                  <MarkerContent>
-                    <div className="relative flex h-8 w-8 items-center justify-center">
-                      <div className="absolute inset-0 rounded-full bg-[#B8955D]/30 animate-ping" />
-                      <div className="relative h-4 w-4 rounded-full border-[2.5px] border-white bg-[#B8955D] shadow-md" />
-                    </div>
-                  </MarkerContent>
-                </MapMarker>
-              </Map>
-            </div>
-          </div>
-
-          {/* ── RIGHT: Interactive Form Card ── */}
-          <div ref={rightColRef} className="lg:col-span-7 xl:col-span-7">
+          {/* ── LEFT: Form + Info Card ── */}
+          <div ref={leftColRef} className="flex flex-col gap-8 lg:gap-10">
+            
+            {/* Interactive Form Card */}
             <div
               ref={formCardRef}
               onMouseMove={handleCardMove}
               onMouseLeave={handleCardLeave}
-              className="relative bg-[#FAFAF8] border border-black/[0.06] rounded-2xl p-7 sm:p-10 shadow-sm hover:shadow-xl hover:border-[#B8955D]/20 transition-all duration-500"
+              className="relative bg-[#FAFAF8] border border-black/[0.06] rounded-2xl p-7 sm:p-10 shadow-sm hover:shadow-xl hover:border-[#B8955D]/20 transition-all duration-500 flex-1"
               style={{ willChange: "transform" }}
             >
               {/* Decorative corner accent */}
@@ -446,7 +378,7 @@ export const Contact2 = ({
                       </div>
                       <div>
                         <h3 className="font-editorial text-lg sm:text-xl text-[#1A1A1A] font-light leading-tight">
-                          Start a Conversation
+                          Send us a message
                         </h3>
                         <span className="font-sans text-[10px] tracking-[0.1em] uppercase text-[#B8955D] font-semibold">
                           We reply within 24 hrs
@@ -504,7 +436,7 @@ export const Contact2 = ({
                           </>
                         ) : (
                           <>
-                            Send Message
+                            Start the Conversation
                           </>
                         )}
                       </span>
@@ -522,7 +454,64 @@ export const Contact2 = ({
                 </form>
               )}
             </div>
+            
+            {/* Info Card */}
+            <div className="bg-[#FAFAF8] border border-black/[0.06] rounded-2xl p-7 sm:p-8 shadow-sm flex flex-col gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {/* Phone */}
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[#F7F3ED] border border-[#B8955D]/15 flex items-center justify-center">
+                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-[#B8955D]" />
+                  </div>
+                  <div>
+                    <h4 className="font-sans text-[10px] tracking-[0.12em] uppercase text-[#B8955D] font-semibold mb-1">Phone</h4>
+                    <a href={`tel:${phone.replace(/[^\d+]/g, "")}`} className="font-sans text-sm sm:text-[15px] font-semibold text-[#1A1A1A] hover:text-[#B8955D] transition-colors">{phone}</a>
+                  </div>
+                </div>
+                {/* Email */}
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[#F7F3ED] border border-[#B8955D]/15 flex items-center justify-center">
+                    <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-[#B8955D]" />
+                  </div>
+                  <div>
+                    <h4 className="font-sans text-[10px] tracking-[0.12em] uppercase text-[#B8955D] font-semibold mb-1">Email</h4>
+                    <a href={`mailto:${email}`} className="font-sans text-sm sm:text-[15px] font-semibold text-[#1A1A1A] hover:text-[#B8955D] transition-colors">{email}</a>
+                  </div>
+                </div>
+              </div>
+              
+              {address && (
+                <>
+                  <hr className="border-t border-black/[0.06] w-full" />
+                  <div className="flex items-center gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[#F7F3ED] border border-[#B8955D]/15 flex items-center justify-center">
+                      <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[#B8955D]" />
+                    </div>
+                    <div>
+                      <h4 className="font-sans text-[10px] tracking-[0.12em] uppercase text-[#B8955D] font-semibold mb-1">Address</h4>
+                      <a href={`https://maps.google.com/?q=${encodeURIComponent(address)}`} target="_blank" rel="noopener noreferrer" className="font-sans text-sm sm:text-[15px] font-semibold text-[#1A1A1A] hover:text-[#B8955D] transition-colors max-w-[280px] block">
+                        {address}
+                      </a>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
+
+          {/* ── RIGHT: Google Calendar Embed ── */}
+          <div ref={rightColRef} className="bg-[#FAFAF8] border border-black/[0.06] rounded-2xl shadow-sm overflow-hidden min-h-[450px] sm:min-h-[600px] xl:min-h-[700px] w-full relative">
+            <iframe
+              src={import.meta.env.VITE_CALENDAR_URL || "https://calendar.google.com/calendar/appointments/schedules/AcZssZ0?gv=true"}
+              width="100%"
+              height="100%"
+              frameBorder="0"
+              title="Schedule a meeting"
+              className="absolute inset-0 w-full h-full"
+              style={{ border: 0 }}
+            ></iframe>
+          </div>
+          
         </div>
       </div>
 
