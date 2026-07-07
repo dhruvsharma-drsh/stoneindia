@@ -1,9 +1,9 @@
-import React, { useRef, useEffect, useState, Suspense } from "react";
+import React, { useRef, useEffect, useState, Suspense, lazy } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, Gem, Globe, Layers, Sparkles } from "lucide-react";
-import { Canvas } from "@react-three/fiber";
-import { useGLTF, OrbitControls, Environment, Float, Center } from "@react-three/drei";
+
+const About3D = lazy(() => import("./About3D"));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,19 +28,7 @@ const statsData = [
   },
 ];
 
-const RockModel = () => {
-  const { scene } = useGLTF("/3D/rock 3d model.glb");
-  return (
-    <Float speed={2.5} rotationIntensity={0.4} floatIntensity={1.2}>
-      <Center>
-        <primitive object={scene} scale={2.8} />
-      </Center>
-    </Float>
-  );
-};
 
-// Preload the 3D model as early as possible
-useGLTF.preload("/3D/rock 3d model.glb");
 
 const About = () => {
   const sectionRef = useRef(null);
@@ -280,15 +268,9 @@ const About = () => {
               ref={imageWrapperRef}
               className="relative z-10 w-full max-w-[320px] h-[320px] sm:max-w-[400px] sm:h-[400px] cursor-grab active:cursor-grabbing"
             >
-              <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-                <ambientLight intensity={0.6} />
-                <directionalLight position={[10, 10, 10]} intensity={1.5} />
-                <Environment preset="city" />
-                <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1.5} />
-                <Suspense fallback={null}>
-                  <RockModel />
-                </Suspense>
-              </Canvas>
+              <Suspense fallback={null}>
+                <About3D />
+              </Suspense>
               <div
                 className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent mix-blend-overlay rounded-full blur-xl pointer-events-none"
               />

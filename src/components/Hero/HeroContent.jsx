@@ -171,11 +171,14 @@ const HeroContent = () => {
         style={{ perspective: "800px" }}
       >
         <span className="block">
-          {splitIntoChars("Timeless Stones.", "#ffffff", false)}
+          <span className="whitespace-nowrap">{splitIntoChars("Timeless", "#ffffff", false)}</span>
+          {splitIntoChars(" ", "#ffffff", false)}
+          <span className="whitespace-nowrap">{splitIntoChars("Stones.", "#ffffff", false)}</span>
         </span>
-        <span className="block">
-          {splitIntoChars("Endless ", "#ffffff", false)}
-          <span className="italic font-normal relative inline-block">
+        <span className="block mt-1 sm:mt-0">
+          <span className="whitespace-nowrap">{splitIntoChars("Endless", "#ffffff", false)}</span>
+          {splitIntoChars(" ", "#ffffff", false)}
+          <span className="italic font-normal relative inline-block whitespace-nowrap">
             {splitIntoChars("Possibilities.", "#B8955D", true)}
             <span className="absolute bottom-1 left-0 right-0 h-[1px] bg-[#B8955D]/40 gold-underline-anim" />
           </span>
