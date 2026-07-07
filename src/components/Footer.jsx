@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaInstagram, FaEnvelope, FaWhatsapp, FaLinkedin, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
+import { FaFacebookF, FaPinterestP, FaXTwitter } from "react-icons/fa6";
 import { Sparkles, ArrowUpRight } from "lucide-react";
 
 const Footer = () => {
@@ -44,16 +45,16 @@ const Footer = () => {
             </p>
 
             {/* Glowing Social Icons */}
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <a
-                href="mailto:info@gwaliorstone.com"
+                href="mailto:info@stoneindia.co"
                 className="w-8 h-8 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#DFBA73] hover:border-[#DFBA73] hover:text-[#111111] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(223,186,115,0.4)]"
                 aria-label="Email Us"
               >
                 <FaEnvelope className="text-xs" />
               </a>
               <a
-                href="https://wa.me/919425112100"
+                href="https://wa.me/919371013666"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#DFBA73] hover:border-[#DFBA73] hover:text-[#111111] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(223,186,115,0.4)]"
@@ -62,22 +63,40 @@ const Footer = () => {
                 <FaWhatsapp className="text-sm" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.facebook.com/stoneindiaco"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#DFBA73] hover:border-[#DFBA73] hover:text-[#111111] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(223,186,115,0.4)]"
+                aria-label="Facebook"
+              >
+                <FaFacebookF className="text-[13px]" />
+              </a>
+              <a
+                href="https://in.pinterest.com/stone_india/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#DFBA73] hover:border-[#DFBA73] hover:text-[#111111] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(223,186,115,0.4)]"
+                aria-label="Pinterest"
+              >
+                <FaPinterestP className="text-sm" />
+              </a>
+              <a
+                href="https://x.com/StoneIndia4"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#DFBA73] hover:border-[#DFBA73] hover:text-[#111111] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(223,186,115,0.4)]"
+                aria-label="X (Twitter)"
+              >
+                <FaXTwitter className="text-[13px]" />
+              </a>
+              <a
+                href="https://www.instagram.com/stoneindia_/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#DFBA73] hover:border-[#DFBA73] hover:text-[#111111] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(223,186,115,0.4)]"
                 aria-label="Instagram"
               >
-                <FaInstagram className="text-sm" />
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#DFBA73] hover:border-[#DFBA73] hover:text-[#111111] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(223,186,115,0.4)]"
-                aria-label="LinkedIn"
-              >
-                <FaLinkedin className="text-sm" />
+                <FaInstagram className="text-[13px]" />
               </a>
             </div>
           </div>
@@ -98,34 +117,34 @@ const Footer = () => {
           {/* Contact Col */}
           <div className="md:col-span-4">
             <h4 className="font-editorial text-sm text-[#B8955D] font-semibold uppercase tracking-wider mb-3">
-              Global Export Office
+              Headquarter
             </h4>
             <div className="space-y-3 sm:space-y-2.5 font-sans text-[11px] sm:text-xs font-light text-white/80">
               <a
-                href="https://www.google.com/maps/search/?api=1&query=Stone+Industrial+Area,+AB+Road,+Gwalior,+Madhya+Pradesh+474001,+India"
+                href="https://www.google.com/maps/search/?api=1&query=C-56+industrial+area+banmore,+Morena,+Madhya+Pradesh+476444"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-start gap-2 group hover:text-white transition-colors duration-300 relative z-20"
               >
                 <FaMapMarkerAlt className="text-[#B8955D] mt-0.5 flex-shrink-0 text-[10px] transition-transform duration-300 group-hover:scale-125 group-hover:text-[#DFBA73]" />
-                <span className="group-hover:underline underline-offset-4 decoration-white/30">Stone Industrial Area, AB Road, Gwalior (M.P.) — 474001 India</span>
+                <span className="group-hover:underline underline-offset-4 decoration-white/30">C-56 industrial area banmore, Morena, Madhya Pradesh 476444</span>
               </a>
               
               <div className="flex items-center gap-2 group relative z-20">
                 <FaPhoneAlt className="text-[#B8955D] flex-shrink-0 text-[10px] transition-transform duration-300 group-hover:scale-125 group-hover:text-[#DFBA73]" />
                 <span className="transition-colors duration-300 group-hover:text-white">
-                  <a href="tel:+919425112100" className="hover:underline underline-offset-4 decoration-white/50">+91 94251 12100</a> 
+                  <a href="tel:+919371013666" className="hover:underline underline-offset-4 decoration-white/50">+91 937 101 3666</a> 
                   {" "}/{" "} 
-                  <a href="tel:+917512405500" className="hover:underline underline-offset-4 decoration-white/50">+91 751 240 5500</a>
+                  <a href="tel:+919826058456" className="hover:underline underline-offset-4 decoration-white/50">+91 982 605 8456</a>
                 </span>
               </div>
               
               <a
-                href="mailto:export@gwaliorstone.com"
+                href="mailto:info@stoneindia.co"
                 className="flex items-center gap-2 group hover:text-white transition-colors duration-300 relative z-20"
               >
                 <FaEnvelope className="text-[#B8955D] flex-shrink-0 text-[10px] transition-transform duration-300 group-hover:scale-125 group-hover:text-[#DFBA73]" />
-                <span className="group-hover:underline underline-offset-4 decoration-white/30">export@gwaliorstone.com</span>
+                <span className="group-hover:underline underline-offset-4 decoration-white/30">info@stoneindia.co</span>
               </a>
             </div>
 

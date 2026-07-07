@@ -536,7 +536,7 @@ const GwaliorMintSandstoneSlabsView = () => {
           <p className="text-lg md:text-xl text-white/70 font-light max-w-2xl mx-auto mb-10 leading-relaxed">
             Available in bulk for wholesale buyers globally — the perfect choice for garden accessories, paving, interior and exterior wall cladding, and flooring.
           </p>
-          <a href="mailto:info@stoneindia.com" className="px-10 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wider uppercase hover:bg-[#B8955D] hover:text-white transition-all duration-300 shadow-xl inline-flex items-center gap-2">
+          <a href="mailto:info@stoneindia.co" className="px-10 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wider uppercase hover:bg-[#B8955D] hover:text-white transition-all duration-300 shadow-xl inline-flex items-center gap-2">
             Contact Us Today <ArrowRight size={16} />
           </a>
         </div>

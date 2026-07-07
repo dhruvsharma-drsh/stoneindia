@@ -5,7 +5,7 @@ import About from "./components/About";
 import CategoryShowcase from "./components/CategoryShowcase";
 import VerticalProductShowcase from "./components/VerticalProductShowcase";
 import Features from "./components/Features";
-import Feedback from "./components/Feedback";
+import FAQ from "./components/FAQ";
 import Hero from "./components/Hero/Hero";
 import Footer from "./components/Footer";
 import SplashScreen from "./components/SplashScreen";
@@ -50,7 +50,7 @@ function HomePage() {
       <CategoryShowcase />
       <VerticalProductShowcase />
       <Features />
-      <Feedback />
+      <FAQ />
       <Footer />
     </>
   );

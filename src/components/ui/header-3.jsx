@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { MenuToggleIcon } from "@/components/ui/menu-toggle-icon";
@@ -31,6 +31,8 @@ export function Header() {
   const [open, setOpen] = React.useState(false);
   const scrolled = useScroll(20);
   const navigate = useNavigate();
+  const location = useLocation();
+  const pathname = location.pathname;
 
   React.useEffect(() => {
     if (open) {
@@ -65,18 +67,18 @@ export function Header() {
           {/* Desktop Navigation */}
           <NavigationMenu className="hidden lg:flex">
             <NavigationMenuList className="gap-1">
-              <NavigationMenuLink className="px-3 py-2 text-sm font-medium text-white/80 hover:text-[#B8955D] transition-colors" asChild>
+              <NavigationMenuLink className={`px-3 py-2 text-sm font-medium transition-colors ${pathname === '/' ? 'text-[#B8955D]' : 'text-white/80 hover:text-[#B8955D]'}`} asChild>
                 <Link to="/">Home</Link>
               </NavigationMenuLink>
 
-              <NavigationMenuLink className="px-3 py-2 text-sm font-medium text-white/80 hover:text-[#B8955D] transition-colors" asChild>
+              <NavigationMenuLink className={`px-3 py-2 text-sm font-medium transition-colors ${pathname === '/about' ? 'text-[#B8955D]' : 'text-white/80 hover:text-[#B8955D]'}`} asChild>
                 <Link to="/about">About Us</Link>
               </NavigationMenuLink>
 
               {/* Mega Menu for Our Product */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger 
-                  className="bg-transparent text-white/80 hover:text-[#B8955D] font-medium text-sm cursor-pointer"
+                  className={`bg-transparent font-medium text-sm cursor-pointer transition-colors ${pathname.startsWith('/products') ? 'text-[#B8955D]' : 'text-white/80 hover:text-[#B8955D]'}`}
                   onClick={() => navigate('/products')}
                 >
                   Our Product
@@ -139,19 +141,19 @@ export function Header() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
-              <NavigationMenuLink className="px-3 py-2 text-sm font-medium text-white/80 hover:text-[#B8955D] transition-colors" asChild>
+              <NavigationMenuLink className={`px-3 py-2 text-sm font-medium transition-colors ${pathname === '/projects' ? 'text-[#B8955D]' : 'text-white/80 hover:text-[#B8955D]'}`} asChild>
                 <Link to="/projects">Our Projects</Link>
               </NavigationMenuLink>
 
-              <NavigationMenuLink className="px-3 py-2 text-sm font-medium text-white/80 hover:text-[#B8955D] transition-colors" asChild>
+              <NavigationMenuLink className={`px-3 py-2 text-sm font-medium transition-colors ${pathname === '/packaging' ? 'text-[#B8955D]' : 'text-white/80 hover:text-[#B8955D]'}`} asChild>
                 <Link to="/packaging">Packaging</Link>
               </NavigationMenuLink>
 
-              <NavigationMenuLink className="px-3 py-2 text-sm font-medium text-white/80 hover:text-[#B8955D] transition-colors" asChild>
+              <NavigationMenuLink className={`px-3 py-2 text-sm font-medium transition-colors ${pathname.startsWith('/blog') ? 'text-[#B8955D]' : 'text-white/80 hover:text-[#B8955D]'}`} asChild>
                 <Link to="/blog">Blog</Link>
               </NavigationMenuLink>
 
-              <NavigationMenuLink className="px-3 py-2 text-sm font-medium text-white/80 hover:text-[#B8955D] transition-colors" asChild>
+              <NavigationMenuLink className={`px-3 py-2 text-sm font-medium transition-colors ${pathname === '/contact' ? 'text-[#B8955D]' : 'text-white/80 hover:text-[#B8955D]'}`} asChild>
                 <Link to="/contact">Contact Us</Link>
               </NavigationMenuLink>
             </NavigationMenuList>
@@ -186,8 +188,8 @@ export function Header() {
       <MobileMenu open={open} className="flex flex-col justify-between gap-4 overflow-y-auto bg-[#0a0a0a]/95 backdrop-blur-2xl px-6 py-8">
         <div className="flex flex-col gap-1 mt-4">
           <span className="text-xs font-mono uppercase tracking-widest text-[#B8955D] mb-3">Menu</span>
-          <Link to="/" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-2.5 border-b border-white/5">Home</Link>
-          <Link to="/about" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-2.5 border-b border-white/5">About Us</Link>
+          <Link to="/" onClick={() => setOpen(false)} className={`text-lg font-medium py-2.5 border-b border-white/5 transition-colors ${pathname === '/' ? 'text-[#B8955D]' : 'text-white hover:text-[#B8955D]'}`}>Home</Link>
+          <Link to="/about" onClick={() => setOpen(false)} className={`text-lg font-medium py-2.5 border-b border-white/5 transition-colors ${pathname === '/about' ? 'text-[#B8955D]' : 'text-white hover:text-[#B8955D]'}`}>About Us</Link>
           
           {/* ── Our Products Accordion ── */}
           <MobileAccordion label="Our Products" linkTo="/products" onNavigate={() => setOpen(false)}>
@@ -208,10 +210,10 @@ export function Header() {
             </MobileAccordion>
           </MobileAccordion>
 
-          <Link to="/projects" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-2.5 border-b border-white/5">Our Projects</Link>
-          <Link to="/packaging" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-2.5 border-b border-white/5">Packaging</Link>
-          <Link to="/blog" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-2.5 border-b border-white/5">Blog</Link>
-          <Link to="/contact" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-2.5 border-b border-white/5">Contact Us</Link>
+          <Link to="/projects" onClick={() => setOpen(false)} className={`text-lg font-medium py-2.5 border-b border-white/5 transition-colors ${pathname === '/projects' ? 'text-[#B8955D]' : 'text-white hover:text-[#B8955D]'}`}>Our Projects</Link>
+          <Link to="/packaging" onClick={() => setOpen(false)} className={`text-lg font-medium py-2.5 border-b border-white/5 transition-colors ${pathname === '/packaging' ? 'text-[#B8955D]' : 'text-white hover:text-[#B8955D]'}`}>Packaging</Link>
+          <Link to="/blog" onClick={() => setOpen(false)} className={`text-lg font-medium py-2.5 border-b border-white/5 transition-colors ${pathname.startsWith('/blog') ? 'text-[#B8955D]' : 'text-white hover:text-[#B8955D]'}`}>Blog</Link>
+          <Link to="/contact" onClick={() => setOpen(false)} className={`text-lg font-medium py-2.5 border-b border-white/5 transition-colors ${pathname === '/contact' ? 'text-[#B8955D]' : 'text-white hover:text-[#B8955D]'}`}>Contact Us</Link>
         </div>
 
         <div className="flex flex-col gap-3 mt-auto pt-6 border-t border-white/10">

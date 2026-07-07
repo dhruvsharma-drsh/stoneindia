@@ -11,7 +11,6 @@ const ContactUsPage = () => {
         phone="+91 937 101 3666"
         email="info@stoneindia.co"
         address="C-56 Industrial Area, Banmore, Morena, Madhya Pradesh 476444"
-        web={{ label: "www.stoneindia.co", url: "https://www.stoneindia.co" }}
       />
       <Footer />
     </div>

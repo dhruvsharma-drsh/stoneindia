@@ -470,7 +470,7 @@ const WallPanelView = () => {
             Available in bulk for wholesale buyers globally — the perfect choice for feature
             walls, homes, offices, clubs, and restaurants.
           </p>
-          <a href="mailto:info@stoneindia.com" className="px-10 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wider uppercase hover:bg-[#B8955D] hover:text-white transition-all duration-300 shadow-xl inline-flex items-center gap-2">
+          <a href="mailto:info@stoneindia.co" className="px-10 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wider uppercase hover:bg-[#B8955D] hover:text-white transition-all duration-300 shadow-xl inline-flex items-center gap-2">
             Contact Us Today <ArrowRight size={16} />
           </a>
         </div>

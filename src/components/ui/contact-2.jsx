@@ -73,7 +73,7 @@ export const Contact2 = ({
   phone = "(123) 345-67890",
   email = "hello@studio.co",
   address,
-  web = { label: "shadcnblocks.com", url: "https://shadcnblocks.com" },
+  web,
 }) => {
   /* ── Refs ── */
   const sectionRef = useRef(null);
@@ -141,7 +141,7 @@ export const Contact2 = ({
     { icon: Phone, label: "Phone", value: phone, href: `tel:${phone.replace(/[^\d+]/g, "")}` },
     { icon: Mail, label: "Email", value: email, href: `mailto:${email}` },
     ...(address ? [{ icon: MapPin, label: "Address", value: address }] : []),
-    { icon: Globe2, label: "Web", value: web.label, href: web.url },
+    ...(web ? [{ icon: Globe2, label: "Web", value: web.label, href: web.url }] : []),
   ];
 
   /* ── GSAP animations ── */
