@@ -28,7 +28,21 @@ const statsData = [
   },
 ];
 
-
+/* Fractured stone edge — sits at the top, pointing upward */
+const FractureEdge = ({ fill = '#FFFFFF' }) => (
+  <svg
+    className="absolute left-0 right-0 -top-[55px] w-full z-20 pointer-events-none"
+    height="56"
+    viewBox="0 0 1440 56"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M0,40 L96,18 L188,34 L266,6 L344,28 L430,12 L512,36 L598,10 L676,30 L760,4 L842,26 L930,14 L1012,32 L1098,8 L1180,24 L1264,2 L1346,20 L1440,10 L1440,56 L0,56 Z"
+      fill={fill}
+    />
+  </svg>
+);
 
 const About = () => {
   const sectionRef = useRef(null);
@@ -173,35 +187,40 @@ const About = () => {
     <section
       ref={sectionRef}
       id="about"
-      className="relative w-full bg-white overflow-hidden py-12 sm:py-16 lg:py-20"
+      className="relative w-full bg-white py-12 sm:py-16 lg:py-20 z-10 -mt-14"
     >
-      {/* Background radial glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-[#B8955D]/[0.05] rounded-full blur-[120px] pointer-events-none" />
+      <FractureEdge fill="#FFFFFF" />
 
-      {/* Subtle dot pattern */}
-      <div
-        className="absolute inset-0 opacity-[0.035] pointer-events-none"
-        style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, #111 1px, transparent 0)`,
-          backgroundSize: "32px 32px",
-        }}
-      />
+      {/* Background elements contained */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Background radial glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-[#B8955D]/[0.05] rounded-full blur-[120px] pointer-events-none" />
 
-      {/* ── GSAP Automatically Floating Geometric Shapes Background ── */}
-      <div ref={shapesContainerRef} className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="auto-shape absolute top-12 left-[12%] w-14 h-14 border border-[#B8955D]/25 rotate-45 rounded-md backdrop-blur-[1px]" />
-        
-        <div className="auto-shape absolute bottom-16 left-[28%] w-16 h-16 rounded-full border border-black/10 flex items-center justify-center">
-          <div className="w-8 h-8 bg-[#B8955D]/10 rounded-full" />
-        </div>
+        {/* Subtle dot pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.035] pointer-events-none"
+          style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, #111 1px, transparent 0)`,
+            backgroundSize: "32px 32px",
+          }}
+        />
 
-        <div className="auto-shape absolute top-20 right-[15%] w-10 h-10 bg-gradient-to-br from-[#B8955D]/20 to-transparent rotate-12 rounded" />
-        
-        <div className="auto-shape absolute bottom-20 right-[35%] w-6 h-6 rounded-full border-2 border-[#B8955D]/30" />
+        {/* ── GSAP Automatically Floating Geometric Shapes Background ── */}
+        <div ref={shapesContainerRef} className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="auto-shape absolute top-12 left-[12%] w-14 h-14 border border-[#B8955D]/25 rotate-45 rounded-md backdrop-blur-[1px]" />
+          
+          <div className="auto-shape absolute bottom-16 left-[28%] w-16 h-16 rounded-full border border-black/10 flex items-center justify-center">
+            <div className="w-8 h-8 bg-[#B8955D]/10 rounded-full" />
+          </div>
 
-        <div className="auto-shape absolute top-1/3 left-[45%] w-12 h-12 flex items-center justify-center opacity-40">
-          <div className="absolute w-full h-[1px] bg-[#B8955D]/40" />
-          <div className="absolute h-full w-[1px] bg-[#B8955D]/40" />
+          <div className="auto-shape absolute top-20 right-[15%] w-10 h-10 bg-gradient-to-br from-[#B8955D]/20 to-transparent rotate-12 rounded" />
+          
+          <div className="auto-shape absolute bottom-20 right-[35%] w-6 h-6 rounded-full border-2 border-[#B8955D]/30" />
+
+          <div className="auto-shape absolute top-1/3 left-[45%] w-12 h-12 flex items-center justify-center opacity-40">
+            <div className="absolute w-full h-[1px] bg-[#B8955D]/40" />
+            <div className="absolute h-full w-[1px] bg-[#B8955D]/40" />
+          </div>
         </div>
       </div>
 
