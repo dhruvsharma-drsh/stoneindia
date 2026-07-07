@@ -187,9 +187,8 @@ const About = () => {
     <section
       ref={sectionRef}
       id="about"
-      className="relative w-full bg-white py-12 sm:py-16 lg:py-20 z-10 -mt-14"
+      className="relative w-full bg-white overflow-hidden py-12 sm:py-16 lg:py-20"
     >
-      <FractureEdge fill="#FFFFFF" />
 
       {/* Background elements contained */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
