@@ -23,7 +23,12 @@ const Footer = () => {
           {/* Brand & Heritage Col */}
           <div className="sm:col-span-2 md:col-span-5 flex flex-col justify-start">
             <div className="flex items-center gap-3 mb-3 group">
-              <img src="img/stone_logo_rock.png" alt="Gwalior Stone Logo" className="h-8 w-auto object-contain transition-transform duration-500 group-hover:scale-110" />
+              <img 
+                src="/img/stone_logo_rock.png" 
+                alt="Gwalior Stone Logo" 
+                className="h-8 w-auto object-contain transition-transform duration-500 group-hover:scale-110" 
+                onError={(e) => { e.currentTarget.src = "/img/logo.png"; }}
+              />
               <div>
                 <h3 className="font-editorial text-lg tracking-widest text-white uppercase font-bold">
                   Gwalior Stone
@@ -95,23 +100,37 @@ const Footer = () => {
             <h4 className="font-editorial text-sm text-[#B8955D] font-semibold uppercase tracking-wider mb-3">
               Global Export Office
             </h4>
-            <div className="space-y-2.5 font-sans text-[11px] sm:text-xs font-light text-white/80">
-              <div className="flex items-start gap-2 group">
+            <div className="space-y-3 sm:space-y-2.5 font-sans text-[11px] sm:text-xs font-light text-white/80">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Stone+Industrial+Area,+AB+Road,+Gwalior,+Madhya+Pradesh+474001,+India"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-2 group hover:text-white transition-colors duration-300 relative z-20"
+              >
                 <FaMapMarkerAlt className="text-[#B8955D] mt-0.5 flex-shrink-0 text-[10px] transition-transform duration-300 group-hover:scale-125 group-hover:text-[#DFBA73]" />
-                <span className="transition-colors duration-300 group-hover:text-white">Stone Industrial Area, AB Road, Gwalior (M.P.) — 474001 India</span>
-              </div>
-              <div className="flex items-center gap-2 group">
+                <span className="group-hover:underline underline-offset-4 decoration-white/30">Stone Industrial Area, AB Road, Gwalior (M.P.) — 474001 India</span>
+              </a>
+              
+              <div className="flex items-center gap-2 group relative z-20">
                 <FaPhoneAlt className="text-[#B8955D] flex-shrink-0 text-[10px] transition-transform duration-300 group-hover:scale-125 group-hover:text-[#DFBA73]" />
-                <span className="transition-colors duration-300 group-hover:text-white">+91 94251 12100 / +91 751 240 5500</span>
+                <span className="transition-colors duration-300 group-hover:text-white">
+                  <a href="tel:+919425112100" className="hover:underline underline-offset-4 decoration-white/50">+91 94251 12100</a> 
+                  {" "}/{" "} 
+                  <a href="tel:+917512405500" className="hover:underline underline-offset-4 decoration-white/50">+91 751 240 5500</a>
+                </span>
               </div>
-              <div className="flex items-center gap-2 group">
+              
+              <a
+                href="mailto:export@gwaliorstone.com"
+                className="flex items-center gap-2 group hover:text-white transition-colors duration-300 relative z-20"
+              >
                 <FaEnvelope className="text-[#B8955D] flex-shrink-0 text-[10px] transition-transform duration-300 group-hover:scale-125 group-hover:text-[#DFBA73]" />
-                <span className="transition-colors duration-300 group-hover:text-white">export@gwaliorstone.com</span>
-              </div>
+                <span className="group-hover:underline underline-offset-4 decoration-white/30">export@gwaliorstone.com</span>
+              </a>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-white/10 group">
-              <span className="font-mono text-[9px] text-[#B8955D] font-semibold uppercase tracking-widest block mb-1 transition-colors duration-300 group-hover:text-[#DFBA73]">
+            <div className="mt-5 sm:mt-4 pt-4 sm:pt-3 border-t border-white/10 group">
+              <span className="font-mono text-[9px] text-[#B8955D] font-semibold uppercase tracking-widest block mb-1.5 sm:mb-1 transition-colors duration-300 group-hover:text-[#DFBA73]">
                 Quarry Operations
               </span>
               <p className="font-sans text-[10px] text-white/60 leading-relaxed transition-colors duration-300 group-hover:text-white/90">
@@ -123,13 +142,8 @@ const Footer = () => {
         </div>
 
         {/* Bottom Copyright */}
-        <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-sans text-white/50">
+        <div className="pt-5 sm:pt-4 flex items-center justify-center sm:justify-start text-[10px] sm:text-[11px] font-sans text-white/50 text-center sm:text-left">
           <p>© 2026 Gwalior Stone Pvt. Ltd. All rights reserved.</p>
-          <div className="flex items-center gap-4">
-            <a href="/contact" className="hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-white hover:after:w-full after:transition-all after:duration-300">Privacy Policy</a>
-            <a href="/contact" className="hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-white hover:after:w-full after:transition-all after:duration-300">Export Terms</a>
-            <a href="/about" className="hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-white hover:after:w-full after:transition-all after:duration-300">Sitemap</a>
-          </div>
         </div>
 
       </div>

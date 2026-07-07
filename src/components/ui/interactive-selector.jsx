@@ -1,11 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { Maximize2, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Maximize2, X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from 'lucide-react';
 
 const InteractiveSelector = ({ title, description, images }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animatedOptions, setAnimatedOptions] = useState([]);
   const [modalImageIndex, setModalImageIndex] = useState(null);
+  const [magnifyEnabled, setMagnifyEnabled] = useState(true);
+
+  // Magnifying glass state for the modal
+  const [lens, setLens] = useState({ x: 0, y: 0, rectW: 0, rectH: 0, show: false, index: -1 });
+  const zoomRef = useRef(null);
+
+  const handleLensMove = (e) => {
+    if (!zoomRef.current) return;
+    const rect = zoomRef.current.getBoundingClientRect();
+    setLens({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      rectW: rect.width,
+      rectH: rect.height,
+      show: true,
+    });
+  };
+
+  const handleTouchMove = (e) => {
+    if (!zoomRef.current) return;
+    const rect = zoomRef.current.getBoundingClientRect();
+    const touch = e.touches[0];
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    setLens({ show: true, x, y, rectW: rect.width, rectH: rect.height });
+  };
 
   const handleOptionClick = (index) => {
     if (index !== activeIndex) {
@@ -105,9 +131,56 @@ const InteractiveSelector = ({ title, description, images }) => {
                 zIndex: activeIndex === index ? 10 : 1,
                 willChange: 'flex-grow, box-shadow'
               }}
-              onMouseEnter={() => setActiveIndex(index)}
+              onMouseEnter={(e) => {
+                setActiveIndex(index);
+              }}
+              onMouseMove={(e) => {
+                if (activeIndex !== index || !magnifyEnabled) return;
+                const rect = e.currentTarget.getBoundingClientRect();
+                setLens({
+                  x: e.clientX - rect.left,
+                  y: e.clientY - rect.top,
+                  rectW: rect.width,
+                  rectH: rect.height,
+                  show: true,
+                  index: index
+                });
+              }}
+              onMouseLeave={() => {
+                setLens(l => ({ ...l, show: false }));
+              }}
+              onTouchStart={(e) => {
+                setActiveIndex(index);
+              }}
+              onTouchMove={(e) => {
+                // Disabled lens on mobile per request
+              }}
               onClick={() => setModalImageIndex(index)}
             >
+              {/* Lens Effect inside the accordion item */}
+              <div
+                className={`hidden md:block absolute pointer-events-none rounded-full border-4 border-white shadow-2xl z-50 overflow-hidden transition-opacity duration-300 ${lens.show && lens.index === index ? "opacity-100" : "opacity-0"}`}
+                style={{
+                  width: 180,
+                  height: 180,
+                  left: lens.x - 90,
+                  top: lens.y - 90,
+                  display: activeIndex === index ? 'block' : 'none'
+                }}
+              >
+                <div 
+                  className="absolute"
+                  style={{
+                    width: lens.rectW * 2,
+                    height: lens.rectH * 2,
+                    left: -(lens.x * 2) + 90,
+                    top: -(lens.y * 2) + 90,
+                    backgroundImage: `url('${imgUrl}')`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                />
+              </div>
               {/* Shadow effect */}
               <div
                 className="absolute left-0 right-0 bottom-0 pointer-events-none transition-all duration-700 ease-in-out z-0"
@@ -120,25 +193,50 @@ const InteractiveSelector = ({ title, description, images }) => {
                 }}
               ></div>
 
-              {/* Expand Icon */}
+              {/* Action Buttons Container */}
               <div
-                className="absolute left-1/2 -translate-x-1/2 md:left-6 md:translate-x-0 bottom-4 md:bottom-6 flex items-center justify-center z-10 hover:scale-110 transition-transform duration-300"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setModalImageIndex(index);
-                }}
+                className="absolute inset-x-0 bottom-4 md:bottom-6 px-4 md:px-6 flex items-center justify-center md:justify-between z-[60] pointer-events-none"
               >
-                <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-md shadow-lg transition-transform duration-500 ease-in-out cursor-pointer"
-                  style={{
-                    transform: activeIndex === index ? 'scale(1)' : 'scale(0)'
+                {/* Expand Icon */}
+                <div
+                  className="pointer-events-auto hover:scale-110 transition-transform duration-300"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setModalImageIndex(index);
                   }}
                 >
-                  <Maximize2 size={18} className="text-[#B8955D]" />
+                  <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-md shadow-lg transition-transform duration-500 ease-in-out cursor-pointer"
+                    style={{
+                      transform: activeIndex === index ? 'scale(1)' : 'scale(0)'
+                    }}
+                  >
+                    <Maximize2 size={18} className="text-[#B8955D]" />
+                  </div>
+                </div>
+
+                {/* Magnifier Toggle Icon */}
+                <div
+                  className="pointer-events-auto hover:scale-110 transition-transform duration-300 hidden md:block"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMagnifyEnabled(!magnifyEnabled);
+                    setLens(l => ({ ...l, show: false }));
+                  }}
+                >
+                  <div className={`w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full backdrop-blur-md shadow-lg transition-all duration-500 ease-in-out cursor-pointer ${magnifyEnabled ? 'bg-[#B8955D] text-white' : 'bg-white/90 text-[#B8955D]'}`}
+                    style={{
+                      transform: activeIndex === index ? 'scale(1)' : 'scale(0)'
+                    }}
+                  >
+                    {magnifyEnabled ? <ZoomIn size={18} /> : <ZoomOut size={18} />}
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
+
+
 
         {/* Custom animations */}
         <style>{`

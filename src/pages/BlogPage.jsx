@@ -20,6 +20,21 @@ const tags = [
 
 const BlogPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  const postsPerPage = 6;
+  
+  const filteredPosts = blogPosts.filter(post => 
+    post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    post.excerpt.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+  const currentPosts = filteredPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,7 +73,7 @@ const BlogPage = () => {
           {/* Main Blog Grid (Left Side) */}
           <div className="w-full lg:w-2/3">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {blogPosts.map((post, idx) => (
+              {currentPosts.map((post, idx) => (
                 <Link 
                   to={`/blog/${post.id}`}
                   key={post.id} 
@@ -114,15 +129,39 @@ const BlogPage = () => {
               ))}
             </div>
             
-            {/* Pagination Placeholder */}
-            <div className="mt-12 flex justify-center gap-2">
-               <button className="w-10 h-10 rounded-lg bg-[#B8955D] text-white font-medium flex items-center justify-center shadow-md">1</button>
-               <button className="w-10 h-10 rounded-lg bg-white border border-[#EDEDE9] text-[#666] font-medium flex items-center justify-center hover:bg-[#FAFAF8] transition-colors">2</button>
-               <button className="w-10 h-10 rounded-lg bg-white border border-[#EDEDE9] text-[#666] font-medium flex items-center justify-center hover:bg-[#FAFAF8] transition-colors">3</button>
-               <button className="w-10 h-10 rounded-lg bg-white border border-[#EDEDE9] text-[#666] font-medium flex items-center justify-center hover:bg-[#FAFAF8] transition-colors">
-                 <ChevronRight size={16} />
-               </button>
-            </div>
+            {/* Dynamic Pagination */}
+            {totalPages > 0 && (
+              <div className="mt-12 flex justify-center gap-2">
+                {Array.from({ length: totalPages }).map((_, i) => (
+                  <button 
+                    key={i}
+                    onClick={() => {
+                      setCurrentPage(i + 1);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className={`w-10 h-10 rounded-lg font-medium flex items-center justify-center transition-colors ${
+                      currentPage === i + 1 
+                        ? "bg-[#B8955D] text-white shadow-md" 
+                        : "bg-white border border-[#EDEDE9] text-[#666] hover:bg-[#FAFAF8]"
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+                
+                {currentPage < totalPages && (
+                  <button 
+                    onClick={() => {
+                      setCurrentPage(prev => prev + 1);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="w-10 h-10 rounded-lg bg-white border border-[#EDEDE9] text-[#666] font-medium flex items-center justify-center hover:bg-[#FAFAF8] transition-colors"
+                  >
+                    <ChevronRight size={16} />
+                  </button>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Sidebar (Right Side) */}

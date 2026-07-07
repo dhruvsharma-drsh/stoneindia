@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+﻿import React, { useRef, useEffect, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "react-router-dom";
@@ -132,6 +132,15 @@ const MintStoneBlocksView = () => {
       rectH: rect.height,
       show: true,
     });
+  };
+
+  const handleTouchMove = (e) => {
+    if (!zoomRef.current) return;
+    const rect = zoomRef.current.getBoundingClientRect();
+    const touch = e.touches[0];
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    setLens({ show: true, x, y, rectW: rect.width, rectH: rect.height });
   };
 
   return (
@@ -283,7 +292,10 @@ const MintStoneBlocksView = () => {
           </div>
 
           <div className="split-right relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
-            <img src={galleryImages[2]} alt="Mint Stone Blocks Pattern" className="w-full h-full object-cover" />
+            <img src={galleryImages[2]} alt="Mint Stone Blocks Pattern" className="w-full h-full object-cover" onLoad={(e) => {
+              const r = e.target.getBoundingClientRect();
+              setLens(l => ({ ...l, x: r.width/2, y: r.height/2, rectW: r.width, rectH: r.height }));
+            }} />
             <div className="absolute inset-0 bg-gradient-to-t from-[#111]/80 via-transparent to-transparent pointer-events-none" />
             <div className="absolute bottom-10 left-10 right-10 pointer-events-none">
               <h3 className="text-white font-serif text-3xl mb-3">Natural Beauty</h3>
@@ -305,8 +317,8 @@ const MintStoneBlocksView = () => {
               Hover over the stone to inspect the uniform grain size, natural shades, and exquisite texture up close —
               the same detail you'll find in every Mint Stone block.
             </p>
-            <div className="hidden lg:flex items-center gap-2 text-[#B8955D] text-sm font-medium">
-              <ZoomIn size={16} /> Move your cursor over the image
+            <div className="flex items-center gap-2 text-[#B8955D] text-sm font-medium">
+              <ZoomIn size={16} /> <span className="hidden lg:inline">Move your cursor over the image</span><span className="inline lg:hidden">Drag your finger to explore the texture</span>
             </div>
           </div>
 
@@ -314,12 +326,18 @@ const MintStoneBlocksView = () => {
             ref={zoomRef}
             onMouseMove={handleLensMove}
             onMouseLeave={() => setLens((l) => ({ ...l, show: false }))}
-            className="split-right relative aspect-square rounded-3xl overflow-hidden shadow-2xl lg:cursor-none"
+            onTouchMove={handleTouchMove}
+            onTouchStart={(e) => {
+              handleTouchMove(e);
+            }}
+            className="split-right relative aspect-square rounded-3xl overflow-hidden shadow-2xl lg:cursor-none touch-none"
           >
-            <img src={TEXTURE_IMG} alt="Stone texture detail" className="w-full h-full object-cover" />
-            {lens.show && (
-              <div
-                className="hidden lg:block absolute pointer-events-none rounded-full border-4 border-white shadow-2xl"
+            <img src={TEXTURE_IMG} alt="Stone texture detail" className="w-full h-full object-cover" onLoad={(e) => {
+              const r = e.target.getBoundingClientRect();
+              setLens(l => ({ ...l, x: r.width/2, y: r.height/2, rectW: r.width, rectH: r.height }));
+            }} />
+            <div
+                className={`absolute pointer-events-none rounded-full border-4 border-white shadow-2xl z-50 transition-opacity duration-300 ${lens.show ? "opacity-100" : "opacity-100 lg:opacity-0"}`}
                 style={{
                   width: LENS_SIZE,
                   height: LENS_SIZE,
@@ -330,7 +348,6 @@ const MintStoneBlocksView = () => {
                   backgroundPosition: `-${lens.x * ZOOM - LENS_SIZE / 2}px -${lens.y * ZOOM - LENS_SIZE / 2}px`,
                 }}
               />
-            )}
           </div>
         </div>
       </section>
@@ -518,3 +535,4 @@ const MintStoneBlocksView = () => {
 };
 
 export default MintStoneBlocksView;
+

@@ -24,6 +24,7 @@ import {
   Box,
   PhoneCall,
   ArrowRight,
+  ChevronDown,
 } from "lucide-react";
 
 export function Header() {
@@ -183,42 +184,34 @@ export function Header() {
 
       {/* Mobile Portal Menu */}
       <MobileMenu open={open} className="flex flex-col justify-between gap-4 overflow-y-auto bg-[#0a0a0a]/95 backdrop-blur-2xl px-6 py-8">
-        <div className="flex flex-col gap-4 mt-4">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#B8955D]">Menu</span>
-          <Link to="/" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Home</Link>
-          <Link to="/about" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">About Us</Link>
+        <div className="flex flex-col gap-1 mt-4">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#B8955D] mb-3">Menu</span>
+          <Link to="/" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-2.5 border-b border-white/5">Home</Link>
+          <Link to="/about" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-2.5 border-b border-white/5">About Us</Link>
           
-          <div className="border-y border-white/10 py-4 my-2 flex flex-col gap-6">
-            <div>
-              <span className="text-xs font-mono uppercase tracking-widest text-[#B8955D] block mb-3 pb-2 border-b border-white/10">Stone Products</span>
-              <div className="grid grid-cols-1 gap-2.5">
-                {megaMenuData.stoneProducts.map((item) => (
-                  <Link key={item} to={`/products/stone-products/${item.toLowerCase().replace(/\s+/g, '-')}`} onClick={() => setOpen(false)} className="text-sm font-medium text-white/80 hover:text-white pl-2 border-l border-white/10 hover:border-[#B8955D] transition-colors">{item}</Link>
-                ))}
-              </div>
-            </div>
-            <div>
-              <span className="text-xs font-mono uppercase tracking-widest text-[#B8955D] block mb-3 pb-2 border-b border-white/10">Sandstone</span>
-              <div className="grid grid-cols-1 gap-2.5">
-                {megaMenuData.sandstone.map((item) => (
-                  <Link key={item} to={`/products/sandstone/${item.toLowerCase().replace(/\s+/g, '-')}`} onClick={() => setOpen(false)} className="text-sm font-medium text-white/80 hover:text-white pl-2 border-l border-white/10 hover:border-[#B8955D] transition-colors">{item}</Link>
-                ))}
-              </div>
-            </div>
-            <div>
-              <span className="text-xs font-mono uppercase tracking-widest text-[#B8955D] block mb-3 pb-2 border-b border-white/10">Stone Articrafts</span>
-              <div className="grid grid-cols-1 gap-2.5">
-                {megaMenuData.stoneArticrafts.map((item) => (
-                  <Link key={item} to={`/products/stone-articrafts/${item.toLowerCase().replace(/\s+/g, '-')}`} onClick={() => setOpen(false)} className="text-sm font-medium text-white/80 hover:text-white pl-2 border-l border-white/10 hover:border-[#B8955D] transition-colors">{item}</Link>
-                ))}
-              </div>
-            </div>
-          </div>
+          {/* ── Our Products Accordion ── */}
+          <MobileAccordion label="Our Products" linkTo="/products" onNavigate={() => setOpen(false)}>
+            <MobileAccordion label="Stone Products" nested>
+              {megaMenuData.stoneProducts.map((item) => (
+                <Link key={item} to={`/products/stone-products/${item.toLowerCase().replace(/\s+/g, '-')}`} onClick={() => setOpen(false)} className="block text-sm text-white/70 hover:text-white py-1.5 pl-4 border-l border-white/10 hover:border-[#B8955D] transition-colors">{item}</Link>
+              ))}
+            </MobileAccordion>
+            <MobileAccordion label="Sandstone" nested>
+              {megaMenuData.sandstone.map((item) => (
+                <Link key={item} to={`/products/sandstone/${item.toLowerCase().replace(/\s+/g, '-')}`} onClick={() => setOpen(false)} className="block text-sm text-white/70 hover:text-white py-1.5 pl-4 border-l border-white/10 hover:border-[#B8955D] transition-colors">{item}</Link>
+              ))}
+            </MobileAccordion>
+            <MobileAccordion label="Stone Articrafts" nested>
+              {megaMenuData.stoneArticrafts.map((item) => (
+                <Link key={item} to={`/products/stone-articrafts/${item.toLowerCase().replace(/\s+/g, '-')}`} onClick={() => setOpen(false)} className="block text-sm text-white/70 hover:text-white py-1.5 pl-4 border-l border-white/10 hover:border-[#B8955D] transition-colors">{item}</Link>
+              ))}
+            </MobileAccordion>
+          </MobileAccordion>
 
-          <Link to="/projects" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Our Projects</Link>
-          <Link to="/packaging" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Packaging</Link>
-          <Link to="/blog" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Blog</Link>
-          <Link to="/contact" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-1">Contact Us</Link>
+          <Link to="/projects" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-2.5 border-b border-white/5">Our Projects</Link>
+          <Link to="/packaging" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-2.5 border-b border-white/5">Packaging</Link>
+          <Link to="/blog" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-2.5 border-b border-white/5">Blog</Link>
+          <Link to="/contact" onClick={() => setOpen(false)} className="text-lg font-medium text-white hover:text-[#B8955D] py-2.5 border-b border-white/5">Contact Us</Link>
         </div>
 
         <div className="flex flex-col gap-3 mt-auto pt-6 border-t border-white/10">
@@ -236,19 +229,22 @@ export function Header() {
 }
 
 function MobileMenu({ open, children, className, ...props }) {
-  if (!open || typeof window === "undefined") return null;
+  if (typeof window === "undefined") return null;
 
   return createPortal(
     <div
       id="mobile-menu"
       className={cn(
-        "fixed top-20 right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden lg:hidden border-t border-white/10"
+        "fixed top-20 right-0 bottom-0 left-0 z-40 flex flex-col lg:hidden border-t border-white/10 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+        open
+          ? "opacity-100 translate-y-0 pointer-events-auto"
+          : "opacity-0 -translate-y-4 pointer-events-none"
       )}
     >
       <div
-        data-slot={open ? "open" : "closed"}
         className={cn(
-          "data-[slot=open]:animate-in data-[slot=open]:zoom-in-97 ease-out size-full",
+          "size-full transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          open ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0",
           className
         )}
         {...props}
@@ -257,6 +253,63 @@ function MobileMenu({ open, children, className, ...props }) {
       </div>
     </div>,
     document.body
+  );
+}
+
+function MobileAccordion({ label, children, nested = false, linkTo, onNavigate }) {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const navigate = useNavigate();
+
+  return (
+    <div className={cn(
+      nested ? "" : "border-b border-white/5"
+    )}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={cn(
+          "w-full flex items-center justify-between py-2.5 text-left transition-colors",
+          nested
+            ? "text-xs font-mono uppercase tracking-widest text-[#B8955D] hover:text-[#DFBA73] pl-2 py-2"
+            : "text-lg font-medium text-white hover:text-[#B8955D]"
+        )}
+      >
+        <span className="flex items-center gap-2">
+          {label}
+          {linkTo && (
+            <span
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(linkTo);
+                onNavigate?.();
+              }}
+              className="text-xs font-mono text-[#B8955D]/60 hover:text-[#B8955D] underline underline-offset-2 cursor-pointer"
+            >
+              View All
+            </span>
+          )}
+        </span>
+        <ChevronDown
+          className={cn(
+            "w-4 h-4 transition-transform duration-300",
+            nested ? "text-[#B8955D]/50" : "text-white/40",
+            isOpen && "rotate-180"
+          )}
+        />
+      </button>
+      <div
+        className={cn(
+          "overflow-hidden transition-all duration-300 ease-in-out",
+          isOpen ? "max-h-[2000px] opacity-100 pb-3" : "max-h-0 opacity-0"
+        )}
+      >
+        <div className={cn(
+          "flex flex-col gap-0.5",
+          nested ? "pl-2 mt-1" : "pl-1 mt-1 flex flex-col gap-3"
+        )}>
+          {children}
+        </div>
+      </div>
+    </div>
   );
 }
 

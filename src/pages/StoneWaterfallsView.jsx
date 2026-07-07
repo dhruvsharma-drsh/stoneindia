@@ -138,6 +138,15 @@ const StoneWaterfallsView = () => {
     });
   };
 
+  const handleTouchMove = (e) => {
+    if (!zoomRef.current) return;
+    const rect = zoomRef.current.getBoundingClientRect();
+    const touch = e.touches[0];
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    setLens({ show: true, x, y, rectW: rect.width, rectH: rect.height });
+  };
+
   return (
     <div ref={pageRef} className="bg-[#FAFAF8] min-h-[100svh] font-sans text-[#111]">
 
@@ -334,8 +343,8 @@ const StoneWaterfallsView = () => {
             <p className="text-[15px] text-[#666] leading-[1.85] font-light mb-5">
               Hover over the waterfall stone to inspect the natural vivacious appearance up close. See the optimum finish and outstanding design that makes these stones 100% defect-free and highly sought after.
             </p>
-            <div className="hidden lg:flex items-center gap-2 text-[#B8955D] text-sm font-medium">
-              <ZoomIn size={16} /> Move your cursor over the image
+            <div className="flex items-center gap-2 text-[#B8955D] text-sm font-medium">
+              <ZoomIn size={16} /> <span className="hidden lg:inline">Move your cursor over the image</span><span className="inline lg:hidden">Drag your finger to explore the texture</span>
             </div>
           </div>
 
@@ -343,12 +352,18 @@ const StoneWaterfallsView = () => {
             ref={zoomRef}
             onMouseMove={handleLensMove}
             onMouseLeave={() => setLens((l) => ({ ...l, show: false }))}
-            className="split-right relative aspect-square rounded-3xl overflow-hidden shadow-2xl lg:cursor-none"
+            onTouchMove={handleTouchMove}
+            onTouchStart={(e) => {
+              handleTouchMove(e);
+            }}
+            className="split-right relative aspect-square rounded-3xl overflow-hidden shadow-2xl lg:cursor-none touch-none"
           >
-            <img src={TEXTURE_IMG} alt="Stone detail" className="w-full h-full object-cover" />
-            {lens.show && (
-              <div
-                className="hidden lg:block absolute pointer-events-none rounded-full border-4 border-white shadow-2xl"
+            <img src={TEXTURE_IMG} alt="Stone detail" className="w-full h-full object-cover" onLoad={(e) => {
+              const r = e.target.getBoundingClientRect();
+              setLens(l => ({ ...l, x: r.width/2, y: r.height/2, rectW: r.width, rectH: r.height }));
+            }} />
+            <div
+                className={`absolute pointer-events-none rounded-full border-4 border-white shadow-2xl z-50 transition-opacity duration-300 ${lens.show ? "opacity-100" : "opacity-100 lg:opacity-0"}`}
                 style={{
                   width: LENS_SIZE,
                   height: LENS_SIZE,
@@ -359,7 +374,6 @@ const StoneWaterfallsView = () => {
                   backgroundPosition: `-${lens.x * ZOOM - LENS_SIZE / 2}px -${lens.y * ZOOM - LENS_SIZE / 2}px`,
                 }}
               />
-            )}
           </div>
         </div>
       </section>

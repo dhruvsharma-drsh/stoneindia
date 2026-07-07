@@ -38,7 +38,7 @@ const Feedback = () => {
       <div className="min-h-[400px] flex flex-wrap gap-6 items-center justify-center relative pb-16">
         <div
           className="items-center justify-center relative flex w-full"
-          style={{ maxWidth: "1024px" }}
+          style={{ maxWidth: "1200px" }}
         >
           <CircularTestimonials
             testimonials={testimonials}

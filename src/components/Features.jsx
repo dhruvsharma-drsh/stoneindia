@@ -160,6 +160,39 @@ const Features = () => {
                               <Layers className="w-3.5 h-3.5 text-[#B8955D]" /> {item.stoneUsed}
                             </span>
                           </div>
+
+                          {/* ── MOBILE ONLY: Inline image dropdown ── */}
+                          <div className="lg:hidden mt-5 rounded-2xl overflow-hidden border border-black/10 shadow-lg aspect-[4/3] relative">
+                            <img
+                              src={item.image}
+                              alt={item.title}
+                              loading="lazy"
+                              className="w-full h-full object-cover object-center"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                            <div className="absolute bottom-4 left-4 right-4 z-10">
+                              <span className="font-sans text-[10px] text-[#DFBA73] tracking-widest uppercase font-semibold">
+                                {item.location}
+                              </span>
+                              <h4 className="font-editorial text-lg text-white font-light leading-tight mt-0.5">
+                                {item.title}
+                              </h4>
+                            </div>
+                            <div className="absolute top-3 right-3 z-10">
+                              <span className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#B8955D] text-white font-sans text-[10px] font-semibold tracking-wider uppercase shadow-lg">
+                                <CheckCircle2 className="w-3 h-3" /> Verified
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Mobile CTA */}
+                          <a
+                            href="/projects"
+                            className="lg:hidden mt-4 w-full inline-flex items-center justify-center gap-2 bg-[#FAF9F5] border border-[#B8955D]/30 text-[#B8955D] font-sans text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-full transition-all duration-300 hover:bg-[#B8955D] hover:text-white"
+                          >
+                            <span>View All Projects</span>
+                            <ArrowUpRight className="w-3.5 h-3.5" />
+                          </a>
                         </div>
                       </motion.div>
                     )}
@@ -169,8 +202,8 @@ const Features = () => {
             })}
           </div>
 
-          {/* Right Column: Sticky Image Showcase (5 Cols) */}
-          <div className="lg:col-span-5 lg:sticky lg:top-32">
+          {/* Right Column: Sticky Image Showcase (5 Cols) — DESKTOP/TABLET ONLY */}
+          <div className="hidden lg:block lg:col-span-5 lg:sticky lg:top-32">
             <div className="relative rounded-3xl overflow-hidden bg-[#FAF9F5] border border-black/10 shadow-xl aspect-[4/5] sm:aspect-[4/4] lg:aspect-[4/5] group">
               
               {/* Image Transition Box */}

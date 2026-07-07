@@ -696,9 +696,9 @@ const AboutPage = () => {
             </p>
           </div>
 
-          {/* Wave Content Area - Scrollable on mobile/tablet */}
-          <div className="journey__wave-wrapper reveal-block overflow-x-auto pb-4">
-            <div className="min-w-[1100px] lg:min-w-0">
+          {/* Wave Content Area - Vertical on mobile, Wave on desktop */}
+          <div className="journey__wave-wrapper reveal-block pb-4">
+            <div className="w-full">
               {/* The mathematical SVG wave */}
               <div className="journey__wave-bg">
                 <svg viewBox="0 0 1500 200" preserveAspectRatio="none" width="100%" height="100%">

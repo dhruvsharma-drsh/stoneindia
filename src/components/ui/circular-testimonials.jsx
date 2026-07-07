@@ -253,17 +253,20 @@ export const CircularTestimonials = ({
         .testimonial-container {
           width: 100%;
           max-width: 56rem;
-          padding: 2rem;
+          padding: 1rem;
         }
         .testimonial-grid {
-          display: grid;
-          gap: 5rem;
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
         }
         .image-container {
           position: relative;
           width: 100%;
-          height: 24rem;
+          height: 14rem;
           perspective: 1000px;
+          margin: 0 auto;
+          max-width: 16rem;
         }
         .testimonial-image {
           position: absolute;
@@ -277,25 +280,30 @@ export const CircularTestimonials = ({
           display: flex;
           flex-direction: column;
           justify-content: space-between;
+          text-align: center;
         }
         .name {
           font-weight: bold;
           margin-bottom: 0.25rem;
+          font-size: 1.25rem !important;
         }
         .designation {
-          margin-bottom: 2rem;
+          margin-bottom: 1.25rem;
+          font-size: 0.8rem !important;
         }
         .quote {
           line-height: 1.75;
+          font-size: 1rem !important;
         }
         .arrow-buttons {
           display: flex;
-          gap: 1.5rem;
-          padding-top: 3rem;
+          gap: 1rem;
+          padding-top: 1.5rem;
+          justify-content: center;
         }
         .arrow-button {
-          width: 2.7rem;
-          height: 2.7rem;
+          width: 2.4rem;
+          height: 2.4rem;
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -304,15 +312,52 @@ export const CircularTestimonials = ({
           transition: background-color 0.3s;
           border: none;
         }
+        .arrow-button svg {
+          width: 16px;
+          height: 16px;
+        }
         .word {
           display: inline-block;
         }
         @media (min-width: 768px) {
+          .testimonial-container {
+            padding: 2rem;
+            max-width: 68rem;
+          }
           .testimonial-grid {
+            display: grid;
             grid-template-columns: 1fr 1fr;
+            gap: 8rem;
+          }
+          .image-container {
+            height: 24rem;
+            max-width: none;
+          }
+          .testimonial-content {
+            text-align: left;
+          }
+          .name {
+            font-size: inherit !important;
+          }
+          .designation {
+            margin-bottom: 2rem;
+            font-size: inherit !important;
+          }
+          .quote {
+            font-size: inherit !important;
           }
           .arrow-buttons {
             padding-top: 0;
+            justify-content: flex-start;
+            gap: 1.5rem;
+          }
+          .arrow-button {
+            width: 2.7rem;
+            height: 2.7rem;
+          }
+          .arrow-button svg {
+            width: 28px;
+            height: 28px;
           }
         }
       `}</style>

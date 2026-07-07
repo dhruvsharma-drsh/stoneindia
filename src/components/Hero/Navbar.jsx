@@ -70,11 +70,11 @@ const Navbar = () => {
         >
           <div className="relative flex items-center justify-center transition-transform duration-500 group-hover:scale-105">
             <img
-              src="img/stone_logo_rock.png"
+              src="/img/stone_logo_rock.png"
               alt="Gwalior Stone Logo"
               className="h-9 w-auto object-contain drop-shadow-sm"
               onError={(e) => {
-                e.currentTarget.src = "img/logo.png";
+                e.currentTarget.src = "/img/logo.png";
               }}
             />
           </div>
