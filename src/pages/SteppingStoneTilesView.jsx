@@ -1,4 +1,4 @@
-﻿// src/pages/SteppingStoneTilesView.jsx
+// src/pages/SteppingStoneTilesView.jsx
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -578,7 +578,7 @@ const SteppingStoneTilesView = () => {
           <p className="text-lg md:text-xl text-white/70 font-light max-w-2xl mx-auto mb-10 leading-relaxed">
             Our world-class manufacturing practices ensure you get the supreme quality you deserve. Contact us for bulk orders for homes, villas, offices, and hotels.
           </p>
-          <a href="mailto:info@stoneindia.co" className="px-10 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wider uppercase hover:bg-[#B8955D] hover:text-white transition-all duration-300 shadow-xl inline-flex items-center gap-2">
+          <a href="mailto:info@gwaliorstone.in" className="px-10 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wider uppercase hover:bg-[#B8955D] hover:text-white transition-all duration-300 shadow-xl inline-flex items-center gap-2">
             Contact Us Today <ArrowRight size={16} />
           </a>
         </div>

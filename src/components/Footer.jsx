@@ -47,7 +47,7 @@ const Footer = () => {
             {/* Glowing Social Icons */}
             <div className="flex flex-wrap items-center gap-3">
               <a
-                href="mailto:info@stoneindia.co"
+                href="mailto:info@gwaliorstone.in"
                 className="w-8 h-8 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white transition-all duration-300 hover:bg-[#DFBA73] hover:border-[#DFBA73] hover:text-[#111111] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(223,186,115,0.4)]"
                 aria-label="Email Us"
               >
@@ -103,11 +103,11 @@ const Footer = () => {
               </div>
               
               <a
-                href="mailto:info@stoneindia.co"
+                href="mailto:info@gwaliorstone.in"
                 className="flex items-center gap-2 group hover:text-white transition-colors duration-300 relative z-20"
               >
                 <FaEnvelope className="text-[#B8955D] flex-shrink-0 text-[10px] transition-transform duration-300 group-hover:scale-125 group-hover:text-[#DFBA73]" />
-                <span className="group-hover:underline underline-offset-4 decoration-white/30">info@stoneindia.co</span>
+                <span className="group-hover:underline underline-offset-4 decoration-white/30">info@gwaliorstone.in</span>
               </a>
             </div>
 

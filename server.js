@@ -157,7 +157,7 @@ function emailShell({ eyebrow, previewText, bodyHtml }) {
                 C-56 Industrial Area Banmore, Morena, Madhya Pradesh 476444<br />
                 <a href="tel:+919371013666" style="color:${THEME.offWhite}; text-decoration:none;">+91 937 101 3666</a>
                 &nbsp;&middot;&nbsp;
-                <a href="mailto:info@stoneindia.co" style="color:${THEME.offWhite}; text-decoration:none;">info@stoneindia.co</a>
+                <a href="mailto:info@gwaliorstone.in" style="color:${THEME.offWhite}; text-decoration:none;">info@gwaliorstone.in</a>
               </div>
             </td>
           </tr>
@@ -257,7 +257,7 @@ app.post('/api/contact', async (req, res) => {
     to: email,
     replyTo: process.env.RECEIVER_EMAIL || process.env.SMTP_USER, // so a customer reply reaches the team, not the sending inbox
     subject: `We've received your inquiry — Gwalior Stone`,
-    text: `Hello ${name},\n\nThank you for reaching out to Gwalior Stone. We've received your message regarding "${subject || 'your inquiry'}" and will get back to you within 1-2 business days.\n\nYour message:\n${message}\n\nExplore our collection: ${WEBSITE_URL}\n\nGwalior Stone Pvt. Ltd.\nC-56 Industrial Area Banmore, Morena, Madhya Pradesh 476444\n+91 937 101 3666 | info@stoneindia.co`,
+    text: `Hello ${name},\n\nThank you for reaching out to Gwalior Stone. We've received your message regarding "${subject || 'your inquiry'}" and will get back to you within 1-2 business days.\n\nYour message:\n${message}\n\nExplore our collection: ${WEBSITE_URL}\n\nGwalior Stone Pvt. Ltd.\nC-56 Industrial Area Banmore, Morena, Madhya Pradesh 476444\n+91 937 101 3666 | info@gwaliorstone.in`,
     html: emailShell({
       eyebrow: 'Natural Luxury Surfaces',
       previewText: `Thank you for contacting Gwalior Stone — we'll be in touch shortly.`,

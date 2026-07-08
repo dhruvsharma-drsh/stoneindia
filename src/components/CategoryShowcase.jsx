@@ -80,8 +80,22 @@ const CategoryShowcase = () => {
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "bottom bottom",
+        end: "bottom top", // Keeps it pinned until it's fully covered
         pin: true,
         pinSpacing: false,
+      });
+
+      // 2. Cinematic fade-out as the next section (Stone Collection) scrolls up over it
+      gsap.to(contentRef.current, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "bottom bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+        opacity: 0,
+        y: -100,
+        ease: "none"
       });
 
       // 4. Reveal Text, then Cards sequentially after the section is in view

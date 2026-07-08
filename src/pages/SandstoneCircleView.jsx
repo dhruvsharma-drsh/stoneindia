@@ -1,4 +1,4 @@
-﻿// src/pages/SandstoneCircleView.jsx
+// src/pages/SandstoneCircleView.jsx
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -581,7 +581,7 @@ const SandstoneCircleView = () => {
             Available in bulk for wholesale buyers globally — the perfect choice for feature
             gardens, temples, and elegant pavements.
           </p>
-          <a href="mailto:info@stoneindia.co" className="px-10 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wider uppercase hover:bg-[#B8955D] hover:text-white transition-all duration-300 shadow-xl inline-flex items-center gap-2">
+          <a href="mailto:info@gwaliorstone.in" className="px-10 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wider uppercase hover:bg-[#B8955D] hover:text-white transition-all duration-300 shadow-xl inline-flex items-center gap-2">
             Contact Us Today <ArrowRight size={16} />
           </a>
         </div>

@@ -9,7 +9,7 @@ const ContactUsPage = () => {
         title="Let's Create Together, Something Timeless."
         description="Whether you're looking for premium natural stone, exploring custom solutions, or simply want to learn more — we'd love to hear from you. Our team responds within 24 hours."
         phone="+91 937 101 3666"
-        email="info@stoneindia.co"
+        email="info@gwaliorstone.in"
         address="C-56 Industrial Area, Banmore, Morena, Madhya Pradesh 476444"
       />
       <Footer />
