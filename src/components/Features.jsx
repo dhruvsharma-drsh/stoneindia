@@ -71,16 +71,13 @@ const Features = () => {
               Our Global <span className="font-normal italic text-[#B8955D]">Projects.</span>
             </h2>
           </div>
-          <p className="font-sans text-sm sm:text-base text-[#666666] max-w-md font-light leading-relaxed">
-            Hover over our featured installations below to explore our craftsmanship in luxury residences, government estates, and European architecture.
-          </p>
         </div>
 
         {/* Vertical Interactive Showcase Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
           {/* Left Column: Vertical List of Projects (7 Cols) */}
-          <div className="lg:col-span-7 flex flex-col border-t border-black/10">
+          <div className="lg:col-span-7 flex flex-col border-t border-black/10 min-h-[650px] xl:min-h-[700px]">
             {projects.map((item, index) => {
               const isActive = activeIndex === index;
               return (
@@ -239,9 +236,15 @@ const Features = () => {
 
               {/* Floating Bottom Info Overlay */}
               <div className="absolute bottom-6 left-6 right-6 z-10 flex flex-col justify-end">
-                <span className="font-sans text-xs text-[#DFBA73] tracking-widest uppercase font-semibold mb-1">
-                  {activeProject.location}
-                </span>
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="font-sans text-[11px] text-[#DFBA73] tracking-widest uppercase font-semibold">
+                    {activeProject.location}
+                  </span>
+                  <span className="w-1 h-1 rounded-full bg-white/30" />
+                  <span className="font-sans text-[10px] text-white/80 tracking-widest uppercase font-semibold flex items-center gap-1.5">
+                    <Layers className="w-3 h-3 text-[#DFBA73]" /> {activeProject.stoneUsed}
+                  </span>
+                </div>
                 <h4 className="font-editorial text-2xl sm:text-3xl text-white font-light leading-tight mb-3">
                   {activeProject.title}
                 </h4>
