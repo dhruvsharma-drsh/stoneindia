@@ -4,6 +4,13 @@ import { motion } from "framer-motion";
 import { Layers, Sparkles, Hammer, ArrowUpRight, MapPin, Award, ShieldCheck } from "lucide-react";
 import { stoneProductsData } from "../data/stoneProductsData";
 
+import { Suspense, useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import RevealWaveImage from "./ui/reveal-wave-image";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const categories = [
   {
     id: "stoneProducts",
@@ -17,6 +24,8 @@ const categories = [
     defaultQuality: "Grade A+ ISO 9001",
     catalogLink: "/products/stone-products",
     img: stoneProductsData.grid[0]?.img || "/img/stone_mint_sandstone.png",
+    cardImg: "/img/product/Stone-product-image.webp",
+    cardDesc: "Stone India offers a variety of manufactured stone products, thin brick, tile, and precast products. Architectural stone products can be used to greatly enhance the look and feel of your establishment.",
   },
   {
     id: "sandstone",
@@ -28,8 +37,10 @@ const categories = [
     defaultOrigin: "Rajasthan, India",
     defaultFinish: "Cleft & Honed",
     defaultQuality: "Grade A+ Certified",
-    catalogLink: "/products",
+    catalogLink: "/products/gwalior-sandstone",
     img: stoneProductsData.sandstoneProducts[0]?.img || "/img/stone_mint_sandstone.png",
+    cardImg: "/img/product/pro-1.webp",
+    cardDesc: "Among the most precious gift that nature offers, rocks and minerals stand tall. Sandstone is a sedimentary rock consisting of rock grains or minerals. They are available in a variety of colors including white, red, yellow, tan.",
   },
   {
     id: "articrafts",
@@ -43,38 +54,115 @@ const categories = [
     defaultQuality: "Bespoke Heritage",
     catalogLink: "/products/stone-articrafts",
     img: stoneProductsData.stoneArticrafts[0]?.img || "/img/stone_mint_sandstone.png",
+    cardImg: "/img/product/last card image .webp",
+    cardDesc: "STONE INDIA is a master in offering highly attractive and useful stone articrafts for our customers. We offer amazing varieties of products that are designed by following international manufacturing practices...",
   },
 ];
 
 const CategoryShowcase = () => {
-  return (
-    <section id="categories-showcase" className="relative w-full bg-[#FAF9F5] text-[#111111] pt-24 pb-12 sm:pt-36 sm:pb-16 overflow-hidden border-t border-black/5">
-      {/* Subtle ambient lighting */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[75vw] h-[45vw] bg-[#B8955D]/[0.06] rounded-full blur-[160px] pointer-events-none" />
+  const sectionRef = useRef(null);
+  const contentRef = useRef(null);
+  const headerRef = useRef(null);
+  const cardsRef = useRef([]);
+  cardsRef.current = [];
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
+  const addToCardsRef = (el) => {
+    if (el && !cardsRef.current.includes(el)) {
+      cardsRef.current.push(el);
+    }
+  };
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // 1. Pin the section when its bottom hits the bottom of the viewport
+      // By setting pinSpacing: false, the next section (Stone Collection) 
+      // will naturally scroll up and overlap this section.
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "bottom bottom",
+        pin: true,
+        pinSpacing: false,
+      });
+
+      // 4. Reveal Text, then Cards sequentially after the section is in view
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 45%", // Triggers when the section has comfortably emerged
+          toggleActions: "play none none reverse",
+        }
+      });
+
+      if (headerRef.current) {
+        tl.fromTo(headerRef.current.children, 
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out" }
+        );
+      }
+
+      if (cardsRef.current.length > 0) {
+        tl.fromTo(cardsRef.current,
+          { opacity: 0, y: 40 },
+          { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out" },
+          "-=0.4" // Overlap slightly with text animation
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section 
+      ref={sectionRef}
+      id="categories-showcase" 
+      className="relative w-full bg-[#111111] text-white pt-16 pb-12 sm:pt-20 sm:pb-16 overflow-hidden"
+    >
+      
+      {/* ── RevealWaveImage Background — desktop only ── */}
+      <div className="hidden md:block absolute inset-0 z-0">
+        <Suspense fallback={null}>
+          <RevealWaveImage
+            src="/img/project_udaipur_palace.png"
+            waveSpeed={0.2}
+            waveFrequency={0.7}
+            waveAmplitude={0.5}
+            revealRadius={0.6}
+            revealSoftness={0.9}
+            pixelSize={2}
+            mouseRadius={0.4}
+            className="w-full h-full"
+          />
+        </Suspense>
+      </div>
+
+      <div ref={contentRef} className="max-w-[90rem] mx-auto px-6 md:px-12 relative z-10 pointer-events-none">
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-20">
-          <h2 className="font-editorial text-4xl sm:text-6xl lg:text-7xl font-light tracking-tight text-[#111111] leading-[1.08] mb-6">
-            Explore <span className="font-normal italic text-[#B8955D]">Our Collections.</span>
+        {/* Section Header — Stone Collection style */}
+        <div ref={headerRef} className="text-center mb-10 md:mb-14">
+          <h2 
+            className="text-4xl sm:text-6xl md:text-8xl font-serif text-[#F8F8F8] mb-2 tracking-tight"
+            style={{ textShadow: "0 4px 20px rgba(0,0,0,0.35)" }}
+          >
+            Our
           </h2>
-          <p className="font-sans text-sm sm:text-base text-[#666666] font-light leading-relaxed max-w-2xl mx-auto">
-            Tap on any collection to browse the complete category catalog with detailed specifications and pricing.
-          </p>
+          <h2 
+            className="text-3xl sm:text-5xl md:text-7xl font-serif italic text-[#B8955D] ml-4 sm:ml-12 md:ml-32"
+            style={{ textShadow: "0 4px 20px rgba(0,0,0,0.35)" }}
+          >
+            Categories
+          </h2>
         </div>
 
         {/* ── CARD GRID ── */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-8 lg:gap-10 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-8 lg:gap-10 mb-16 pointer-events-auto">
           {categories.map((cat, idx) => {
             const Icon = cat.icon;
             return (
-              <motion.div
+              <div
                 key={cat.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                ref={addToCardsRef}
+                className="opacity-0" // Hidden initially, GSAP will reveal it
               >
                 <Link
                   to={cat.catalogLink}
@@ -91,75 +179,23 @@ const CategoryShowcase = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/50 to-transparent opacity-90" />
                   </div>
 
-                  {/* Top Bar — hidden on mobile */}
-                  <div className="absolute top-0 left-0 right-0 z-10 p-3 sm:p-7 flex items-center justify-between">
-                    <span className="hidden sm:inline font-mono text-xs font-bold text-white/90 bg-black/50 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/15">
-                      [ {cat.totalCount} ITEMS ]
-                    </span>
-                    <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/15 group-hover:bg-[#B8955D] group-hover:border-[#B8955D] transition-all duration-300 ml-auto">
-                      <Icon className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
-                    </div>
-                  </div>
-
-                  {/* ── MOBILE: Simple bottom name ── */}
-                  <div className="sm:hidden absolute inset-x-0 bottom-0 z-10 p-3 pb-4">
-                    <h4 className="font-editorial text-lg text-white font-normal leading-tight drop-shadow-md">
+                  {/* ── Category Details (Always Visible) ── */}
+                  <div className="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-7">
+                    <h4 className="font-editorial text-xl sm:text-3xl text-white font-normal leading-tight drop-shadow-md">
                       {cat.name}
                     </h4>
-                    <div className="flex items-center justify-between mt-2 pt-2 border-t border-white/15">
-                      <span className="font-sans text-[10px] text-[#DFBA73] font-bold uppercase tracking-wider">View</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 text-[#DFBA73]" />
-                    </div>
-                  </div>
-
-                  {/* ── DESKTOP: Specs Overlay — slides up on hover ── */}
-                  <div className="hidden sm:block absolute inset-x-0 bottom-0 z-10 translate-y-[calc(100%-160px)] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
-                    
-                    {/* Always visible bottom content */}
-                    <div className="p-7 pb-4">
-                      <h4 className="font-editorial text-3xl lg:text-4xl text-white font-normal mb-1.5 leading-tight drop-shadow-md">
-                        {cat.name}
-                      </h4>
-                      <p className="font-sans text-sm text-white/70 font-light leading-relaxed">
-                        {cat.subtitle}
-                      </p>
-                    </div>
-
-                    {/* Specs (revealed on hover) */}
-                    <div className="bg-[#111111]/95 backdrop-blur-xl px-7 pt-5 pb-7 border-t border-white/10">
-                      <p className="font-sans text-xs text-white/60 mb-4 leading-relaxed line-clamp-2">{cat.description}</p>
-                      
-                      <div className="space-y-2.5 mb-5">
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-white/50 font-mono text-xs uppercase tracking-widest flex items-center gap-2">
-                            <MapPin className="w-3.5 h-3.5 text-[#B8955D]" /> Origin
-                          </span>
-                          <span className="font-semibold text-white text-sm">{cat.defaultOrigin}</span>
-                        </div>
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-white/50 font-mono text-xs uppercase tracking-widest flex items-center gap-2">
-                            <Award className="w-3.5 h-3.5 text-[#B8955D]" /> Finish
-                          </span>
-                          <span className="font-semibold text-white text-sm">{cat.defaultFinish}</span>
-                        </div>
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-white/50 font-mono text-xs uppercase tracking-widest flex items-center gap-2">
-                            <ShieldCheck className="w-3.5 h-3.5 text-[#B8955D]" /> Quality
-                          </span>
-                          <span className="font-semibold text-[#B8955D] text-sm">{cat.defaultQuality}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between pt-3 border-t border-white/10 text-xs font-sans font-bold uppercase tracking-wider text-[#DFBA73]">
-                        <span>View Collection</span>
-                        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#DFBA73] transition-colors duration-300">
-                          <ArrowUpRight className="w-4 h-4 text-white group-hover:text-[#111111]" />
-                        </div>
-                      </div>
+                    <p className="hidden sm:block font-sans text-sm text-white/80 mt-1.5 mb-4">
+                      {cat.subtitle}
+                    </p>
+                    <div className="flex items-center justify-between mt-3 sm:mt-0 pt-3 border-t border-white/20 group-hover:border-[#DFBA73]/50 transition-colors duration-300">
+                      <span className="font-sans text-[10px] sm:text-xs text-[#DFBA73] font-bold uppercase tracking-widest">
+                        View Collection
+                      </span>
+                      <ArrowUpRight className="w-4 h-4 text-[#DFBA73] transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
                     </div>
                   </div>
                 </Link>
-              </motion.div>
+              </div>
             );
           })}
         </div>

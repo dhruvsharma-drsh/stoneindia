@@ -74,7 +74,6 @@ const Footer = () => {
               <li><Link to="/" className="group flex items-center gap-2 hover:text-[#DFBA73] transition-all duration-300 hover:translate-x-1.5"><ArrowUpRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 text-[#DFBA73]" /> Home</Link></li>
               <li><Link to="/about" className="group flex items-center gap-2 hover:text-[#DFBA73] transition-all duration-300 hover:translate-x-1.5"><ArrowUpRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 text-[#DFBA73]" /> Our Quarry Heritage</Link></li>
               <li><Link to="/products" className="group flex items-center gap-2 hover:text-[#DFBA73] transition-all duration-300 hover:translate-x-1.5"><ArrowUpRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 text-[#DFBA73]" /> Natural Stone Collection</Link></li>
-              <li><Link to="/design-system" className="group flex items-center gap-2 hover:text-[#DFBA73] transition-all duration-300 hover:translate-x-1.5"><ArrowUpRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 text-[#DFBA73]" /> Design System</Link></li>
             </ul>
           </div>
 

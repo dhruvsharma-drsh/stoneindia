@@ -161,7 +161,7 @@ const PackagingPage = () => {
       {/* ══════════════════════════════════════
           SCROLLING CONTENT — Slides up over the hero
       ══════════════════════════════════════ */}
-      <div className="relative z-10 w-full bg-white mt-[100vh] rounded-t-[3rem] shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
+      <div className="relative z-10 w-full bg-white mt-[100vh] shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
         <FractureEdge fill="#ffffff" />
         
         {/* Main Content Grid */}

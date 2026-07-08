@@ -1,4 +1,4 @@
-import { useState, Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Header } from "@/components/ui/header-3";
 import About from "./components/About";
@@ -8,7 +8,6 @@ import Features from "./components/Features";
 import FAQ from "./components/FAQ";
 import Hero from "./components/Hero/Hero";
 import Footer from "./components/Footer";
-import SplashScreen from "./components/SplashScreen";
 
 /* ── Lazy-loaded pages (only downloaded when navigated to) ── */
 const AboutPage = lazy(() => import("./pages/AboutPage"));
@@ -57,7 +56,6 @@ function HomePage() {
 }
 
 function AppContent() {
-  const [splashDone, setSplashDone] = useState(false);
   const location = useLocation();
   
   // Define which pages should have a white background instead of the default dark one
@@ -73,16 +71,12 @@ function AppContent() {
 
   return (
     <>
-      {!splashDone && <SplashScreen onComplete={() => setSplashDone(true)} />}
-      
       {/* Global Navigation Header - Rendered on all pages */}
       <Header />
       <ScrollToTop />
       
       <main
-        className={`relative min-h-screen w-screen overflow-x-hidden transition-opacity duration-700 ${
-          splashDone ? "opacity-100" : "opacity-0"
-        } ${isWhitePage ? "bg-white" : "bg-[#111111]"}`}
+        className={`relative min-h-screen w-screen overflow-x-hidden ${isWhitePage ? "bg-white" : "bg-[#111111]"}`}
       >
         <Suspense fallback={<PageLoader />}>
           <Routes>

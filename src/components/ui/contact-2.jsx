@@ -233,7 +233,7 @@ export const Contact2 = ({
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-white overflow-hidden pb-16 sm:pb-24 lg:pb-28 pt-4 sm:pt-6 lg:pt-8"
+      className="relative w-full bg-white overflow-hidden pb-12 sm:pb-24 lg:pb-28 pt-4 sm:pt-6 lg:pt-8"
     >
       {/* ── Background Ambient Glow (Made Brighter) ── */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[60vw] bg-[#B8955D]/[0.08] rounded-full blur-[120px] pointer-events-none" />
@@ -309,7 +309,7 @@ export const Contact2 = ({
               ref={formCardRef}
               onMouseMove={handleCardMove}
               onMouseLeave={handleCardLeave}
-              className="relative bg-[#FAFAF8] border border-black/[0.06] rounded-2xl p-7 sm:p-10 shadow-sm hover:shadow-xl hover:border-[#B8955D]/20 transition-all duration-500 flex-1"
+              className="relative bg-[#FAFAF8] border border-black/[0.06] rounded-2xl p-5 sm:p-10 shadow-sm hover:shadow-xl hover:border-[#B8955D]/20 transition-all duration-500 flex-1"
               style={{ willChange: "transform" }}
             >
               {/* Decorative corner accent */}
@@ -456,7 +456,7 @@ export const Contact2 = ({
             </div>
             
             {/* Info Card */}
-            <div className="bg-[#FAFAF8] border border-black/[0.06] rounded-2xl p-7 sm:p-8 shadow-sm flex flex-col gap-6">
+            <div className="bg-[#FAFAF8] border border-black/[0.06] rounded-2xl p-5 sm:p-8 shadow-sm flex flex-col gap-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {/* Phone */}
                 <div className="flex items-center gap-4">
@@ -489,7 +489,7 @@ export const Contact2 = ({
                     </div>
                     <div>
                       <h4 className="font-sans text-[10px] tracking-[0.12em] uppercase text-[#B8955D] font-semibold mb-1">Address</h4>
-                      <a href={`https://maps.google.com/?q=${encodeURIComponent(address)}`} target="_blank" rel="noopener noreferrer" className="font-sans text-sm sm:text-[15px] font-semibold text-[#1A1A1A] hover:text-[#B8955D] transition-colors max-w-[280px] block">
+                      <a href={`https://maps.google.com/?q=${encodeURIComponent(address)}`} target="_blank" rel="noopener noreferrer" className="font-sans text-sm sm:text-[15px] font-semibold text-[#1A1A1A] hover:text-[#B8955D] transition-colors block w-full pr-2">
                         {address}
                       </a>
                     </div>
@@ -500,7 +500,7 @@ export const Contact2 = ({
           </div>
 
           {/* ── RIGHT: Google Calendar Embed ── */}
-          <div ref={rightColRef} className="bg-[#FAFAF8] border border-black/[0.06] rounded-2xl shadow-sm overflow-hidden min-h-[450px] sm:min-h-[600px] xl:min-h-[700px] w-full relative">
+          <div ref={rightColRef} className="bg-[#FAFAF8] border border-black/[0.06] rounded-2xl shadow-sm overflow-hidden min-h-[650px] sm:min-h-[700px] xl:min-h-[750px] w-full relative">
             <iframe
               src={import.meta.env.VITE_CALENDAR_URL || "https://calendar.google.com/calendar/appointments/schedules/AcZssZ0?gv=true"}
               width="100%"

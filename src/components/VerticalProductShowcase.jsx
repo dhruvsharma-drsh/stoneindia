@@ -1,60 +1,143 @@
-import React, { useMemo } from "react";
+import React, { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { stoneProductsData } from "../data/stoneProductsData";
 import { ArrowRight } from "lucide-react";
-import SocialCards from "./ui/card-fan-carousel";
+import { stoneProductsData } from "../data/stoneProductsData";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const VerticalProductShowcase = () => {
-  // Get a random selection of products from all categories
-  const randomProducts = useMemo(() => {
-    const allProducts = [
-      ...stoneProductsData.grid,
-      ...stoneProductsData.sandstoneProducts,
-      ...stoneProductsData.stoneArticrafts,
-    ];
+  const gridRef = useRef(null);
+  const headRef = useRef(null);
+  const cardRefs = useRef([]);
+  cardRefs.current = [];
 
-    // Shuffle and pick 10 items for the beautiful fan carousel
-    const shuffled = allProducts.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 10).map((product) => ({
-      imgUrl: product.img,
-      alt: product.title,
-      linkUrl: `/products/${product.title.toLowerCase().replace(/\s+/g, '-')}`,
-      title: product.title,
-      desc: product.desc
-    }));
+  const addCardRef = (el) => {
+    if (el && !cardRefs.current.includes(el)) cardRefs.current.push(el);
+  };
+
+  // Use the first 12 items from the grid (3 rows × 4 columns)
+  const products = stoneProductsData.grid.slice(0, 12);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Animate heading
+      if (headRef.current) {
+        gsap.fromTo(
+          headRef.current.children,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            stagger: 0.15,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: headRef.current,
+              start: "top 85%",
+            },
+          }
+        );
+      }
+
+      // Animate cards stagger
+      if (cardRefs.current.length) {
+        gsap.fromTo(
+          cardRefs.current,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.06,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: gridRef.current,
+              start: "top 85%",
+            },
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section className="w-full bg-[#FAF9F5] pt-12 pb-24 relative overflow-hidden">
-      {/* Light Decorative Background */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#B8955D]/5 rounded-full blur-[120px] pointer-events-none" />
-
-      <div className="max-w-[100rem] mx-auto relative z-10">
-        
-        {/* Header */}
-        <div className="flex flex-col items-center mb-10 px-6 sm:px-10 text-center">
-          <h2 className="font-editorial text-4xl md:text-5xl lg:text-6xl text-[#111111] font-light leading-tight mb-4">
-            Curated <span className="italic text-[#B8955D] font-normal">Selection.</span>
+    <section className="relative z-20 py-24 md:py-32 bg-white border-t border-[#DFDDD8] shadow-[0_-25px_50px_rgba(0,0,0,0.25)]">
+      <div className="max-w-[90rem] mx-auto px-6 md:px-12">
+        {/* Heading — Stone Collection style */}
+        <div ref={headRef} className="text-center mb-16 md:mb-24">
+          <h2 className="text-4xl sm:text-6xl md:text-8xl font-serif text-[#222] mb-2 tracking-tight">
+            Stone
           </h2>
-          <p className="font-sans text-[#666666] text-sm sm:text-base max-w-2xl font-light">
-            Swipe through a hand-picked, interactive showcase of our most exquisite natural stone surfaces and architectural elements.
-          </p>
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-serif italic text-[#222] ml-4 sm:ml-12 md:ml-32">
+            Collection
+          </h2>
         </div>
 
-        {/* 3D Fan Carousel */}
-        <SocialCards cards={randomProducts} />
+        {/* Grid with ultra-subtle divider lines — 3 rows of 4 */}
+        <div
+          ref={gridRef}
+          className="grid grid-cols-2 lg:grid-cols-4 border-t border-black/[0.08]"
+        >
+          {products.map((item, idx) => (
+            <Link
+              key={idx}
+              ref={addCardRef}
+              to={`/products/${item.title.toLowerCase().replace(/\s+/g, "-")}`}
+              className={`flex flex-col items-center text-center group py-6 sm:py-12 px-3 sm:px-5 md:px-8 no-underline border-b border-black/[0.08] border-r border-r-black/[0.08] ${
+                (idx + 1) % 4 === 0 ? "lg:border-r-0" : ""
+              } ${
+                (idx + 1) % 2 === 0 ? "max-lg:border-r-0" : ""
+              } hover:bg-[#F4F3EF] transition-colors duration-700`}
+            >
+              {/* 3D hover effect on image */}
+              <div className="relative w-full sm:w-[85%] md:w-[75%] aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3)]">
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 brightness-[0.97] contrast-[0.95] group-hover:brightness-100 group-hover:contrast-100 saturate-[0.9] group-hover:saturate-100"
+                  loading="lazy"
+                />
+
+                {/* Premium frosted glass INQUIRE button */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-700 flex items-end justify-center pb-6">
+                  <div className="px-6 py-2.5 border border-white/50 bg-white/10 backdrop-blur-md opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                    <span className="text-[9px] tracking-[0.4em] uppercase text-white font-semibold drop-shadow-sm">
+                      Inquire
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Refined Typography */}
+              <h4 className="text-[10px] sm:text-[12px] md:text-[14px] font-serif text-[#111] uppercase tracking-[0.1em] sm:tracking-[0.2em] mb-1 sm:mb-2 group-hover:text-[#B4956C] transition-colors duration-500">
+                {item.title}
+              </h4>
+              {/* Subtitle / SKU style */}
+              <div className="hidden sm:flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="w-4 h-[1px] bg-[#B4956C]/50"></div>
+                <p className="text-[8px] md:text-[9px] text-[#555] uppercase tracking-[0.3em] font-medium">
+                  {item.desc}
+                </p>
+                <div className="w-4 h-[1px] bg-[#B4956C]/50"></div>
+              </div>
+            </Link>
+          ))}
+        </div>
 
         {/* Bottom CTA */}
-        <div className="mt-8 flex justify-center px-6">
+        <div className="mt-16 flex justify-center">
           <Link
             to="/products"
-            className="group inline-flex items-center gap-3 bg-transparent border border-[#DFBA73] text-[#DFBA73] font-sans text-xs font-semibold uppercase tracking-[0.15em] px-8 py-4 rounded-full transition-all duration-300 hover:bg-[#DFBA73] hover:text-[#111111] shadow-[0_0_20px_rgba(223,186,115,0.1)] hover:shadow-[0_0_30px_rgba(223,186,115,0.3)]"
+            className="group inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#111] text-white font-bold text-sm tracking-widest uppercase hover:bg-[#B4956C] transition-colors duration-400"
           >
             <span>Explore Entire Collection</span>
             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>
-
       </div>
     </section>
   );

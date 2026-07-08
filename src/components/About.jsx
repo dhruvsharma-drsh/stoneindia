@@ -173,7 +173,7 @@ const About = () => {
     <section
       ref={sectionRef}
       id="about"
-      className="relative w-full bg-white overflow-hidden py-12 sm:py-16 lg:py-20"
+      className="relative z-30 w-full bg-white overflow-hidden py-12 sm:py-16 lg:py-20 shadow-[0_25px_50px_rgba(0,0,0,0.15)]"
     >
       {/* Background radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-[#B8955D]/[0.05] rounded-full blur-[120px] pointer-events-none" />
