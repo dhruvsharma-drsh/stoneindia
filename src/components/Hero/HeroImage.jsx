@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "./hero.css";
 
-const slides = [
-  { id: 1, image: "img/1.png", alt: "Gwalior Fort, Man Mandir Palace built with Gwalior Mint sandstone" },
-  { id: 2, image: "img/2.png", alt: "Swaminarayan Akshardham temple built with pink and red sandstone" },
-  { id: 3, image: "img/3.png", alt: "Umaid Bhawan Palace in Rajasthan, golden sandstone" },
+export const slides = [
+  { id: 1, image: "/img/hero%20section/ChatGPT%20Image%20Jul%209,%202026,%2004_30_22%20PM.png", alt: "Majestic Natural Stone Landscape & Architecture" },
+  { id: 2, image: "/img/hero%20section/ChatGPT%20Image%20Jul%209,%202026,%2004_43_46%20PM.png", alt: "Timeless Gwalior Stone Heritage Palace" },
+  { id: 3, image: "/img/hero%20section/ChatGPT%20Image%20Jul%209,%202026,%2004_51_42%20PM.png", alt: "Grand Sandstone Monument Showcase" },
+  { id: 4, image: "/img/hero%20section/ChatGPT%20Image%20Jul%209,%202026,%2004_57_43%20PM.png", alt: "Architectural Elegance in Natural Stone" },
+  { id: 5, image: "/img/hero%20section/ChatGPT%20Image%20Jul%209,%202026,%2005_03_38%20PM.png", alt: "Exquisite Sandstone Craftsmanship & Structure" },
 ];
 
 // Preload all slide images immediately into browser cache

@@ -66,11 +66,11 @@ const VerticalProductShowcase = () => {
 
   return (
     <section className="relative z-30 py-24 md:py-32 bg-white border-t border-[#DFDDD8] shadow-[0_-25px_50px_rgba(0,0,0,0.25)] mt-16 md:mt-0">
-      {/* Decorative Jaali image overlapping the section gap */}
+      {/* Decorative Jaali image overlapping the section gap between Timeless Elegance & Stone Collection */}
       <img 
-        src="/img/Jaali Design, Wood Laser Ideas, Mdf Panel, Laser Cut Deco (1).png" 
-        alt="Decorative Jaali" 
-        className="absolute top-0 right-8 md:right-28 -translate-y-[65%] w-56 sm:w-72 md:w-96 h-auto object-contain z-[40] pointer-events-none drop-shadow-2xl" 
+        src="/img/drsh/image copy 12.png" 
+        alt="Decorative Stone Art" 
+        className="absolute top-0 right-2 sm:right-8 md:right-12 lg:right-16 -translate-y-[62%] w-60 sm:w-76 md:w-[400px] lg:w-[440px] h-auto object-contain z-[40] pointer-events-none drop-shadow-2xl" 
       />
       <style>{`
         @keyframes marquee {

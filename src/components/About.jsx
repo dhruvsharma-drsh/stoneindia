@@ -1,15 +1,16 @@
 import React, { useRef, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, Sparkles, Globe, Gem, Layers, ShieldCheck } from "lucide-react";
+import { ArrowRight, Sparkles, Globe, Gem, Layers, ShieldCheck, ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const textures = [
-  { src: "/img/product/Stone Products/Sandstone Jaali/image copy.png", label: "Floral Vine" },
-  { src: "/img/product/Stone Products/Sandstone Jaali/image.png", label: "Geometric Grid" },
-  { src: "/img/product/Stone Products/Sandstone Jaali/image copy 2.png", label: "Heritage Lattice" },
-  { src: "/img/product/Stone Products/Sandstone Jaali/image copy 3.png", label: "Classic Arch" },
+const sliderImages = [
+  { src: "/img/drsh/image copy 10.png", label: "Master Carved Jaali", subtitle: "Intricate Geometric Stone Carving" },
+  { src: "/img/drsh/image.png", label: "Heritage Sandstone", subtitle: "Timeless Architectural Craft" },
+  { src: "/img/drsh/image copy 9.png", label: "Ornate Lattice Panel", subtitle: "Precision Laser Cut Stone Art" },
+  { src: "/img/drsh/9bb3928c-5874-4806-a749-94e644f55e79.jpg", label: "Royal Gwalior Facade", subtitle: "Elevating Exterior & Interior Spaces" },
 ];
 
 const About = () => {
@@ -18,6 +19,16 @@ const About = () => {
   const imageColRef = useRef(null);
   const statsBarRef = useRef(null);
   const [activeTexture, setActiveTexture] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Auto-play slider loop every 3 seconds when not hovered/paused
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setActiveTexture((prev) => (prev + 1) % sliderImages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isPaused]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -77,11 +88,21 @@ const About = () => {
         }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      {/* ── Right Side Texture Bleed ── */}
+      <div className="absolute top-0 right-0 bottom-0 w-[45%] max-w-[650px] pointer-events-none overflow-hidden z-0 opacity-[0.07]">
+        <img
+          src="/img/drsh/image copy 10.png"
+          alt=""
+          className="w-full h-full object-cover object-left select-none"
+        />
+        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/40 to-white" />
+      </div>
 
-          {/* ── Left Column ── */}
-          <div ref={leftColRef} className="z-10 flex flex-col items-start">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+
+          {/* ── Left Column (6/12 width on desktop) ── */}
+          <div ref={leftColRef} className="lg:col-span-6 z-10 flex flex-col items-start">
             {/* Subtitle */}
             <div className="flex items-center gap-3.5 mb-6">
               <span className="font-sans text-xs sm:text-[13px] tracking-[0.28em] font-semibold text-[#B8955D] uppercase flex items-center gap-1.5">
@@ -132,138 +153,94 @@ const About = () => {
               ))}
             </div>
 
-            {/* CTA */}
-            <a
-              href="/about"
-              className="group relative inline-flex items-center gap-4 bg-[#141414] text-white font-sans text-xs sm:text-[13px] font-semibold uppercase tracking-[0.16em] pl-7 pr-3 py-3 rounded-full border border-[#B8955D]/35 overflow-hidden shadow-md transition-all duration-500 hover:border-[#B8955D] hover:shadow-[0_12px_30px_rgba(184,149,93,0.28)] hover:-translate-y-1 active:scale-95"
+            {/* CTA — optimized, lag-free hardware-accelerated button */}
+            <Link
+              to="/about"
+              className="group relative inline-flex items-center gap-4 bg-[#141414] text-white font-sans text-xs sm:text-[13px] font-semibold uppercase tracking-[0.16em] pl-7 pr-3 py-3 rounded-full border border-[#B8955D]/40 shadow-md hover:bg-[#B8955D] hover:border-[#B8955D] hover:shadow-[0_10px_25px_rgba(184,149,93,0.3)] hover:-translate-y-0.5 transition-all duration-300 ease-out active:scale-95 transform-gpu"
             >
-              <span className="absolute inset-0 bg-gradient-to-r from-[#B8955D] via-[#C5A880] to-[#B8955D] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-none" />
               <span className="relative z-10">Learn More About Us</span>
-              <span className="relative z-10 w-9 h-9 rounded-full bg-white/10 border border-white/15 flex items-center justify-center transition-all duration-500 group-hover:bg-white group-hover:text-[#111111] group-hover:scale-105">
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <span className="relative z-10 w-9 h-9 rounded-full bg-white/10 border border-white/15 flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:text-[#111111] group-hover:scale-105">
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
               </span>
-            </a>
+            </Link>
           </div>
 
-          {/* ── Right Column: Interactive Texture Showcase ── */}
-          <div ref={imageColRef} className="relative flex flex-col items-center">
-
-            {/* ── Background texture behind image ── */}
-            <div className="absolute -top-8 -right-8 sm:-top-12 sm:-right-12 w-[85%] h-[80%] rounded-3xl overflow-hidden pointer-events-none opacity-[0.08]">
-              <img
-                src="/img/product/Stone Products/Sandstone Jaali/image copy 2.png"
-                alt=""
-                className="w-full h-full object-cover"
-              />
-            </div>
-            {/* Decorative pattern overlay */}
-            <div
-              className="absolute -top-6 -right-6 sm:-top-10 sm:-right-10 w-[80%] h-[75%] rounded-3xl pointer-events-none opacity-[0.06]"
-              style={{
-                backgroundImage: `repeating-linear-gradient(45deg, #B8955D 0px, #B8955D 1px, transparent 1px, transparent 12px)`,
-              }}
-            />
+          {/* ── Right Column: Classy Auto Slider (6/12 width on desktop) ── */}
+          <div ref={imageColRef} className="lg:col-span-6 relative flex flex-col items-center w-full">
 
             {/* Gold corner accents */}
-            <div className="absolute -top-2 -left-2 w-12 h-12 border-t-2 border-l-2 border-[#B8955D]/30 rounded-tl-2xl pointer-events-none" />
-            <div className="absolute -top-2 -right-2 w-12 h-12 border-t-2 border-r-2 border-[#B8955D]/30 rounded-tr-2xl pointer-events-none" />
-            <div className="absolute -bottom-2 -left-2 w-12 h-12 border-b-2 border-l-2 border-[#B8955D]/30 rounded-bl-2xl pointer-events-none" />
-            <div className="absolute -bottom-2 -right-2 w-12 h-12 border-b-2 border-r-2 border-[#B8955D]/30 rounded-br-2xl pointer-events-none" />
+            <div className="absolute -top-2 -left-2 w-10 h-10 border-t-2 border-l-2 border-[#B8955D]/30 rounded-tl-2xl pointer-events-none z-10" />
+            <div className="absolute -top-2 -right-2 w-10 h-10 border-t-2 border-r-2 border-[#B8955D]/30 rounded-tr-2xl pointer-events-none z-10" />
+            <div className="absolute -bottom-2 -left-2 w-10 h-10 border-b-2 border-l-2 border-[#B8955D]/30 rounded-bl-2xl pointer-events-none z-10" />
+            <div className="absolute -bottom-2 -right-2 w-10 h-10 border-b-2 border-r-2 border-[#B8955D]/30 rounded-br-2xl pointer-events-none z-10" />
 
-            {/* Main image — swaps on texture selection */}
-            <div className="relative w-full aspect-[5/4] max-w-[520px] rounded-2xl overflow-hidden shadow-2xl group">
-              {textures.map((t, i) => (
-                <img
-                  key={t.label}
-                  src={t.src}
-                  alt={t.label}
-                  className="absolute inset-0 w-full h-full object-cover transition-all duration-700"
-                  style={{
-                    opacity: i === activeTexture ? 1 : 0,
-                    transform: i === activeTexture ? "scale(1)" : "scale(1.08)",
-                  }}
-                />
-              ))}
+            {/* Main Slider Box — refined, classy gallery frame with clean dimensions */}
+            <div
+              className="relative w-full h-[430px] sm:h-[530px] lg:h-[580px] max-w-[560px] rounded-3xl overflow-hidden shadow-[0_25px_50px_rgba(0,0,0,0.18)] group border border-[#B8955D]/25 bg-[#FAF9F6]"
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+            >
+              {/* Top Progress Line */}
+              <div
+                className="absolute top-0 left-0 h-1 bg-gradient-to-r from-[#B8955D] via-[#DFBA73] to-[#B8955D] transition-all duration-500 z-30 pointer-events-none"
+                style={{ width: `${((activeTexture + 1) / sliderImages.length) * 100}%` }}
+              />
 
-              {/* Vignette */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none" />
-
-              {/* Active texture label */}
-              <div className="absolute top-4 left-4 sm:top-5 sm:left-5">
-                <div className="backdrop-blur-md bg-white/15 border border-white/20 rounded-full px-4 py-1.5">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/90">
-                    {textures[activeTexture].label}
-                  </span>
-                </div>
-              </div>
-
-              {/* Bottom caption */}
-              <div className="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-5">
-                <div className="backdrop-blur-md bg-black/30 border border-white/10 rounded-xl px-4 py-3">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#DFBA73] mb-0.5">
-                    Handcrafted Heritage
-                  </p>
-                  <p className="font-serif text-sm sm:text-base text-white/90 font-light">
-                    Sandstone Jaali — Gwalior
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* ── Interactive Texture Selector ── */}
-            <div className="w-full max-w-[480px] mt-4 sm:mt-5">
-              <div className="grid grid-cols-4 gap-2 sm:gap-3">
-                {textures.map((t, i) => (
-                  <button
-                    key={t.label}
-                    onClick={() => setActiveTexture(i)}
-                    className={`relative group/thumb rounded-xl overflow-hidden aspect-square border-2 transition-all duration-300 ${
-                      i === activeTexture
-                        ? "border-[#B8955D] shadow-lg shadow-[#B8955D]/20 scale-[1.02]"
-                        : "border-transparent hover:border-[#B8955D]/40 grayscale-[40%] hover:grayscale-0"
-                    }`}
-                  >
+              {/* Horizontal Slider Track — clean right-to-left panning */}
+              <div
+                className="flex w-full h-full transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+                style={{ transform: `translateX(-${activeTexture * 100}%)` }}
+              >
+                {sliderImages.map((t) => (
+                  <div key={t.label} className="w-full h-full flex-shrink-0 relative overflow-hidden bg-[#FAF9F6]">
+                    {/* Ambient blurred backdrop to frame uncropped images beautifully */}
+                    <img
+                      src={t.src}
+                      alt=""
+                      className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-20 scale-110 pointer-events-none"
+                    />
+                    {/* Full uncropped image */}
                     <img
                       src={t.src}
                       alt={t.label}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover/thumb:scale-110"
+                      className="relative z-10 w-full h-full object-contain object-center select-none"
                     />
-                    {/* Overlay */}
-                    <div className={`absolute inset-0 transition-all duration-300 ${
-                      i === activeTexture
-                        ? "bg-[#B8955D]/10"
-                        : "bg-black/20 group-hover/thumb:bg-black/5"
-                    }`} />
-
-                    {/* Active dot indicator */}
-                    {i === activeTexture && (
-                      <div className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-[#B8955D] border border-white shadow-sm" />
-                    )}
-
-                    {/* Label on hover */}
-                    <div className="absolute inset-x-0 bottom-0 p-1.5 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover/thumb:opacity-100 transition-opacity duration-300">
-                      <span className="font-mono text-[8px] sm:text-[9px] text-white/90 uppercase tracking-wider block text-center">
-                        {t.label}
-                      </span>
-                    </div>
-                  </button>
+                  </div>
                 ))}
               </div>
 
-              {/* Texture navigation label */}
-              <div className="flex items-center justify-center gap-3 mt-3">
-                <span className="h-px flex-1 max-w-[40px] bg-gradient-to-r from-transparent to-[#B8955D]/30" />
-                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-[#B8955D]/50">
-                  Click to explore textures
-                </span>
-                <span className="h-px flex-1 max-w-[40px] bg-gradient-to-l from-transparent to-[#B8955D]/30" />
+              {/* Slider Navigation Arrows on Hover (Previous / Next) */}
+              <button
+                onClick={() => setActiveTexture((prev) => (prev - 1 + sliderImages.length) % sliderImages.length)}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full backdrop-blur-md bg-black/40 border border-white/25 text-white flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 hover:bg-[#B8955D] hover:border-[#B8955D] hover:scale-110 shadow-lg"
+                aria-label="Previous slide"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={() => setActiveTexture((prev) => (prev + 1) % sliderImages.length)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full backdrop-blur-md bg-black/40 border border-white/25 text-white flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 hover:bg-[#B8955D] hover:border-[#B8955D] hover:scale-110 shadow-lg"
+                aria-label="Next slide"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+
+              {/* Minimal Bottom Dots Indicator right inside image container */}
+              <div className="absolute bottom-4 inset-x-0 z-20 flex justify-center gap-2 pointer-events-auto">
+                {sliderImages.map((_, dotIdx) => (
+                  <button
+                    key={dotIdx}
+                    onClick={() => setActiveTexture(dotIdx)}
+                    className={`h-1.5 rounded-full transition-all duration-300 shadow-sm ${
+                      dotIdx === activeTexture ? "w-7 bg-[#DFBA73]" : "w-1.5 bg-white/60 hover:bg-white"
+                    }`}
+                  />
+                ))}
               </div>
             </div>
           </div>
 
         </div>
-
-
       </div>
     </section>
   );

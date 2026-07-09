@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
 import HeroContent from "./HeroContent";
-import HeroImage from "./HeroImage";
+import HeroImage, { slides } from "./HeroImage";
 import SliderNavigation from "./SliderNavigation";
 import "./hero.css";
 
 const Hero = () => {
   const [activeSlide, setActiveSlide] = useState(0);
-  const totalSlides = 3;
+  const totalSlides = slides.length;
 
   // Auto-cycle slides every 6 seconds for dynamic feel
   useEffect(() => {
