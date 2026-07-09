@@ -4,7 +4,6 @@ import { ArrowRight } from "lucide-react";
 import { stoneProductsData } from "../data/stoneProductsData";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import FloatingRockModel from "./FloatingRockModel";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,8 +66,12 @@ const VerticalProductShowcase = () => {
 
   return (
     <section className="relative z-30 py-24 md:py-32 bg-white border-t border-[#DFDDD8] shadow-[0_-25px_50px_rgba(0,0,0,0.25)] mt-16 md:mt-0">
-      {/* 3D Model overlapping the section gap */}
-      <FloatingRockModel />
+      {/* Decorative Jaali image overlapping the section gap */}
+      <img 
+        src="/img/Jaali Design, Wood Laser Ideas, Mdf Panel, Laser Cut Deco (1).png" 
+        alt="Decorative Jaali" 
+        className="absolute top-0 right-8 md:right-28 -translate-y-[65%] w-56 sm:w-72 md:w-96 h-auto object-contain z-[40] pointer-events-none drop-shadow-2xl" 
+      />
       <style>{`
         @keyframes marquee {
           0% { transform: translateX(0); }
@@ -143,13 +146,13 @@ const VerticalProductShowcase = () => {
               </div>
 
               {/* Refined Typography */}
-              <h4 className="text-[12px] sm:text-[14px] md:text-[16px] font-['Libre_Baskerville',serif] text-[#111] uppercase tracking-[0.1em] sm:tracking-[0.15em] mb-1 sm:mb-2 group-hover:text-[#B4956C] transition-colors duration-500">
+              <h4 className="text-[14px] sm:text-[16px] md:text-[18px] font-['Libre_Baskerville',serif] text-[#111] font-semibold tracking-normal mb-1 sm:mb-2 group-hover:text-[#B4956C] transition-colors duration-500">
                 {item.title}
               </h4>
               {/* Subtitle / SKU style */}
               <div className="hidden sm:flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500 mt-2">
                 <div className="w-4 h-[1px] bg-[#B4956C]/50"></div>
-                <p className="text-[9px] md:text-[10px] text-[#555] font-['Libre_Baskerville',serif] uppercase tracking-[0.2em] font-medium max-w-[200px] leading-relaxed">
+                <p className="text-[11px] md:text-[12px] text-[#555] font-['Libre_Baskerville',serif] tracking-normal font-normal max-w-[220px] leading-relaxed">
                   {item.desc}
                 </p>
                 <div className="w-4 h-[1px] bg-[#B4956C]/50"></div>

@@ -5,7 +5,8 @@ import About from "./components/About";
 import ParallaxImageDivider from "./components/ParallaxImageDivider";
 import VerticalProductShowcase from "./components/VerticalProductShowcase";
 import Features from "./components/Features";
-import FAQ from "./components/FAQ";
+import OurMission from "./components/OurMission";
+import HomeBlogSection from "./components/HomeBlogSection";
 import Hero from "./components/Hero/Hero";
 import Footer from "./components/Footer";
 
@@ -49,7 +50,8 @@ function HomePage() {
       <ParallaxImageDivider />
       <VerticalProductShowcase />
       <Features />
-      <FAQ />
+      <OurMission />
+      <HomeBlogSection />
       <Footer />
     </>
   );

@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Header } from "@/components/ui/header-3";
 import Footer from "../components/Footer";
+import FAQ from "../components/FAQ";
 import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -899,6 +900,11 @@ const AboutPage = () => {
           </div>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          FAQ SECTION
+      ═══════════════════════════════════════════════════════ */}
+      <FAQ />
 
       {/* ═══════════════════════════════════════════════════════
           CTA BANNER

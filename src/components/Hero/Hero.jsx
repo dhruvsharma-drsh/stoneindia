@@ -44,8 +44,6 @@ const Hero = () => {
         className="absolute top-1/4 left-[10%] w-[50vw] h-[50vw] rounded-full bg-[#B8955D]/[0.06] blur-[160px] pointer-events-none z-[5]"
       />
 
-
-
       {/* ── Hero Content (left overlay) ── */}
       <div className="absolute inset-0 z-20 flex items-end sm:items-center pointer-events-none">
         <div className="w-full lg:w-[55%] xl:w-[50%] pt-16 sm:pt-24 pb-28 sm:pb-12 pointer-events-auto">
