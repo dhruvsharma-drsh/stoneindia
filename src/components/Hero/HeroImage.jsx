@@ -3,11 +3,11 @@ import { motion } from "framer-motion";
 import "./hero.css";
 
 export const slides = [
-  { id: 1, image: "/img/hero%20section/ChatGPT%20Image%20Jul%209,%202026,%2004_30_22%20PM.png", alt: "Majestic Natural Stone Landscape & Architecture" },
-  { id: 2, image: "/img/hero%20section/ChatGPT%20Image%20Jul%209,%202026,%2004_43_46%20PM.png", alt: "Timeless Gwalior Stone Heritage Palace" },
-  { id: 3, image: "/img/hero%20section/ChatGPT%20Image%20Jul%209,%202026,%2004_51_42%20PM.png", alt: "Grand Sandstone Monument Showcase" },
-  { id: 4, image: "/img/hero%20section/ChatGPT%20Image%20Jul%209,%202026,%2004_57_43%20PM.png", alt: "Architectural Elegance in Natural Stone" },
-  { id: 5, image: "/img/hero%20section/ChatGPT%20Image%20Jul%209,%202026,%2005_03_38%20PM.png", alt: "Exquisite Sandstone Craftsmanship & Structure" },
+  { id: 1, image: "/img/Hero%20section/ChatGPT%20Image%20Jul%209,%202026,%2004_30_22%20PM.png", alt: "Majestic Natural Stone Landscape & Architecture" },
+  { id: 2, image: "/img/Hero%20section/ChatGPT%20Image%20Jul%209,%202026,%2004_43_46%20PM.png", alt: "Timeless Gwalior Stone Heritage Palace" },
+  { id: 3, image: "/img/Hero%20section/ChatGPT%20Image%20Jul%209,%202026,%2004_51_42%20PM.png", alt: "Grand Sandstone Monument Showcase" },
+  { id: 4, image: "/img/Hero%20section/ChatGPT%20Image%20Jul%209,%202026,%2004_57_43%20PM.png", alt: "Architectural Elegance in Natural Stone" },
+  { id: 5, image: "/img/Hero%20section/ChatGPT%20Image%20Jul%209,%202026,%2005_03_38%20PM.png", alt: "Exquisite Sandstone Craftsmanship & Structure" },
 ];
 
 // Preload all slide images immediately into browser cache
@@ -39,7 +39,7 @@ const HeroImage = ({ activeIndex = 0 }) => {
       <motion.div
         animate={{ x: -mousePos.x, y: -mousePos.y }}
         transition={{ type: "spring", stiffness: 35, damping: 25 }}
-        className="absolute -inset-4 w-[calc(100%+32px)] h-[calc(100%+32px)]"
+        className="absolute -inset-1 w-[calc(100%+8px)] h-[calc(100%+8px)]"
       >
         {slides.map((slide, idx) => {
           const isActive = idx === activeIndex % slides.length;
@@ -49,11 +49,10 @@ const HeroImage = ({ activeIndex = 0 }) => {
               initial={false}
               animate={{
                 opacity: isActive ? 1 : 0,
-                scale: isActive ? 1.05 : 1,
+                scale: 1,
               }}
               transition={{
                 opacity: { duration: 1.2, ease: "easeInOut" },
-                scale: { duration: isActive ? 18 : 1.2, ease: "easeOut" },
               }}
               className={`absolute inset-0 w-full h-full transition-visibility ${
                 isActive ? "z-10 pointer-events-auto" : "z-0 pointer-events-none"

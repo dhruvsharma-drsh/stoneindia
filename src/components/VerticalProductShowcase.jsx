@@ -67,9 +67,9 @@ const VerticalProductShowcase = () => {
   return (
     <section className="relative z-30 py-24 md:py-32 bg-white border-t border-[#DFDDD8] shadow-[0_-25px_50px_rgba(0,0,0,0.25)] mt-16 md:mt-0">
       {/* Decorative Jaali image overlapping the section gap between Timeless Elegance & Stone Collection */}
-      <img 
-        src="/img/drsh/image copy 12.png" 
-        alt="Decorative Stone Art" 
+      <img
+        src="/img/drsh/image copy 12.png"
+        alt="Decorative Stone Art"
         className="absolute top-0 right-2 sm:right-8 md:right-12 lg:right-16 -translate-y-[62%] w-60 sm:w-76 md:w-[400px] lg:w-[440px] h-auto object-contain z-[40] pointer-events-none drop-shadow-2xl" 
       />
       <style>{`
@@ -81,7 +81,7 @@ const VerticalProductShowcase = () => {
           animation: marquee 15s linear infinite;
         }
       `}</style>
-      
+
       <div className="max-w-[90rem] mx-auto px-6 md:px-12 pt-8 md:pt-16">
         {/* Heading — Stone Collection style */}
         <div ref={headRef} className="text-center mb-16 md:mb-24">
@@ -103,26 +103,24 @@ const VerticalProductShowcase = () => {
               key={idx}
               ref={addCardRef}
               to={`/products/${item.title.toLowerCase().replace(/\s+/g, "-")}`}
-              className={`flex flex-col items-center text-center group py-6 sm:py-12 px-3 sm:px-5 md:px-8 no-underline border-b border-black/[0.08] border-r border-r-black/[0.08] ${
-                (idx + 1) % 4 === 0 ? "lg:border-r-0" : ""
-              } ${
-                (idx + 1) % 2 === 0 ? "max-lg:border-r-0" : ""
-              } hover:bg-[#F4F3EF] transition-colors duration-700`}
+              className={`flex flex-col items-center text-center group py-6 sm:py-12 px-3 sm:px-5 md:px-8 no-underline border-b border-black/[0.08] border-r border-r-black/[0.08] ${(idx + 1) % 4 === 0 ? "lg:border-r-0" : ""
+                } ${(idx + 1) % 2 === 0 ? "max-lg:border-r-0" : ""
+                } hover:bg-[#F4F3EF] transition-colors duration-700`}
             >
               {/* 3D hover effect on image */}
               <div className="relative w-full aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#111] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
-                
+
                 {/* Marquee Text - Revealed on hover */}
                 <div className="absolute top-0 left-0 w-full h-[15%] flex items-center overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 pointer-events-none">
                   <div className="flex w-max animate-marquee">
                     <div className="flex whitespace-nowrap px-2">
                       <span className="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] font-['Libre_Baskerville',serif] text-white/90">
-                        {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; 
+                        {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp;
                       </span>
                     </div>
                     <div className="flex whitespace-nowrap px-2">
                       <span className="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] font-['Libre_Baskerville',serif] text-white/90">
-                        {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; 
+                        {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp;
                       </span>
                     </div>
                   </div>
