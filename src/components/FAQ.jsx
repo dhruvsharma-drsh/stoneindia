@@ -57,7 +57,7 @@ const FAQ = () => {
     })).filter(cat => cat.faqs.length > 0);
 
     return (
-        <section className="bg-white py-20 relative overflow-hidden" id="faq">
+        <section className="bg-white py-20 relative z-30 overflow-hidden" id="faq">
             {/* Background Accents */}
             <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[60vw] h-[60vw] rounded-full blur-[120px] bg-[#B8955D]/[0.05] pointer-events-none" />
             <div

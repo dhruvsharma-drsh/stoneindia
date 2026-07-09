@@ -103,27 +103,64 @@ export const Contact2 = ({
     setStatus("sending");
     
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
-          name: `${form.firstname} ${form.lastname}`.trim(),
-          email: form.email,
-          subject: form.subject || "New Contact Form Submission — Gwalior Stone",
-          message: form.message,
-          from_name: "Gwalior Stone Website",
-        }),
-      });
+      const fullName = `${form.firstname} ${form.lastname}`.trim();
 
-      const result = await response.json();
-      if (result.success) {
+      // Helper: submit to a Web3Forms key
+      const submitToKey = async (key) => {
+        if (!key) return { success: true };
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            access_key: key,
+            name: fullName,
+            email: form.email,
+            subject: form.subject || "New Contact Form Submission — Gwalior Stone",
+            message: form.message,
+            from_name: "Gwalior Stone Website",
+          }),
+        });
+        return await response.json();
+      };
+
+      // Helper: submit to backend SMTP server
+      const submitToBackend = async () => {
+        try {
+          const response = await fetch("/api/contact", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: fullName,
+              email: form.email,
+              subject: form.subject || "New Contact Form Submission — Gwalior Stone",
+              message: form.message,
+            }),
+          });
+          return await response.json();
+        } catch (err) {
+          console.error("Backend email failed:", err);
+          return { success: false };
+        }
+      };
+
+      // Fire all submissions in parallel (Web3Forms + Backend SMTP)
+      const [result1, result2, result3, backendResult] = await Promise.all([
+        submitToKey(import.meta.env.VITE_WEB3FORMS_KEY),
+        submitToKey(import.meta.env.VITE_WEB3FORMS_KEY_2),
+        submitToKey(import.meta.env.VITE_WEB3FORMS_KEY_3),
+        submitToBackend(),
+      ]);
+
+      // Consider success if at least one channel delivered
+      if (result1.success || result2.success || result3.success || backendResult.success) {
         setStatus("sent");
       } else {
-        alert(result.message || "There was an error sending your message. Please try again.");
+        alert(result1.message || result2.message || result3.message || "There was an error sending your message. Please try again.");
         setStatus("idle");
       }
     } catch (error) {

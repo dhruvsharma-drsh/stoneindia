@@ -1,184 +1,74 @@
-import React, { useRef, useEffect, useState, Suspense, lazy } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, Gem, Globe, Layers, Sparkles } from "lucide-react";
-
-const About3D = lazy(() => import("./About3D"));
+import { ArrowRight, Sparkles, Globe, Gem, Layers, ShieldCheck } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const statsData = [
-  {
-    icon: Gem,
-    targetValue: 20,
-    suffix: "+",
-    label: "Years of Experience",
-  },
-  {
-    icon: Globe,
-    targetValue: 50,
-    suffix: "+",
-    label: "Countries Exported",
-  },
-  {
-    icon: Layers,
-    targetValue: 200,
-    suffix: "+",
-    label: "Natural Stone Varieties",
-  },
+const textures = [
+  { src: "/img/product/Stone Products/Sandstone Jaali/image copy.png", label: "Floral Vine" },
+  { src: "/img/product/Stone Products/Sandstone Jaali/image.png", label: "Geometric Grid" },
+  { src: "/img/product/Stone Products/Sandstone Jaali/image copy 2.png", label: "Heritage Lattice" },
+  { src: "/img/product/Stone Products/Sandstone Jaali/image copy 3.png", label: "Classic Arch" },
 ];
-
-
 
 const About = () => {
   const sectionRef = useRef(null);
   const leftColRef = useRef(null);
-  const imageWrapperRef = useRef(null);
-  const stoneImgRef = useRef(null);
-  const statsRef = useRef(null);
-  const shapesContainerRef = useRef(null);
-
-  // Counter state for numbers
-  const [counts, setCounts] = useState([0, 0, 0]);
+  const imageColRef = useRef(null);
+  const statsBarRef = useRef(null);
+  const [activeTexture, setActiveTexture] = useState(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. Left Column: Subtitle, Heading, Description, CTA slide smoothly FROM THE LEFT
-      const leftElements = leftColRef.current.children;
+      // Left column slide in
       gsap.fromTo(
-        leftElements,
+        leftColRef.current.children,
+        { opacity: 0, x: -80, filter: "blur(6px)" },
         {
-          opacity: 0,
-          x: -110,
-          filter: "blur(6px)",
-        },
-        {
-          opacity: 1,
-          x: 0,
-          filter: "blur(0px)",
-          duration: 1.2,
-          stagger: 0.18,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 78%",
-            toggleActions: "play none none reverse",
-          },
+          opacity: 1, x: 0, filter: "blur(0px)",
+          duration: 1.2, stagger: 0.15, ease: "power3.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 78%", toggleActions: "play none none reverse" },
         }
       );
 
-      // 2. Right Column: Stat Cards slide smoothly FROM THE RIGHT
-      const statCards = statsRef.current.querySelectorAll(".stat-card");
+      // Image column slide in
       gsap.fromTo(
-        statCards,
+        imageColRef.current,
+        { opacity: 0, x: 80, scale: 0.92 },
         {
-          opacity: 0,
-          x: 110,
-          filter: "blur(6px)",
-        },
-        {
-          opacity: 1,
-          x: 0,
-          filter: "blur(0px)",
-          duration: 1.2,
-          stagger: 0.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 78%",
-            toggleActions: "play none none reverse",
-          },
+          opacity: 1, x: 0, scale: 1,
+          duration: 1.4, ease: "power3.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 78%", toggleActions: "play none none reverse" },
         }
       );
 
-      // 3. Center image entrance with parallax scale
-      gsap.fromTo(
-        imageWrapperRef.current,
-        { opacity: 0, scale: 0.75, y: 60 },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          duration: 1.4,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 78%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-
-      // 4. Removed static image oscillation (now handled natively by <Float> in 3D)
-
-      // 5. Dynamic GSAP Geometric Shapes Animations
-      const shapes = shapesContainerRef.current.querySelectorAll(".auto-shape");
-      shapes.forEach((shape, index) => {
-        gsap.to(shape, {
-          x: (index % 2 === 0 ? 1 : -1) * (30 + index * 15),
-          y: (index % 3 === 0 ? -1 : 1) * (25 + index * 12),
-          rotation: index % 2 === 0 ? 360 : -360,
-          scale: index % 2 === 0 ? 1.15 : 0.85,
-          duration: 5 + index * 1.5,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          delay: index * 0.4,
-        });
-      });
-
-      // Rotating orbit rings around the rock
-      gsap.to(".orbit-ring-1", {
-        rotation: 360,
-        duration: 25,
-        repeat: -1,
-        ease: "none",
-      });
-      gsap.to(".orbit-ring-2", {
-        rotation: -360,
-        duration: 35,
-        repeat: -1,
-        ease: "none",
-      });
-
-      // 6. Animated Number Counters
-      const counterObj = { val0: 0, val1: 0, val2: 0 };
-      gsap.to(counterObj, {
-        val0: statsData[0].targetValue,
-        val1: statsData[1].targetValue,
-        val2: statsData[2].targetValue,
-        duration: 2.2,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 78%",
-          toggleActions: "play none none reverse",
-        },
-        onUpdate: () => {
-          setCounts([
-            Math.floor(counterObj.val0),
-            Math.floor(counterObj.val1),
-            Math.floor(counterObj.val2),
-          ]);
-        },
-      });
+      // Stats bar stagger
+      if (statsBarRef.current) {
+        gsap.fromTo(
+          statsBarRef.current.children,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1, y: 0, duration: 0.8, stagger: 0.12, ease: "power3.out",
+            scrollTrigger: { trigger: statsBarRef.current, start: "top 90%", toggleActions: "play none none reverse" },
+          }
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  /* ── 3D Interactive Mouse Tilt (Removed, now using OrbitControls) ── */
-
   return (
     <section
       ref={sectionRef}
       id="about"
-      className="relative z-30 w-full bg-white overflow-hidden py-12 sm:py-16 lg:py-20 shadow-[0_25px_50px_rgba(0,0,0,0.15)]"
+      className="relative z-30 w-full bg-white overflow-hidden py-16 sm:py-20 lg:py-28 shadow-[0_25px_50px_rgba(0,0,0,0.15)]"
     >
-      {/* Background radial glow */}
+      {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-[#B8955D]/[0.05] rounded-full blur-[120px] pointer-events-none" />
 
-      {/* Subtle dot pattern */}
+      {/* Dot pattern */}
       <div
         className="absolute inset-0 opacity-[0.035] pointer-events-none"
         style={{
@@ -187,29 +77,11 @@ const About = () => {
         }}
       />
 
-      {/* ── GSAP Automatically Floating Geometric Shapes Background ── */}
-      <div ref={shapesContainerRef} className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="auto-shape absolute top-12 left-[12%] w-14 h-14 border border-[#B8955D]/25 rotate-45 rounded-md backdrop-blur-[1px]" />
-        
-        <div className="auto-shape absolute bottom-16 left-[28%] w-16 h-16 rounded-full border border-black/10 flex items-center justify-center">
-          <div className="w-8 h-8 bg-[#B8955D]/10 rounded-full" />
-        </div>
-
-        <div className="auto-shape absolute top-20 right-[15%] w-10 h-10 bg-gradient-to-br from-[#B8955D]/20 to-transparent rotate-12 rounded" />
-        
-        <div className="auto-shape absolute bottom-20 right-[35%] w-6 h-6 rounded-full border-2 border-[#B8955D]/30" />
-
-        <div className="auto-shape absolute top-1/3 left-[45%] w-12 h-12 flex items-center justify-center opacity-40">
-          <div className="absolute w-full h-[1px] bg-[#B8955D]/40" />
-          <div className="absolute h-full w-[1px] bg-[#B8955D]/40" />
-        </div>
-      </div>
-
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
-          
-          {/* ── Left Column: Content sliding in from LEFT ── */}
-          <div ref={leftColRef} className="lg:col-span-4 xl:col-span-4 z-10 flex flex-col items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+
+          {/* ── Left Column ── */}
+          <div ref={leftColRef} className="z-10 flex flex-col items-start">
             {/* Subtitle */}
             <div className="flex items-center gap-3.5 mb-6">
               <span className="font-sans text-xs sm:text-[13px] tracking-[0.28em] font-semibold text-[#B8955D] uppercase flex items-center gap-1.5">
@@ -226,89 +98,193 @@ const About = () => {
             </h2>
 
             {/* Description */}
-            <p className="font-sans text-sm sm:text-base md:text-[17px] text-[#6B6B6B] leading-relaxed max-w-[460px] mb-8">
-              Gwalior Stone is a leading manufacturer and exporter
-              of premium natural stones. We bring the finest
-              quality stones from nature to create timeless
-              spaces around the world.
+            <p className="font-sans text-sm sm:text-base md:text-[17px] text-[#6B6B6B] leading-relaxed max-w-[520px] mb-4">
+              For over two decades, Gwalior Stone has been transforming 
+              India's finest natural stones into timeless architectural 
+              masterpieces — exported to 50+ countries worldwide.
+            </p>
+            <p className="font-sans text-sm sm:text-base md:text-[17px] text-[#6B6B6B] leading-relaxed max-w-[520px] mb-6">
+              From intricate jaali carvings to grand facade cladding,
+              our artisans blend heritage techniques with modern precision
+              to deliver stone solutions that stand the test of time.
             </p>
 
-            {/* CTA Button */}
-            <div className="pt-2">
-              <a
-                href="/about"
-                className="group relative inline-flex items-center gap-4 bg-[#141414] text-white font-sans text-xs sm:text-[13px] font-semibold uppercase tracking-[0.16em] pl-7 pr-3 py-3 rounded-full border border-[#B8955D]/35 overflow-hidden shadow-md transition-all duration-500 hover:border-[#B8955D] hover:shadow-[0_12px_30px_rgba(184,149,93,0.28)] hover:-translate-y-1 active:scale-95"
-              >
-                {/* Expanding Luxury Gold Sheen Background on Hover */}
-                <span className="absolute inset-0 bg-gradient-to-r from-[#B8955D] via-[#C5A880] to-[#B8955D] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-none" />
+            {/* Quote */}
+            <p className="font-sans text-sm text-[#888] leading-relaxed max-w-[480px] italic border-l-2 border-[#B8955D]/40 pl-4 mb-8">
+              "Where centuries-old craftsmanship meets modern precision."
+            </p>
 
-                {/* Text Label */}
-                <span className="relative z-10 transition-colors duration-300">
-                  Learn More About Us
+            {/* Feature pills */}
+            <div className="flex flex-wrap gap-2.5 mb-8">
+              {[
+                { icon: ShieldCheck, text: "ISO Certified" },
+                { icon: Globe, text: "50+ Countries" },
+                { icon: Gem, text: "200+ Varieties" },
+                { icon: Layers, text: "20+ Years" },
+              ].map((item) => (
+                <span
+                  key={item.text}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#FAF9F5] border border-[#E8E5DE] text-xs font-medium text-[#7A7A7A] hover:border-[#B8955D]/40 hover:text-[#B8955D] transition-colors duration-300 cursor-default"
+                >
+                  <item.icon className="w-3.5 h-3.5" />
+                  {item.text}
                 </span>
-
-                {/* Circular Arrow Badge */}
-                <span className="relative z-10 w-9 h-9 rounded-full bg-white/10 border border-white/15 flex items-center justify-center transition-all duration-500 group-hover:bg-white group-hover:text-[#111111] group-hover:scale-105">
-                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </span>
-              </a>
+              ))}
             </div>
+
+            {/* CTA */}
+            <a
+              href="/about"
+              className="group relative inline-flex items-center gap-4 bg-[#141414] text-white font-sans text-xs sm:text-[13px] font-semibold uppercase tracking-[0.16em] pl-7 pr-3 py-3 rounded-full border border-[#B8955D]/35 overflow-hidden shadow-md transition-all duration-500 hover:border-[#B8955D] hover:shadow-[0_12px_30px_rgba(184,149,93,0.28)] hover:-translate-y-1 active:scale-95"
+            >
+              <span className="absolute inset-0 bg-gradient-to-r from-[#B8955D] via-[#C5A880] to-[#B8955D] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-none" />
+              <span className="relative z-10">Learn More About Us</span>
+              <span className="relative z-10 w-9 h-9 rounded-full bg-white/10 border border-white/15 flex items-center justify-center transition-all duration-500 group-hover:bg-white group-hover:text-[#111111] group-hover:scale-105">
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </span>
+            </a>
           </div>
 
-          {/* ── Center Column: Interactive 3D Stone Image with Orbit Shapes ── */}
-          <div className="lg:col-span-4 xl:col-span-4 flex items-center justify-center my-6 lg:my-0 relative">
-            <div className="orbit-ring-1 absolute w-64 h-64 sm:w-80 sm:h-80 rounded-full border border-dashed border-[#B8955D]/25 pointer-events-none flex items-center justify-start">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#B8955D]/60 -ml-1" />
-            </div>
-            <div className="orbit-ring-2 absolute w-72 h-72 sm:w-96 sm:h-96 rounded-full border border-black/[0.06] pointer-events-none flex items-start justify-center">
-              <div className="w-2 h-2 rounded-full bg-black/30 -mt-1" />
-            </div>
+          {/* ── Right Column: Interactive Texture Showcase ── */}
+          <div ref={imageColRef} className="relative flex flex-col items-center">
 
-            <div
-              ref={imageWrapperRef}
-              className="relative z-10 w-full max-w-[320px] h-[320px] sm:max-w-[400px] sm:h-[400px] cursor-grab active:cursor-grabbing"
-            >
-              <Suspense fallback={null}>
-                <About3D />
-              </Suspense>
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent mix-blend-overlay rounded-full blur-xl pointer-events-none"
+            {/* ── Background texture behind image ── */}
+            <div className="absolute -top-8 -right-8 sm:-top-12 sm:-right-12 w-[85%] h-[80%] rounded-3xl overflow-hidden pointer-events-none opacity-[0.08]">
+              <img
+                src="/img/product/Stone Products/Sandstone Jaali/image copy 2.png"
+                alt=""
+                className="w-full h-full object-cover"
               />
             </div>
-          </div>
+            {/* Decorative pattern overlay */}
+            <div
+              className="absolute -top-6 -right-6 sm:-top-10 sm:-right-10 w-[80%] h-[75%] rounded-3xl pointer-events-none opacity-[0.06]"
+              style={{
+                backgroundImage: `repeating-linear-gradient(45deg, #B8955D 0px, #B8955D 1px, transparent 1px, transparent 12px)`,
+              }}
+            />
 
-          {/* ── Right Column: Interactive Animated Stats sliding in from RIGHT ── */}
-          <div
-            ref={statsRef}
-            className="lg:col-span-4 xl:col-span-4 flex flex-col gap-4 sm:gap-5 z-10"
-          >
-            {statsData.map((stat, idx) => {
-              const Icon = stat.icon;
-              return (
-                <div
-                  key={stat.label}
-                  className="stat-card group relative overflow-hidden flex items-center gap-4 sm:gap-5 p-4 sm:p-5 rounded-2xl bg-[#FAF9F5] border border-black/[0.06] shadow-sm hover:shadow-lg hover:border-[#B8955D]/30 hover:-translate-y-0.5 transition-all duration-300 cursor-default"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#B8955D]/[0.06] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
+            {/* Gold corner accents */}
+            <div className="absolute -top-2 -left-2 w-12 h-12 border-t-2 border-l-2 border-[#B8955D]/30 rounded-tl-2xl pointer-events-none" />
+            <div className="absolute -top-2 -right-2 w-12 h-12 border-t-2 border-r-2 border-[#B8955D]/30 rounded-tr-2xl pointer-events-none" />
+            <div className="absolute -bottom-2 -left-2 w-12 h-12 border-b-2 border-l-2 border-[#B8955D]/30 rounded-bl-2xl pointer-events-none" />
+            <div className="absolute -bottom-2 -right-2 w-12 h-12 border-b-2 border-r-2 border-[#B8955D]/30 rounded-br-2xl pointer-events-none" />
 
-                  <div className="flex-shrink-0 w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#F7F3ED] border border-[#B8955D]/20 flex items-center justify-center group-hover:bg-[#B8955D] group-hover:border-[#B8955D] transition-all duration-300">
-                    <Icon className="w-5 h-5 text-[#B8955D] group-hover:text-white stroke-[1.75] transition-colors duration-300" />
-                  </div>
+            {/* Main image — swaps on texture selection */}
+            <div className="relative w-full aspect-[5/4] max-w-[520px] rounded-2xl overflow-hidden shadow-2xl group">
+              {textures.map((t, i) => (
+                <img
+                  key={t.label}
+                  src={t.src}
+                  alt={t.label}
+                  className="absolute inset-0 w-full h-full object-cover transition-all duration-700"
+                  style={{
+                    opacity: i === activeTexture ? 1 : 0,
+                    transform: i === activeTexture ? "scale(1)" : "scale(1.08)",
+                  }}
+                />
+              ))}
 
-                  <div className="flex flex-col">
-                    <span className="font-editorial text-2xl sm:text-3xl lg:text-4xl font-light text-[#1A1A1A] leading-tight group-hover:text-[#B8955D] transition-colors duration-300">
-                      {counts[idx]}
-                      {stat.suffix}
-                    </span>
-                    <span className="font-sans text-xs sm:text-sm text-[#7A7A7A] tracking-wide mt-0.5 font-medium">
-                      {stat.label}
-                    </span>
-                  </div>
+              {/* Vignette */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none" />
+
+              {/* Active texture label */}
+              <div className="absolute top-4 left-4 sm:top-5 sm:left-5">
+                <div className="backdrop-blur-md bg-white/15 border border-white/20 rounded-full px-4 py-1.5">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/90">
+                    {textures[activeTexture].label}
+                  </span>
                 </div>
-              );
-            })}
+              </div>
+
+              {/* Bottom caption */}
+              <div className="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-5">
+                <div className="backdrop-blur-md bg-black/30 border border-white/10 rounded-xl px-4 py-3">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#DFBA73] mb-0.5">
+                    Handcrafted Heritage
+                  </p>
+                  <p className="font-serif text-sm sm:text-base text-white/90 font-light">
+                    Sandstone Jaali — Gwalior
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* ── Interactive Texture Selector ── */}
+            <div className="w-full max-w-[480px] mt-4 sm:mt-5">
+              <div className="grid grid-cols-4 gap-2 sm:gap-3">
+                {textures.map((t, i) => (
+                  <button
+                    key={t.label}
+                    onClick={() => setActiveTexture(i)}
+                    className={`relative group/thumb rounded-xl overflow-hidden aspect-square border-2 transition-all duration-300 ${
+                      i === activeTexture
+                        ? "border-[#B8955D] shadow-lg shadow-[#B8955D]/20 scale-[1.02]"
+                        : "border-transparent hover:border-[#B8955D]/40 grayscale-[40%] hover:grayscale-0"
+                    }`}
+                  >
+                    <img
+                      src={t.src}
+                      alt={t.label}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover/thumb:scale-110"
+                    />
+                    {/* Overlay */}
+                    <div className={`absolute inset-0 transition-all duration-300 ${
+                      i === activeTexture
+                        ? "bg-[#B8955D]/10"
+                        : "bg-black/20 group-hover/thumb:bg-black/5"
+                    }`} />
+
+                    {/* Active dot indicator */}
+                    {i === activeTexture && (
+                      <div className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-[#B8955D] border border-white shadow-sm" />
+                    )}
+
+                    {/* Label on hover */}
+                    <div className="absolute inset-x-0 bottom-0 p-1.5 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover/thumb:opacity-100 transition-opacity duration-300">
+                      <span className="font-mono text-[8px] sm:text-[9px] text-white/90 uppercase tracking-wider block text-center">
+                        {t.label}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              {/* Texture navigation label */}
+              <div className="flex items-center justify-center gap-3 mt-3">
+                <span className="h-px flex-1 max-w-[40px] bg-gradient-to-r from-transparent to-[#B8955D]/30" />
+                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-[#B8955D]/50">
+                  Click to explore textures
+                </span>
+                <span className="h-px flex-1 max-w-[40px] bg-gradient-to-l from-transparent to-[#B8955D]/30" />
+              </div>
+            </div>
           </div>
 
+        </div>
+
+        {/* ── Stats bar ── */}
+        <div ref={statsBarRef} className="mt-16 sm:mt-20 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+          {[
+            { value: "20+", label: "Years of Excellence", icon: Gem },
+            { value: "50+", label: "Countries Exported", icon: Globe },
+            { value: "200+", label: "Stone Varieties", icon: Layers },
+            { value: "500+", label: "Projects Completed", icon: ShieldCheck },
+          ].map((stat) => (
+            <div
+              key={stat.label}
+              className="group relative overflow-hidden flex flex-col items-center text-center p-5 sm:p-6 rounded-2xl bg-[#FAFAF8] border border-black/[0.06] hover:border-[#B8955D]/30 hover:-translate-y-1 transition-all duration-300 cursor-default"
+            >
+              <div className="absolute inset-0 bg-gradient-to-b from-[#B8955D]/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              <stat.icon className="w-5 h-5 text-[#B8955D]/60 mb-2 group-hover:text-[#B8955D] transition-colors duration-300" />
+              <span className="font-editorial text-2xl sm:text-3xl font-light text-[#1A1A1A] leading-tight group-hover:text-[#B8955D] transition-colors duration-300">
+                {stat.value}
+              </span>
+              <span className="font-sans text-[11px] sm:text-xs text-[#999] tracking-wide mt-1 font-medium">
+                {stat.label}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </section>

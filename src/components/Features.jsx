@@ -54,7 +54,7 @@ const Features = () => {
   const activeProject = projects[activeIndex];
 
   return (
-    <section id="projects-showcase" className="relative w-full bg-white text-[#111111] py-20 sm:py-28 overflow-hidden border-t border-black/5">
+    <section id="projects-showcase" className="relative z-30 w-full bg-white text-[#111111] py-20 sm:py-28 overflow-hidden border-t border-black/5">
       {/* Background ambient lighting */}
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[40vw] h-[40vw] bg-[#B8955D]/[0.04] rounded-full blur-[120px] pointer-events-none" />
 

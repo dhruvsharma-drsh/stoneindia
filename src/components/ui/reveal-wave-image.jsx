@@ -219,6 +219,7 @@ export const RevealWaveImage = ({
 }) => {
   const [isMouseInCanvas, setIsMouseInCanvas] = useState(false);
   const [aspectRatio, setAspectRatio] = useState(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const img = new Image();
@@ -228,13 +229,21 @@ export const RevealWaveImage = ({
     };
   }, [src]);
 
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => setMounted(true));
+    return () => {
+      cancelAnimationFrame(raf);
+      setMounted(false);
+    };
+  }, []);
+
   return (
     <div
       className={`relative overflow-hidden ${className}`}
       onMouseEnter={() => setIsMouseInCanvas(true)}
       onMouseLeave={() => setIsMouseInCanvas(false)}
     >
-      {aspectRatio !== null && (
+      {mounted && aspectRatio !== null && (
         <Canvas
           style={{
             width: "100%",
@@ -243,6 +252,10 @@ export const RevealWaveImage = ({
           }}
           gl={{ antialias: false }}
           camera={{ position: [0, 0, 1] }}
+          onCreated={({ gl }) => {
+            const canvas = gl.domElement;
+            canvas.addEventListener("webglcontextlost", (e) => e.preventDefault());
+          }}
         >
           <ImagePlane
             src={src}

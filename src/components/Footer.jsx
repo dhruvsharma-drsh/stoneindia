@@ -6,7 +6,7 @@ import { Sparkles, ArrowUpRight } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="relative w-full bg-[#111111] text-white overflow-hidden border-t border-white/10 pt-8 pb-6 group/footer">
+    <footer className="relative z-30 w-full bg-[#111111] text-white overflow-hidden border-t border-white/10 pt-8 pb-6 group/footer">
       {/* Subtle background ambient lighting - pulses smoothly on hover */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60vw] h-[20vw] bg-[#B8955D]/10 rounded-full blur-[100px] pointer-events-none transition-all duration-1000 group-hover/footer:bg-[#DFBA73]/20 group-hover/footer:blur-[120px]" />
 

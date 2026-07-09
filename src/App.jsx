@@ -2,7 +2,7 @@ import { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Header } from "@/components/ui/header-3";
 import About from "./components/About";
-import CategoryShowcase from "./components/CategoryShowcase";
+import ParallaxImageDivider from "./components/ParallaxImageDivider";
 import VerticalProductShowcase from "./components/VerticalProductShowcase";
 import Features from "./components/Features";
 import FAQ from "./components/FAQ";
@@ -46,7 +46,7 @@ function HomePage() {
     <>
       <Hero />
       <About />
-      <CategoryShowcase />
+      <ParallaxImageDivider />
       <VerticalProductShowcase />
       <Features />
       <FAQ />

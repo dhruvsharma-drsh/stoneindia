@@ -65,7 +65,7 @@ const VerticalProductShowcase = () => {
   }, []);
 
   return (
-    <section className="relative z-20 py-24 md:py-32 bg-white border-t border-[#DFDDD8] shadow-[0_-25px_50px_rgba(0,0,0,0.25)]">
+    <section className="relative z-30 py-24 md:py-32 bg-white border-t border-[#DFDDD8] shadow-[0_-25px_50px_rgba(0,0,0,0.25)]">
       <div className="max-w-[90rem] mx-auto px-6 md:px-12">
         {/* Heading — Stone Collection style */}
         <div ref={headRef} className="text-center mb-16 md:mb-24">
