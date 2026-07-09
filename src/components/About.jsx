@@ -263,29 +263,7 @@ const About = () => {
 
         </div>
 
-        {/* ── Stats bar ── */}
-        <div ref={statsBarRef} className="mt-16 sm:mt-20 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
-          {[
-            { value: "20+", label: "Years of Excellence", icon: Gem },
-            { value: "50+", label: "Countries Exported", icon: Globe },
-            { value: "200+", label: "Stone Varieties", icon: Layers },
-            { value: "500+", label: "Projects Completed", icon: ShieldCheck },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              className="group relative overflow-hidden flex flex-col items-center text-center p-5 sm:p-6 rounded-2xl bg-[#FAFAF8] border border-black/[0.06] hover:border-[#B8955D]/30 hover:-translate-y-1 transition-all duration-300 cursor-default"
-            >
-              <div className="absolute inset-0 bg-gradient-to-b from-[#B8955D]/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-              <stat.icon className="w-5 h-5 text-[#B8955D]/60 mb-2 group-hover:text-[#B8955D] transition-colors duration-300" />
-              <span className="font-editorial text-2xl sm:text-3xl font-light text-[#1A1A1A] leading-tight group-hover:text-[#B8955D] transition-colors duration-300">
-                {stat.value}
-              </span>
-              <span className="font-sans text-[11px] sm:text-xs text-[#999] tracking-wide mt-1 font-medium">
-                {stat.label}
-              </span>
-            </div>
-          ))}
-        </div>
+
       </div>
     </section>
   );

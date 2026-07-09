@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { stoneProductsData } from "../data/stoneProductsData";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import FloatingRockModel from "./FloatingRockModel";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -65,8 +66,20 @@ const VerticalProductShowcase = () => {
   }, []);
 
   return (
-    <section className="relative z-30 py-24 md:py-32 bg-white border-t border-[#DFDDD8] shadow-[0_-25px_50px_rgba(0,0,0,0.25)]">
-      <div className="max-w-[90rem] mx-auto px-6 md:px-12">
+    <section className="relative z-30 py-24 md:py-32 bg-white border-t border-[#DFDDD8] shadow-[0_-25px_50px_rgba(0,0,0,0.25)] mt-16 md:mt-0">
+      {/* 3D Model overlapping the section gap */}
+      <FloatingRockModel />
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee 15s linear infinite;
+        }
+      `}</style>
+      
+      <div className="max-w-[90rem] mx-auto px-6 md:px-12 pt-8 md:pt-16">
         {/* Heading — Stone Collection style */}
         <div ref={headRef} className="text-center mb-16 md:mb-24">
           <h2 className="text-4xl sm:text-6xl md:text-8xl font-serif text-[#222] mb-2 tracking-tight">
@@ -94,16 +107,33 @@ const VerticalProductShowcase = () => {
               } hover:bg-[#F4F3EF] transition-colors duration-700`}
             >
               {/* 3D hover effect on image */}
-              <div className="relative w-full sm:w-[85%] md:w-[75%] aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3)]">
+              <div className="relative w-full aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#111] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                
+                {/* Marquee Text - Revealed on hover */}
+                <div className="absolute top-0 left-0 w-full h-[15%] flex items-center overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 pointer-events-none">
+                  <div className="flex w-max animate-marquee">
+                    <div className="flex whitespace-nowrap px-2">
+                      <span className="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] font-['Libre_Baskerville',serif] text-white/90">
+                        {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; 
+                      </span>
+                    </div>
+                    <div className="flex whitespace-nowrap px-2">
+                      <span className="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] font-['Libre_Baskerville',serif] text-white/90">
+                        {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; 
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
                 <img
                   src={item.img}
                   alt={item.title}
-                  className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 brightness-[0.97] contrast-[0.95] group-hover:brightness-100 group-hover:contrast-100 saturate-[0.9] group-hover:saturate-100"
+                  className="relative z-10 w-full h-full object-cover transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-[0.70] brightness-[0.97] contrast-[0.95] group-hover:brightness-100 group-hover:contrast-100 saturate-[0.9] group-hover:saturate-100"
                   loading="lazy"
                 />
 
                 {/* Premium frosted glass INQUIRE button */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-700 flex items-end justify-center pb-6">
+                <div className="absolute z-20 inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-700 flex items-end justify-center pb-6">
                   <div className="px-6 py-2.5 border border-white/50 bg-white/10 backdrop-blur-md opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]">
                     <span className="text-[9px] tracking-[0.4em] uppercase text-white font-semibold drop-shadow-sm">
                       Inquire
@@ -113,13 +143,13 @@ const VerticalProductShowcase = () => {
               </div>
 
               {/* Refined Typography */}
-              <h4 className="text-[10px] sm:text-[12px] md:text-[14px] font-serif text-[#111] uppercase tracking-[0.1em] sm:tracking-[0.2em] mb-1 sm:mb-2 group-hover:text-[#B4956C] transition-colors duration-500">
+              <h4 className="text-[12px] sm:text-[14px] md:text-[16px] font-['Libre_Baskerville',serif] text-[#111] uppercase tracking-[0.1em] sm:tracking-[0.15em] mb-1 sm:mb-2 group-hover:text-[#B4956C] transition-colors duration-500">
                 {item.title}
               </h4>
               {/* Subtitle / SKU style */}
-              <div className="hidden sm:flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="hidden sm:flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500 mt-2">
                 <div className="w-4 h-[1px] bg-[#B4956C]/50"></div>
-                <p className="text-[8px] md:text-[9px] text-[#555] uppercase tracking-[0.3em] font-medium">
+                <p className="text-[9px] md:text-[10px] text-[#555] font-['Libre_Baskerville',serif] uppercase tracking-[0.2em] font-medium max-w-[200px] leading-relaxed">
                   {item.desc}
                 </p>
                 <div className="w-4 h-[1px] bg-[#B4956C]/50"></div>
