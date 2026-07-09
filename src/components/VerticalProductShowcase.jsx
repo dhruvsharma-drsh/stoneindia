@@ -68,7 +68,7 @@ const VerticalProductShowcase = () => {
     <section className="relative z-30 py-24 md:py-32 bg-white border-t border-[#DFDDD8] shadow-[0_-25px_50px_rgba(0,0,0,0.25)] mt-16 md:mt-0">
       {/* Decorative Jaali image overlapping the section gap between Timeless Elegance & Stone Collection */}
       <img
-        src="/img/drsh/image copy 12.png"
+        src="/img/drsh/vertical tile.png"
         alt="Decorative Stone Art"
         className="absolute top-0 right-2 sm:right-8 md:right-12 lg:right-10 -translate-y-[62%] w-[300px] sm:w-[360px] md:w-[460px] lg:w-[480px] h-auto object-contain z-[40] pointer-events-none drop-shadow-2xl"
       />
