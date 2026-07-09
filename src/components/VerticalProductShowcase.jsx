@@ -70,7 +70,7 @@ const VerticalProductShowcase = () => {
       <img
         src="/img/drsh/image copy 12.png"
         alt="Decorative Stone Art"
-        className="absolute top-0 right-2 sm:right-8 md:right-12 lg:right-16 -translate-y-[62%] w-60 sm:w-76 md:w-[400px] lg:w-[440px] h-auto object-contain z-[40] pointer-events-none drop-shadow-2xl" 
+        className="absolute top-0 right-2 sm:right-8 md:right-12 lg:right-10 -translate-y-[62%] w-[300px] sm:w-[360px] md:w-[460px] lg:w-[480px] h-auto object-contain z-[40] pointer-events-none drop-shadow-2xl"
       />
       <style>{`
         @keyframes marquee {

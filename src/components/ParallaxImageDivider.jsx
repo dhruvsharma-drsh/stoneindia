@@ -129,7 +129,7 @@ const ParallaxImageDivider = () => {
       >
         {/* Background image — completely fixed, no movement */}
         <img
-          src="/img/project_udaipur_palace.png"
+          src="/img/about_showroom_extended.png"
           alt="Premium stone quarry"
           className="w-full h-full object-cover"
         />
