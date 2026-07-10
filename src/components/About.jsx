@@ -7,9 +7,9 @@ import { ArrowRight, Sparkles, Globe, Gem, Layers, ShieldCheck, ChevronLeft, Che
 gsap.registerPlugin(ScrollTrigger);
 
 const sliderImages = [
-  { src: "/img/drsh/image copy 10.png", label: "Master Carved Jaali", subtitle: "Intricate Geometric Stone Carving" },
-  { src: "/img/drsh/image.png", label: "Heritage Sandstone", subtitle: "Timeless Architectural Craft" },
-  { src: "/img/drsh/image copy 9.png", label: "Ornate Lattice Panel", subtitle: "Precision Laser Cut Stone Art" },
+  { src: "/img/drsh/image copy 12.png", label: "Master Carved Jaali", subtitle: "Intricate Geometric Stone Carving" },
+  { src: "/img/drsh/image copy 14.png", label: "Heritage Sandstone", subtitle: "Timeless Architectural Craft" },
+  { src: "/img/drsh/image copy 11.png", label: "Ornate Lattice Panel", subtitle: "Precision Laser Cut Stone Art" },
   { src: "/img/drsh/9bb3928c-5874-4806-a749-94e644f55e79.jpg", label: "Royal Gwalior Facade", subtitle: "Elevating Exterior & Interior Spaces" },
 ];
 
@@ -21,12 +21,12 @@ const About = () => {
   const [activeTexture, setActiveTexture] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Auto-play slider loop every 3 seconds when not hovered/paused
+  // Auto-play slider loop every 2 seconds when not hovered/paused
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
       setActiveTexture((prev) => (prev + 1) % sliderImages.length);
-    }, 3000);
+    }, 2500);
     return () => clearInterval(interval);
   }, [isPaused]);
 
@@ -35,22 +35,22 @@ const About = () => {
       // Left column slide in
       gsap.fromTo(
         leftColRef.current.children,
-        { opacity: 0, x: -80, filter: "blur(6px)" },
+        { opacity: 0, y: 30 },
         {
-          opacity: 1, x: 0, filter: "blur(0px)",
-          duration: 1.2, stagger: 0.15, ease: "power3.out",
-          scrollTrigger: { trigger: sectionRef.current, start: "top 78%", toggleActions: "play none none reverse" },
+          opacity: 1, y: 0,
+          duration: 1.0, stagger: 0.1, ease: "power3.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 85%", toggleActions: "play none none reverse" },
         }
       );
 
       // Image column slide in
       gsap.fromTo(
         imageColRef.current,
-        { opacity: 0, x: 80, scale: 0.92 },
+        { opacity: 0, scale: 0.95 },
         {
-          opacity: 1, x: 0, scale: 1,
-          duration: 1.4, ease: "power3.out",
-          scrollTrigger: { trigger: sectionRef.current, start: "top 78%", toggleActions: "play none none reverse" },
+          opacity: 1, scale: 1,
+          duration: 1.2, ease: "power3.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 85%", toggleActions: "play none none reverse" },
         }
       );
 
@@ -88,21 +88,20 @@ const About = () => {
         }}
       />
 
-      {/* ── Right Side Texture Bleed ── */}
-      <div className="absolute top-0 right-0 bottom-0 w-[45%] max-w-[650px] pointer-events-none overflow-hidden z-0 opacity-[0.07]">
+      {/* ── Subtle Tile Background ── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-20">
         <img
-          src="/img/drsh/image copy 10.png"
+          src="/img/drsh/image copy 13.png"
           alt=""
-          className="w-full h-full object-cover object-left select-none"
+          className="w-full h-full object-cover object-center select-none"
         />
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/40 to-white" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+      <div className="max-w-[90rem] mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 xl:gap-40 items-center">
 
-          {/* ── Left Column (6/12 width on desktop) ── */}
-          <div ref={leftColRef} className="lg:col-span-6 z-10 flex flex-col items-start">
+          {/* ── Left Column ── */}
+          <div ref={leftColRef} className="z-10 flex flex-col items-start">
             {/* Subtitle */}
             <div className="flex items-center gap-3.5 mb-6">
               <span className="font-sans text-xs sm:text-[13px] tracking-[0.28em] font-semibold text-[#B8955D] uppercase flex items-center gap-1.5">
@@ -114,14 +113,13 @@ const About = () => {
             {/* Heading */}
             <h2 className="font-editorial text-3xl sm:text-4xl lg:text-[2.85rem] xl:text-[3.2rem] leading-[1.12] tracking-tight text-[#1A1A1A] font-light mb-6">
               Nature's Strength,
-              <br />
-              <span className="italic font-normal text-[#B8955D]">Our Commitment.</span>
+              <span className="block mt-3 sm:mt-4 italic font-normal text-[#B8955D]">Our Commitment.</span>
             </h2>
 
             {/* Description */}
             <p className="font-sans text-sm sm:text-base md:text-[17px] text-[#6B6B6B] leading-relaxed max-w-[520px] mb-4">
-              For over two decades, Gwalior Stone has been transforming 
-              India's finest natural stones into timeless architectural 
+              For over two decades, Gwalior Stone has been transforming
+              India's finest natural stones into timeless architectural
               masterpieces — exported to 50+ countries worldwide.
             </p>
             <p className="font-sans text-sm sm:text-base md:text-[17px] text-[#6B6B6B] leading-relaxed max-w-[520px] mb-6">
@@ -165,26 +163,22 @@ const About = () => {
             </Link>
           </div>
 
-          {/* ── Right Column: Classy Auto Slider (6/12 width on desktop) ── */}
-          <div ref={imageColRef} className="lg:col-span-6 relative flex flex-col items-center w-full">
+          {/* ── Right Column: Classy Auto Slider ── */}
+          <div ref={imageColRef} className="relative flex flex-col items-center w-full">
 
             {/* Gold corner accents */}
-            <div className="absolute -top-2 -left-2 w-10 h-10 border-t-2 border-l-2 border-[#B8955D]/30 rounded-tl-2xl pointer-events-none z-10" />
-            <div className="absolute -top-2 -right-2 w-10 h-10 border-t-2 border-r-2 border-[#B8955D]/30 rounded-tr-2xl pointer-events-none z-10" />
-            <div className="absolute -bottom-2 -left-2 w-10 h-10 border-b-2 border-l-2 border-[#B8955D]/30 rounded-bl-2xl pointer-events-none z-10" />
-            <div className="absolute -bottom-2 -right-2 w-10 h-10 border-b-2 border-r-2 border-[#B8955D]/30 rounded-br-2xl pointer-events-none z-10" />
+            <div className="absolute -top-2 -left-2 w-10 h-10 border-t-2 border-l-2 border-[#B8955D]/30 rounded-tl-md pointer-events-none z-10" />
+            <div className="absolute -top-2 -right-2 w-10 h-10 border-t-2 border-r-2 border-[#B8955D]/30 rounded-tr-md pointer-events-none z-10" />
+            <div className="absolute -bottom-2 -left-2 w-10 h-10 border-b-2 border-l-2 border-[#B8955D]/30 rounded-bl-md pointer-events-none z-10" />
+            <div className="absolute -bottom-2 -right-2 w-10 h-10 border-b-2 border-r-2 border-[#B8955D]/30 rounded-br-md pointer-events-none z-10" />
 
             {/* Main Slider Box — refined, classy gallery frame with clean dimensions */}
             <div
-              className="relative w-full h-[430px] sm:h-[530px] lg:h-[580px] max-w-[560px] rounded-3xl overflow-hidden shadow-[0_25px_50px_rgba(0,0,0,0.18)] group border border-[#B8955D]/25 bg-[#FAF9F6]"
+              className="relative w-full h-[470px] sm:h-[570px] lg:h-[620px] max-w-[480px] rounded-md overflow-hidden shadow-[0_25px_50px_rgba(0,0,0,0.18)] group border border-[#B8955D]/25 bg-[#FAF9F6]"
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
             >
-              {/* Top Progress Line */}
-              <div
-                className="absolute top-0 left-0 h-1 bg-gradient-to-r from-[#B8955D] via-[#DFBA73] to-[#B8955D] transition-all duration-500 z-30 pointer-events-none"
-                style={{ width: `${((activeTexture + 1) / sliderImages.length) * 100}%` }}
-              />
+
 
               {/* Horizontal Slider Track — clean right-to-left panning */}
               <div
@@ -193,17 +187,11 @@ const About = () => {
               >
                 {sliderImages.map((t) => (
                   <div key={t.label} className="w-full h-full flex-shrink-0 relative overflow-hidden bg-[#FAF9F6]">
-                    {/* Ambient blurred backdrop to frame uncropped images beautifully */}
-                    <img
-                      src={t.src}
-                      alt=""
-                      className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-20 scale-110 pointer-events-none"
-                    />
                     {/* Full uncropped image */}
                     <img
                       src={t.src}
                       alt={t.label}
-                      className="relative z-10 w-full h-full object-contain object-center select-none"
+                      className="relative z-10 w-full h-full object-cover object-center select-none"
                     />
                   </div>
                 ))}
@@ -231,9 +219,8 @@ const About = () => {
                   <button
                     key={dotIdx}
                     onClick={() => setActiveTexture(dotIdx)}
-                    className={`h-1.5 rounded-full transition-all duration-300 shadow-sm ${
-                      dotIdx === activeTexture ? "w-7 bg-[#DFBA73]" : "w-1.5 bg-white/60 hover:bg-white"
-                    }`}
+                    className={`h-1.5 rounded-full transition-all duration-300 shadow-sm ${dotIdx === activeTexture ? "w-7 bg-[#DFBA73]" : "w-1.5 bg-white/60 hover:bg-white"
+                      }`}
                   />
                 ))}
               </div>

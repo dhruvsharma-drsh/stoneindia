@@ -233,7 +233,7 @@ const SandstonePalisadeView = () => {
           <div className="split-right relative aspect-square lg:aspect-[4/5] rounded-3xl overflow-hidden bg-[#FAFAF8] border border-[#EDEDE9] shadow-[0_20px_60px_rgba(0,0,0,0.08)] flex flex-col justify-center gap-4 sm:gap-5 py-6">
             <div className="absolute top-0 left-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-[#FAFAF8] to-transparent z-10 pointer-events-none" />
             <div className="absolute top-0 right-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-[#FAFAF8] to-transparent z-10 pointer-events-none" />
-            
+
             <div className="flex gap-4 sm:gap-5 w-max animate-marquee" style={{ animationDuration: '40s' }}>
               {[...galleryImages, ...galleryImages].map((img, idx) => (
                 <div key={idx} className="w-28 h-28 sm:w-40 sm:h-40 lg:w-44 lg:h-44 flex-shrink-0 rounded-2xl overflow-hidden shadow-sm border border-black/5">
@@ -277,7 +277,7 @@ const SandstonePalisadeView = () => {
             <p className="text-[15px] text-[#666] leading-[1.85] font-light">
               You do not need to worry about receiving damaged products because our packaging process is highly sophisticated and we always makes sure that our clients receive the stones on time as well.
             </p>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
               {featuresList.map((feature, idx) => (
                 <div key={idx} className="flex items-center gap-3 bg-white p-4 rounded-xl border border-[#EDEDE9] shadow-sm">
@@ -291,7 +291,7 @@ const SandstonePalisadeView = () => {
           <div className="split-right relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
             <img src={galleryImages[2]} alt="Sandstone Palisade" className="w-full h-full object-cover" onLoad={(e) => {
               const r = e.target.getBoundingClientRect();
-              setLens(l => ({ ...l, x: r.width/2, y: r.height/2, rectW: r.width, rectH: r.height }));
+              setLens(l => ({ ...l, x: r.width / 2, y: r.height / 2, rectW: r.width, rectH: r.height }));
             }} />
             <div className="absolute inset-0 bg-gradient-to-t from-[#111]/80 via-transparent to-transparent pointer-events-none" />
             <div className="absolute bottom-10 left-10 right-10 pointer-events-none">
@@ -331,20 +331,20 @@ const SandstonePalisadeView = () => {
           >
             <img src={TEXTURE_IMG} alt="Stone texture detail" className="w-full h-full object-cover" onLoad={(e) => {
               const r = e.target.getBoundingClientRect();
-              setLens(l => ({ ...l, x: r.width/2, y: r.height/2, rectW: r.width, rectH: r.height }));
+              setLens(l => ({ ...l, x: r.width / 2, y: r.height / 2, rectW: r.width, rectH: r.height }));
             }} />
             <div
-                className={`absolute pointer-events-none rounded-full border-4 border-white shadow-2xl z-50 transition-opacity duration-300 ${lens.show ? "opacity-100" : "opacity-100 lg:opacity-0"}`}
-                style={{
-                  width: LENS_SIZE,
-                  height: LENS_SIZE,
-                  left: lens.x - LENS_SIZE / 2,
-                  top: lens.y - LENS_SIZE / 2,
-                  backgroundImage: `url('${TEXTURE_IMG}')`,
-                  backgroundSize: `${lens.rectW * ZOOM}px ${lens.rectH * ZOOM}px`,
-                  backgroundPosition: `-${lens.x * ZOOM - LENS_SIZE / 2}px -${lens.y * ZOOM - LENS_SIZE / 2}px`,
-                }}
-              />
+              className={`absolute pointer-events-none rounded-full border-4 border-white shadow-2xl z-50 transition-opacity duration-300 ${lens.show ? "opacity-100" : "opacity-100 lg:opacity-0"}`}
+              style={{
+                width: LENS_SIZE,
+                height: LENS_SIZE,
+                left: lens.x - LENS_SIZE / 2,
+                top: lens.y - LENS_SIZE / 2,
+                backgroundImage: `url('${TEXTURE_IMG}')`,
+                backgroundSize: `${lens.rectW * ZOOM}px ${lens.rectH * ZOOM}px`,
+                backgroundPosition: `-${lens.x * ZOOM - LENS_SIZE / 2}px -${lens.y * ZOOM - LENS_SIZE / 2}px`,
+              }}
+            />
           </div>
         </div>
       </section>
@@ -354,7 +354,7 @@ const SandstonePalisadeView = () => {
         <div className="absolute inset-0 pointer-events-none z-10 hidden md:block" style={{
           background: 'linear-gradient(to bottom, #111 0%, transparent 10%, transparent 90%, #111 100%)'
         }} />
-        
+
         <div className="max-w-7xl mx-auto relative z-0">
           <div className="text-center mb-16 md:mb-24 reveal-block">
             <p className="text-[11px] tracking-[0.25em] font-bold text-[#DFBA73] uppercase mb-4 font-mono">Inspiration</p>
@@ -362,7 +362,7 @@ const SandstonePalisadeView = () => {
               See It In <span className="text-[#DFBA73] italic">Space</span>
             </h2>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-10 md:h-[1100px] md:overflow-visible">
             {/* Column 1 */}
             <div className="parallax-col flex flex-col gap-6 md:gap-10 md:translate-y-32" data-speed="-1.5">
@@ -450,50 +450,48 @@ const SandstonePalisadeView = () => {
               .filter(item => item.title !== "Sandstone Palisade")
               .slice(0, 8)
               .map((item, idx) => (
-              <Link
-                key={idx}
-                to={`/products/${item.title.toLowerCase().replace(/\s+/g, '-')}`}
-                className={`flex flex-col items-center text-center group py-6 sm:py-12 px-3 sm:px-5 md:px-8 no-underline border-b border-black/[0.08] border-r border-r-black/[0.08] ${
-                  (idx + 1) % 4 === 0 ? 'lg:border-r-0' : ''
-                } ${
-                  (idx + 1) % 2 === 0 ? 'max-lg:border-r-0' : ''
-                } hover:bg-[#F4F3EF] transition-colors duration-700`}
-              >
-                <div className="relative w-full aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out">
-                  {/* Image 1 - Pans left on hover */}
-                  <img
-                    src={item.img}
-                    alt={item.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-0 group-hover:-translate-x-full"
-                  />
-                  {/* Image 2 - Pans in from right on hover */}
-                  <img
-                    src={item.img2 || item.img}
-                    alt={item.title + " Secondary"}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-full group-hover:translate-x-0" 
-                  />
-                  {/* Glass Reflection Shimmer */}
-                  <div className="absolute w-[200%] h-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rotate-[-45deg] bg-white/50 opacity-0 group-hover:animate-[shimmer-glass_0.35s_ease-out_forwards] z-20 pointer-events-none"></div>
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-700 flex items-end justify-center pb-6">
-                    <div className="px-6 py-2.5 border border-white/50 bg-white/10 backdrop-blur-md opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]">
-                      <span className="text-[9px] tracking-[0.4em] uppercase text-white font-semibold drop-shadow-sm">
-                        Inquire
-                      </span>
+                <Link
+                  key={idx}
+                  to={`/products/${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                  className={`flex flex-col items-center text-center group py-6 sm:py-12 px-3 sm:px-5 md:px-8 no-underline border-b border-black/[0.08] border-r border-r-black/[0.08] ${(idx + 1) % 4 === 0 ? 'lg:border-r-0' : ''
+                    } ${(idx + 1) % 2 === 0 ? 'max-lg:border-r-0' : ''
+                    } hover:bg-[#F4F3EF] transition-colors duration-700`}
+                >
+                  <div className="relative w-full aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out">
+                    {/* Image 1 - Pans left on hover */}
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-0 group-hover:-translate-x-full"
+                    />
+                    {/* Image 2 - Pans in from right on hover */}
+                    <img
+                      src={item.img2 || item.img}
+                      alt={item.title + " Secondary"}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-full group-hover:translate-x-0"
+                    />
+                    {/* Glass Reflection Shimmer */}
+                    <div className="absolute w-[200%] h-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rotate-[-45deg] bg-white/50 opacity-0 group-hover:animate-[shimmer-glass_0.35s_ease-out_forwards] z-20 pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-700 flex items-end justify-center pb-6">
+                      <div className="px-6 py-2.5 border border-white/50 bg-white/10 backdrop-blur-md opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                        <span className="text-[9px] tracking-[0.4em] uppercase text-white font-semibold drop-shadow-sm">
+                          Inquire
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <h4 className="text-[10px] sm:text-[12px] md:text-[14px] font-serif text-[#111] uppercase tracking-[0.1em] sm:tracking-[0.2em] mb-1 sm:mb-2 group-hover:text-[#B4956C] transition-colors duration-500">
-                  {item.title}
-                </h4>
-                <div className="hidden sm:flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="w-4 h-[1px] bg-[#B4956C]/50" />
-                  <p className="text-[8px] md:text-[9px] text-[#555] uppercase tracking-[0.3em] font-medium">
-                    {item.desc}
-                  </p>
-                  <div className="w-4 h-[1px] bg-[#B4956C]/50" />
-                </div>
-              </Link>
-            ))}
+                  <h4 className="text-[10px] sm:text-[12px] md:text-[14px] font-serif text-[#111] uppercase tracking-[0.1em] sm:tracking-[0.2em] mb-1 sm:mb-2 group-hover:text-[#B4956C] transition-colors duration-500">
+                    {item.title}
+                  </h4>
+                  <div className="hidden sm:flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="w-4 h-[1px] bg-[#B4956C]/50" />
+                    <p className="text-[8px] md:text-[9px] text-[#555] uppercase tracking-[0.3em] font-medium">
+                      {item.desc}
+                    </p>
+                    <div className="w-4 h-[1px] bg-[#B4956C]/50" />
+                  </div>
+                </Link>
+              ))}
           </div>
         </div>
       </section>
