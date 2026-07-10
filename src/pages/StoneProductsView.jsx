@@ -209,7 +209,6 @@ const StoneProductsView = () => {
 
       /* Card hover: magnetic tilt */
       cardRefs.current.forEach((card) => {
-        const img = card.querySelector('img');
         const onMove = (e) => {
           const r = card.getBoundingClientRect();
           const px = (e.clientX - r.left) / r.width - 0.5;
@@ -221,11 +220,9 @@ const StoneProductsView = () => {
             ease: 'power2.out',
             transformPerspective: 800,
           });
-          gsap.to(img, { x: px * 8, y: py * 8, duration: 0.6, ease: 'power2.out' });
         };
         const onLeave = () => {
           gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: 'power3.out' });
-          gsap.to(img, { x: 0, y: 0, duration: 0.6, ease: 'power3.out' });
         };
         card.addEventListener('mousemove', onMove);
         card.addEventListener('mouseleave', onLeave);
@@ -479,12 +476,21 @@ const StoneProductsView = () => {
                   } hover:bg-[#F4F3EF] transition-colors duration-700`}
                 >
                   {/* 3D hover effect on image */}
-                  <div className="relative w-full sm:w-[85%] md:w-[75%] aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3)]">
-                    <img
-                      src={item.img}
-                      alt={item.title}
-                      className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 brightness-[0.97] contrast-[0.95] group-hover:brightness-100 group-hover:contrast-100 saturate-[0.9] group-hover:saturate-100"
-                    />
+                  <div className="relative w-full aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out">
+                    {/* Image 1 - Pans left on hover */}
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-0 group-hover:-translate-x-full"
+                  />
+                  {/* Image 2 - Pans in from right on hover */}
+                  <img
+                    src={item.img2 || item.img}
+                    alt={item.title + " Secondary"}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-full group-hover:translate-x-0" 
+                  />
+                  {/* Glass Reflection Shimmer */}
+                  <div className="absolute w-[200%] h-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rotate-[-45deg] bg-white/50 opacity-0 group-hover:animate-[shimmer-glass_0.35s_ease-out_forwards] z-20 pointer-events-none"></div>
                     
                     {/* Premium frosted glass INQUIRE button */}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-700 flex items-end justify-center pb-6">

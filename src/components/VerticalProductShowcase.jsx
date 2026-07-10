@@ -17,8 +17,15 @@ const VerticalProductShowcase = () => {
     if (el && !cardRefs.current.includes(el)) cardRefs.current.push(el);
   };
 
-  // Use the first 12 items from the grid (3 rows × 4 columns)
-  const products = stoneProductsData.grid.slice(0, 12);
+  // Use the first 12 items from the grid (3 rows × 4 columns) + 4 stone articrafts (4th row)
+  const articraftPicks = stoneProductsData.stoneArticrafts.filter(
+    item => ["Stone Figures", "Sandstone Jaali", "Stone Planters", "Sandstone Balls"].includes(item.title)
+  );
+  const products = [
+    ...stoneProductsData.grid.slice(0, 4),
+    ...articraftPicks,
+    ...stoneProductsData.grid.slice(4, 12)
+  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -72,15 +79,7 @@ const VerticalProductShowcase = () => {
         alt="Decorative Stone Art"
         className="absolute top-0 right-2 sm:right-8 md:right-12 lg:right-10 -translate-y-[62%] w-[300px] sm:w-[360px] md:w-[460px] lg:w-[480px] h-auto object-contain z-[40] pointer-events-none drop-shadow-2xl"
       />
-      <style>{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-          animation: marquee 15s linear infinite;
-        }
-      `}</style>
+
 
       <div className="max-w-[90rem] mx-auto px-6 md:px-12 pt-8 md:pt-16">
         {/* Heading — Stone Collection style */}
@@ -102,36 +101,28 @@ const VerticalProductShowcase = () => {
             <Link
               key={idx}
               ref={addCardRef}
-              to={`/products/${item.title.toLowerCase().replace(/\s+/g, "-")}`}
+              to={`/products/${articraftPicks.includes(item) ? 'stone-articrafts/' : ''}${item.title.toLowerCase().replace(/\s+/g, "-")}`}
               className={`flex flex-col items-center text-center group py-6 sm:py-12 px-3 sm:px-5 md:px-8 no-underline border-b border-black/[0.08] border-r border-r-black/[0.08] ${(idx + 1) % 4 === 0 ? "lg:border-r-0" : ""
                 } ${(idx + 1) % 2 === 0 ? "max-lg:border-r-0" : ""
                 } hover:bg-[#F4F3EF] transition-colors duration-700`}
             >
-              {/* 3D hover effect on image */}
-              <div className="relative w-full aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#111] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
-
-                {/* Marquee Text - Revealed on hover */}
-                <div className="absolute top-0 left-0 w-full h-[15%] flex items-center overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 pointer-events-none">
-                  <div className="flex w-max animate-marquee">
-                    <div className="flex whitespace-nowrap px-2">
-                      <span className="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] font-['Libre_Baskerville',serif] text-white/90">
-                        {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp;
-                      </span>
-                    </div>
-                    <div className="flex whitespace-nowrap px-2">
-                      <span className="text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] font-['Libre_Baskerville',serif] text-white/90">
-                        {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp; {item.title} &nbsp;•&nbsp;
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
+              {/* Image Container with Panning Hover Effect */}
+              <div className="relative w-full aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out">
+                {/* Image 1 - Pans left on hover */}
                 <img
                   src={item.img}
                   alt={item.title}
-                  className="relative z-10 w-full h-full object-cover transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-[0.70] brightness-[0.97] contrast-[0.95] group-hover:brightness-100 group-hover:contrast-100 saturate-[0.9] group-hover:saturate-100"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-0 group-hover:-translate-x-full"
                   loading="lazy"
                 />
+                {/* Image 2 - Pans in from right on hover */}
+                <img
+                  src={item.img2 || item.img}
+                  alt={item.title + " Secondary"}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-full group-hover:translate-x-0" 
+                  />
+                  {/* Glass Reflection Shimmer */}
+                  <div className="absolute w-[200%] h-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rotate-[-45deg] bg-white/50 opacity-0 group-hover:animate-[shimmer-glass_0.35s_ease-out_forwards] z-20 pointer-events-none"></div>
 
                 {/* Premium frosted glass INQUIRE button */}
                 <div className="absolute z-20 inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-700 flex items-end justify-center pb-6">

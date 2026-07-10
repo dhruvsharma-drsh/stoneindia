@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const HERO_IMG = "/img/product/Stone Products/Stone Figures/image.png";
 const TEXTURE_IMG = "/img/product/Stone Products/Stone Figures/image copy.png";
-const CTA_IMG = "/img/product/Stone Products/Stone Figures/image copy 3.png";
+const CTA_IMG = "/img/product/Stone Products/Stone Figures/image copy.png";
 
 const TILE_COLS = 8;
 const TILE_ROWS = 5;
@@ -18,9 +18,7 @@ const TILE_INDICES = Array.from({ length: TILE_COLS * TILE_ROWS }, (_, i) => i);
 
 const galleryImages = [
   "/img/product/Stone Products/Stone Figures/image.png",
-  "/img/product/Stone Products/Stone Figures/image copy.png",
-  "/img/product/Stone Products/Stone Figures/image copy 2.png",
-  "/img/product/Stone Products/Stone Figures/image copy 3.png",
+  "/img/product/Stone Products/Stone Figures/image copy.png"
 ];
 
 const featuresList = [
@@ -490,12 +488,21 @@ const StoneFiguresView = () => {
                   (idx + 1) % 2 === 0 ? 'max-lg:border-r-0' : ''
                 } hover:bg-[#F4F3EF] transition-colors duration-700`}
               >
-                <div className="relative w-full sm:w-[85%] md:w-[75%] aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3)]">
+                <div className="relative w-full aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out">
+                  {/* Image 1 - Pans left on hover */}
                   <img
                     src={item.img}
                     alt={item.title}
-                    className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 brightness-[0.97] contrast-[0.95] group-hover:brightness-100 group-hover:contrast-100 saturate-[0.9] group-hover:saturate-100"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-0 group-hover:-translate-x-full"
                   />
+                  {/* Image 2 - Pans in from right on hover */}
+                  <img
+                    src={item.img2 || item.img}
+                    alt={item.title + " Secondary"}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-full group-hover:translate-x-0" 
+                  />
+                  {/* Glass Reflection Shimmer */}
+                  <div className="absolute w-[200%] h-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rotate-[-45deg] bg-white/50 opacity-0 group-hover:animate-[shimmer-glass_0.35s_ease-out_forwards] z-20 pointer-events-none"></div>
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-700 flex items-end justify-center pb-6">
                     <div className="px-6 py-2.5 border border-white/50 bg-white/10 backdrop-blur-md opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]">
                       <span className="text-[9px] tracking-[0.4em] uppercase text-white font-semibold drop-shadow-sm">

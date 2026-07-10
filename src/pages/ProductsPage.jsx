@@ -76,9 +76,20 @@ const ProductsPage = () => {
             <div className="flex md:grid flex-nowrap overflow-x-auto md:overflow-visible snap-x snap-mandatory gap-4 md:gap-10 pb-8 px-6 md:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] md:grid-cols-3">
               
               {/* Card 1: Stone Products */}
-              <Link to="/products/stone-products" className="snap-center shrink-0 w-[85vw] md:w-auto block bg-white/10 md:bg-white backdrop-blur-md md:backdrop-blur-none border border-white/10 md:border-none rounded-2xl md:rounded-xl overflow-hidden shadow-2xl md:shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col items-center text-center pb-8 md:pb-10 transition-all hover:-translate-y-2 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] duration-300 group">
-                <div className="w-full h-48 md:h-56 mb-5 md:mb-8 overflow-hidden">
-                  <img src="/img/product/Stone-product-image.webp" alt="Stone Products" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Link to="/products/stone-products" className="snap-center shrink-0 w-[85vw] md:w-auto block bg-white/10 md:bg-white backdrop-blur-md md:backdrop-blur-none border border-white/10 md:border-none rounded-2xl md:rounded-xl overflow-hidden shadow-2xl md:shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col items-center text-center pb-8 md:pb-10 group">
+                <div className="relative w-full aspect-[3/4] mb-5 md:mb-8 overflow-hidden bg-[#DFDDD8] border-b border-black/5 transition-all duration-700 ease-out">
+                  <img
+                    src="/img/product/Stone-product-image.webp"
+                    alt="Stone Products"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-0 group-hover:-translate-x-full"
+                  />
+                  <img
+                    src="/img/product/Stone-product-image.webp"
+                    alt="Stone Products Secondary"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-full group-hover:translate-x-0" 
+                  />
+                  {/* Glass Reflection Shimmer */}
+                  <div className="absolute w-[200%] h-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rotate-[-45deg] bg-white/50 opacity-0 group-hover:animate-[shimmer-glass_0.35s_ease-out_forwards] z-20 pointer-events-none"></div>
                 </div>
                 <h4 className="text-xl md:text-xl font-bold text-white md:text-[#1f2937] mb-3 md:mb-4">Stone Products</h4>
                 <p className="text-sm md:text-sm text-white/70 md:text-[#6b7280] leading-relaxed px-6 md:px-8 mb-6 md:mb-8 flex-grow">
@@ -90,9 +101,20 @@ const ProductsPage = () => {
               </Link>
 
               {/* Card 2: Sandstone */}
-              <Link to="/products/gwalior-sandstone" className="snap-center shrink-0 w-[85vw] md:w-auto block bg-white/10 md:bg-white backdrop-blur-md md:backdrop-blur-none border border-white/10 md:border-none rounded-2xl md:rounded-xl overflow-hidden shadow-2xl md:shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col items-center text-center pb-8 md:pb-10 transition-all hover:-translate-y-2 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] duration-300 group">
-                <div className="w-full h-48 md:h-56 mb-5 md:mb-8 overflow-hidden">
-                  <img src="/img/product/pro-1.webp" alt="Sandstone" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Link to="/products/gwalior-sandstone" className="snap-center shrink-0 w-[85vw] md:w-auto block bg-white/10 md:bg-white backdrop-blur-md md:backdrop-blur-none border border-white/10 md:border-none rounded-2xl md:rounded-xl overflow-hidden shadow-2xl md:shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col items-center text-center pb-8 md:pb-10 group">
+                <div className="relative w-full aspect-[3/4] mb-5 md:mb-8 overflow-hidden bg-[#DFDDD8] border-b border-black/5 transition-all duration-700 ease-out">
+                  <img
+                    src="/img/product/pro-1.webp"
+                    alt="Sandstone"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-0 group-hover:-translate-x-full"
+                  />
+                  <img
+                    src="/img/product/pro-1.webp"
+                    alt="Sandstone Secondary"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-full group-hover:translate-x-0" 
+                  />
+                  {/* Glass Reflection Shimmer */}
+                  <div className="absolute w-[200%] h-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rotate-[-45deg] bg-white/50 opacity-0 group-hover:animate-[shimmer-glass_0.35s_ease-out_forwards] z-20 pointer-events-none"></div>
                 </div>
                 <h4 className="text-xl md:text-xl font-bold text-white md:text-[#1f2937] mb-3 md:mb-4">Sandstone</h4>
                 <p className="text-sm md:text-sm text-white/70 md:text-[#6b7280] leading-relaxed px-6 md:px-8 mb-6 md:mb-8 flex-grow">
@@ -104,9 +126,20 @@ const ProductsPage = () => {
               </Link>
 
               {/* Card 3: Stone Articrafts */}
-              <Link to="/products/stone-articrafts" className="snap-center shrink-0 w-[85vw] md:w-auto block bg-white/10 md:bg-white backdrop-blur-md md:backdrop-blur-none border border-white/10 md:border-none rounded-2xl md:rounded-xl overflow-hidden shadow-2xl md:shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col items-center text-center pb-8 md:pb-10 transition-all hover:-translate-y-2 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] duration-300 group">
-                <div className="w-full h-48 md:h-56 mb-5 md:mb-8 overflow-hidden">
-                  <img src="/img/product/last card image .webp" alt="Stone Articrafts" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Link to="/products/stone-articrafts" className="snap-center shrink-0 w-[85vw] md:w-auto block bg-white/10 md:bg-white backdrop-blur-md md:backdrop-blur-none border border-white/10 md:border-none rounded-2xl md:rounded-xl overflow-hidden shadow-2xl md:shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col items-center text-center pb-8 md:pb-10 group">
+                <div className="relative w-full aspect-[3/4] mb-5 md:mb-8 overflow-hidden bg-[#DFDDD8] border-b border-black/5 transition-all duration-700 ease-out">
+                  <img
+                    src="/img/product/last card image .webp"
+                    alt="Stone Articrafts"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-0 group-hover:-translate-x-full"
+                  />
+                  <img
+                    src="/img/product/last card image .webp"
+                    alt="Stone Articrafts Secondary"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out transform translate-x-full group-hover:translate-x-0" 
+                  />
+                  {/* Glass Reflection Shimmer */}
+                  <div className="absolute w-[200%] h-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rotate-[-45deg] bg-white/50 opacity-0 group-hover:animate-[shimmer-glass_0.35s_ease-out_forwards] z-20 pointer-events-none"></div>
                 </div>
                 <h4 className="text-xl md:text-xl font-bold text-white md:text-[#1f2937] mb-3 md:mb-4">Stone Articrafts</h4>
                 <p className="text-sm md:text-sm text-white/70 md:text-[#6b7280] leading-relaxed px-6 md:px-8 mb-6 md:mb-8 flex-grow">
