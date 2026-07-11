@@ -8,6 +8,7 @@ import { ArrowRight, PhoneCall, ShieldCheck, Gem, Layers, ChevronRight, CheckCir
 import { stoneProductsData } from "../data/stoneProductsData";
 
 gsap.registerPlugin(ScrollTrigger);
+      
 
 const HERO_IMG = "/img/product/Stone Products/Teakwood Sandstone/Teakwood-Sandstone-04.webp";
 const MOSAIC_TEASE = "/img/mosaics--products-tease.webp";
