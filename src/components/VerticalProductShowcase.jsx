@@ -73,17 +73,15 @@ const VerticalProductShowcase = () => {
 
   return (
     <>
-    <section className="relative z-30 pt-20 md:pt-28 pb-8 md:pb-12 bg-[#D8D8D8] border-t border-[#BC9960]/20 shadow-[0_-25px_50px_rgba(0,0,0,0.25)] mt-16 md:mt-0">
-      {/* ── Subtle Tile Background (repeating pattern, no zoom) ── */}
-      <div
-        className="absolute inset-0 pointer-events-none z-0 opacity-15 overflow-hidden"
-        style={{
-          backgroundImage: `url('/img/drsh/image copy 13.png')`,
-          backgroundRepeat: 'repeat',
-          backgroundSize: 'auto',
-          backgroundPosition: 'top left',
-        }}
-      />
+    <section className="relative z-30 pt-20 md:pt-28 pb-8 md:pb-12 bg-[#F5F5F2] border-t border-[#BC9960]/20 shadow-[0_-25px_50px_rgba(0,0,0,0.25)] mt-16 md:mt-0">
+      {/* ── Subtle Tile Background ── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-20">
+        <img
+          src="/img/drsh/image copy 13.png"
+          alt=""
+          className="w-full h-full object-cover object-center select-none"
+        />
+      </div>
 
       {/* Decorative Jaali image overlapping the section gap between Timeless Elegance & Stone Collection */}
       <img
@@ -107,14 +105,14 @@ const VerticalProductShowcase = () => {
         {/* Grid with ultra-subtle divider lines — 3 rows of 4 */}
         <div
           ref={gridRef}
-          className="grid grid-cols-2 lg:grid-cols-4 border-t border-[#BC9960]/[0.15]"
+          className="grid grid-cols-2 lg:grid-cols-4 border-t border-white/[0.15]"
         >
           {products.map((item, idx) => (
             <Link
               key={idx}
               ref={addCardRef}
               to={`/products/${articraftPicks.includes(item) ? 'stone-articrafts/' : ''}${item.title.toLowerCase().replace(/\s+/g, "-")}`}
-              className={`flex flex-col items-center text-center group py-6 sm:py-12 px-3 sm:px-5 md:px-8 no-underline bg-[#111111] border-b border-[#BC9960]/[0.15] border-r border-r-[#BC9960]/[0.15] ${(idx + 1) % 4 === 0 ? "lg:border-r-0" : ""
+              className={`flex flex-col items-center text-center group py-6 sm:py-12 px-3 sm:px-5 md:px-8 no-underline bg-[#111111] border-b border-white/[0.15] border-r border-r-white/[0.15] ${(idx + 1) % 4 === 0 ? "lg:border-r-0" : ""
                 } ${(idx + 1) % 2 === 0 ? "max-lg:border-r-0" : ""
                 } hover:bg-[#1a1a1a] transition-colors duration-700`}
             >
@@ -179,7 +177,7 @@ const VerticalProductShowcase = () => {
     {/* ── Wave blend divider between Stone Collection (grey) & Global Projects (white) ── */}
     <div className="relative z-40 -mt-px pointer-events-none">
       <svg className="w-full block" viewBox="0 0 1440 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,0 L0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25 L1440,0 Z" fill="#D8D8D8" />
+        <path d="M0,0 L0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25 L1440,0 Z" fill="#F5F5F2" />
         <path d="M0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25 L1440,50 L0,50 Z" fill="white" />
         <path d="M0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25" fill="none" stroke="#BC9960" strokeWidth="1.5" opacity="0.25" />
       </svg>

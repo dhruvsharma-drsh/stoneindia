@@ -84,15 +84,15 @@ export function Header() {
                   Our Product
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-[#141414] border border-white/10 shadow-2xl rounded-xl">
-                  <div className="flex w-[1050px] gap-10 p-8">
+                  <div className="flex w-[1100px] gap-10 p-8">
                     {/* Column 1 (Wider) */}
-                    <div className="flex-[2]">
+                    <div className="flex-[3]">
                       <h4 className="text-xs font-mono uppercase tracking-widest text-[#B8955D] mb-4 pb-3 border-b border-white/10">Stone Products</h4>
-                      <ul className="grid grid-cols-2 gap-x-6 gap-y-3">
+                      <ul className="grid grid-cols-3 gap-x-6 gap-y-3">
                         {megaMenuData.stoneProducts.map(item => (
                           <li key={item}>
                             <NavigationMenuLink asChild>
-                              <Link to={`/products/stone-products/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all block py-1">{item}</Link>
+                              <Link to={`/products/stone-products/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all block py-1 whitespace-nowrap">{item}</Link>
                             </NavigationMenuLink>
                           </li>
                         ))}
@@ -105,7 +105,7 @@ export function Header() {
                         {megaMenuData.sandstone.map(item => (
                           <li key={item}>
                             <NavigationMenuLink asChild>
-                              <Link to={`/products/sandstone/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all block py-1">{item}</Link>
+                              <Link to={`/products/sandstone/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all block py-1 whitespace-nowrap">{item}</Link>
                             </NavigationMenuLink>
                           </li>
                         ))}

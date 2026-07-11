@@ -547,6 +547,7 @@ const RainbowSandstoneView = () => {
         </div>
       </section>
 
+
       {/* ══════════════════════════════════════
           9. CTA BANNER — grout-line overlay
       ══════════════════════════════════════ */}

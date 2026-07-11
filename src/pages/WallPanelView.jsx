@@ -451,6 +451,8 @@ const WallPanelView = () => {
           </div>
         </div>
       </section>
+      {/* ══════════════════════════════════════
+      ══════════════════════════════════════ */}
 
       {/* 9. CTA BANNER */}
       <section id="contact" className="relative py-32 flex items-center justify-center overflow-hidden bg-[#111]">
