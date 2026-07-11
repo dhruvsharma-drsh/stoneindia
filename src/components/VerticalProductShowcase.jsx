@@ -72,7 +72,16 @@ const VerticalProductShowcase = () => {
   }, []);
 
   return (
-    <section className="relative z-30 py-24 md:py-32 bg-white border-t border-[#DFDDD8] shadow-[0_-25px_50px_rgba(0,0,0,0.25)] mt-16 md:mt-0">
+    <section className="relative z-30 py-24 md:py-32 bg-[#D8D8D8] border-t border-[#BC9960]/20 shadow-[0_-25px_50px_rgba(0,0,0,0.25)] mt-16 md:mt-0 overflow-hidden">
+      {/* ── Subtle Tile Background (same as About section) ── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-15">
+        <img
+          src="/img/drsh/image copy 13.png"
+          alt=""
+          className="w-full h-full object-cover object-center select-none"
+        />
+      </div>
+
       {/* Decorative Jaali image overlapping the section gap between Timeless Elegance & Stone Collection */}
       <img
         src="/img/drsh/vertical tile.png"
@@ -81,13 +90,13 @@ const VerticalProductShowcase = () => {
       />
 
 
-      <div className="max-w-[90rem] mx-auto px-6 md:px-12 pt-8 md:pt-16">
+      <div className="max-w-[90rem] mx-auto px-6 md:px-12 pt-8 md:pt-16 relative z-10">
         {/* Heading — Stone Collection style */}
         <div ref={headRef} className="text-center mb-16 md:mb-24">
-          <h2 className="text-4xl sm:text-6xl md:text-8xl font-serif text-[#222] mb-2 tracking-tight">
+          <h2 className="text-4xl sm:text-6xl md:text-8xl font-serif text-[#1A1A1A] mb-2 tracking-tight">
             Stone
           </h2>
-          <h2 className="text-3xl sm:text-5xl md:text-7xl font-serif italic text-[#222] ml-4 sm:ml-12 md:ml-32">
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-serif italic text-[#BC9960] ml-4 sm:ml-12 md:ml-32">
             Collection
           </h2>
         </div>
@@ -95,19 +104,19 @@ const VerticalProductShowcase = () => {
         {/* Grid with ultra-subtle divider lines — 3 rows of 4 */}
         <div
           ref={gridRef}
-          className="grid grid-cols-2 lg:grid-cols-4 border-t border-black/[0.08]"
+          className="grid grid-cols-2 lg:grid-cols-4 border-t border-[#BC9960]/[0.15]"
         >
           {products.map((item, idx) => (
             <Link
               key={idx}
               ref={addCardRef}
               to={`/products/${articraftPicks.includes(item) ? 'stone-articrafts/' : ''}${item.title.toLowerCase().replace(/\s+/g, "-")}`}
-              className={`flex flex-col items-center text-center group py-6 sm:py-12 px-3 sm:px-5 md:px-8 no-underline border-b border-black/[0.08] border-r border-r-black/[0.08] ${(idx + 1) % 4 === 0 ? "lg:border-r-0" : ""
+              className={`flex flex-col items-center text-center group py-6 sm:py-12 px-3 sm:px-5 md:px-8 no-underline bg-[#111111] border-b border-[#BC9960]/[0.15] border-r border-r-[#BC9960]/[0.15] ${(idx + 1) % 4 === 0 ? "lg:border-r-0" : ""
                 } ${(idx + 1) % 2 === 0 ? "max-lg:border-r-0" : ""
-                } hover:bg-[#F4F3EF] transition-colors duration-700`}
+                } hover:bg-[#1a1a1a] transition-colors duration-700`}
             >
               {/* Image Container with Panning Hover Effect */}
-              <div className="relative w-full aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#DFDDD8] border border-black/5 transition-all duration-700 ease-out">
+              <div className="relative w-full aspect-[3/4] mb-4 sm:mb-8 overflow-hidden bg-[#333] border border-white/10 transition-all duration-700 ease-out">
                 {/* Image 1 - Pans left on hover */}
                 <img
                   src={item.img}
@@ -135,13 +144,13 @@ const VerticalProductShowcase = () => {
               </div>
 
               {/* Refined Typography */}
-              <h4 className="text-[14px] sm:text-[16px] md:text-[18px] font-['Libre_Baskerville',serif] text-[#111] font-semibold tracking-normal mb-1 sm:mb-2 group-hover:text-[#B4956C] transition-colors duration-500">
+              <h4 className="text-[14px] sm:text-[16px] md:text-[18px] font-['Libre_Baskerville',serif] text-white/90 font-semibold tracking-normal mb-1 sm:mb-2 group-hover:text-[#B4956C] transition-colors duration-500">
                 {item.title}
               </h4>
               {/* Subtitle / SKU style */}
               <div className="hidden sm:flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500 mt-2">
                 <div className="w-4 h-[1px] bg-[#B4956C]/50"></div>
-                <p className="text-[11px] md:text-[12px] text-[#555] font-['Libre_Baskerville',serif] tracking-normal font-normal max-w-[220px] leading-relaxed">
+                <p className="text-[11px] md:text-[12px] text-white/50 font-['Libre_Baskerville',serif] tracking-normal font-normal max-w-[220px] leading-relaxed">
                   {item.desc}
                 </p>
                 <div className="w-4 h-[1px] bg-[#B4956C]/50"></div>
@@ -154,7 +163,7 @@ const VerticalProductShowcase = () => {
         <div className="mt-16 flex justify-center">
           <Link
             to="/products"
-            className="group inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#111] text-white font-bold text-sm tracking-widest uppercase hover:bg-[#B4956C] transition-colors duration-400"
+            className="group inline-flex items-center gap-3 px-10 py-5 rounded-full bg-white text-[#111] font-bold text-sm tracking-widest uppercase hover:bg-[#B4956C] hover:text-white transition-colors duration-400"
           >
             <span>Explore Entire Collection</span>
             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
