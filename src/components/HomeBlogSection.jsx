@@ -204,7 +204,7 @@ const HomeBlogSection = () => {
       {/* ── SCROLLING SECTION CONTENT (Transparent so you see fixed bg) ── */}
       <section
         ref={sectionRef}
-        className="relative z-30 py-24 sm:py-32 bg-transparent border-b border-[#DFDDD8]/20 overflow-hidden select-none"
+        className="relative z-30 pt-12 pb-24 sm:pt-16 sm:pb-32 bg-transparent border-b border-[#DFDDD8]/20 overflow-hidden select-none"
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 text-center relative z-10">
           

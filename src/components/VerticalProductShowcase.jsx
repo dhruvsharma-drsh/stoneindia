@@ -72,15 +72,18 @@ const VerticalProductShowcase = () => {
   }, []);
 
   return (
-    <section className="relative z-30 py-24 md:py-32 bg-[#D8D8D8] border-t border-[#BC9960]/20 shadow-[0_-25px_50px_rgba(0,0,0,0.25)] mt-16 md:mt-0 overflow-hidden">
-      {/* ── Subtle Tile Background (same as About section) ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-15">
-        <img
-          src="/img/drsh/image copy 13.png"
-          alt=""
-          className="w-full h-full object-cover object-center select-none"
-        />
-      </div>
+    <>
+    <section className="relative z-30 pt-20 md:pt-28 pb-8 md:pb-12 bg-[#D8D8D8] border-t border-[#BC9960]/20 shadow-[0_-25px_50px_rgba(0,0,0,0.25)] mt-16 md:mt-0">
+      {/* ── Subtle Tile Background (repeating pattern, no zoom) ── */}
+      <div
+        className="absolute inset-0 pointer-events-none z-0 opacity-15 overflow-hidden"
+        style={{
+          backgroundImage: `url('/img/drsh/image copy 13.png')`,
+          backgroundRepeat: 'repeat',
+          backgroundSize: 'auto',
+          backgroundPosition: 'top left',
+        }}
+      />
 
       {/* Decorative Jaali image overlapping the section gap between Timeless Elegance & Stone Collection */}
       <img
@@ -160,7 +163,7 @@ const VerticalProductShowcase = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-16 flex justify-center">
+        <div className="mt-10 md:mt-12 flex justify-center">
           <Link
             to="/products"
             className="group inline-flex items-center gap-3 px-10 py-5 rounded-full bg-white text-[#111] font-bold text-sm tracking-widest uppercase hover:bg-[#B4956C] hover:text-white transition-colors duration-400"
@@ -170,7 +173,18 @@ const VerticalProductShowcase = () => {
           </Link>
         </div>
       </div>
+
     </section>
+
+    {/* ── Wave blend divider between Stone Collection (grey) & Global Projects (white) ── */}
+    <div className="relative z-40 -mt-px pointer-events-none">
+      <svg className="w-full block" viewBox="0 0 1440 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 L0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25 L1440,0 Z" fill="#D8D8D8" />
+        <path d="M0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25 L1440,50 L0,50 Z" fill="white" />
+        <path d="M0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25" fill="none" stroke="#BC9960" strokeWidth="1.5" opacity="0.25" />
+      </svg>
+    </div>
+    </>
   );
 };
 

@@ -49,9 +49,10 @@ const OurMission = () => {
   }, []);
 
   return (
+    <>
     <section
       ref={sectionRef}
-      className="relative z-30 pt-6 sm:pt-10 pb-20 sm:pb-28 bg-white border-b border-[#DFDDD8] px-6 sm:px-12 lg:px-20 overflow-hidden"
+      className="relative z-30 pt-6 sm:pt-10 pb-10 sm:pb-14 bg-white px-6 sm:px-12 lg:px-20 overflow-hidden"
     >
       <div className="max-w-[86rem] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         {/* Left Column: CEO Words & Mission */}
@@ -93,14 +94,7 @@ const OurMission = () => {
             Natural stone is durable, readily available, and comes in a variety of textures and colors. Unlike other building materials that have to be fabricated or produced using harsh chemicals, natural stone is abundant in quantity, bountiful in colors and designs, and eco-friendly. We offer great selection of Indian Natural Stone to the world at affordable rates with great services to our clients. Let us open the beautiful world of natural stone for you and to make the world more beautiful
           </p>
 
-          {/* Signature Image Centered */}
-          <div className="mt-6 flex justify-center w-full">
-            <img
-              src="/sing/Vinit-kumar-Mittal-1.png"
-              alt="Vinit Kumar Mittal Signature"
-              className="h-16 sm:h-20 md:h-24 w-auto object-contain select-none -rotate-2 mx-auto"
-            />
-          </div>
+
         </div>
 
         {/* Right Column: Video Showcase with Right-side Bleeding Texture */}
@@ -109,8 +103,8 @@ const OurMission = () => {
           <div className="absolute -right-20 lg:-right-32 top-1/2 -translate-y-1/2 w-[350px] sm:w-[480px] h-[350px] sm:h-[480px] bg-[radial-gradient(#B8955D_1.5px,transparent_1.5px)] [background-size:18px_18px] opacity-40 rounded-full pointer-events-none -z-10" />
           <div className="absolute -right-12 top-1/2 -translate-y-1/2 w-64 h-64 bg-[#B8955D]/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-          {/* Clean Video Container */}
-          <div className="relative z-10 w-full max-w-xs mx-auto rounded-2xl overflow-hidden shadow-2xl border border-black/10">
+          {/* Clean Video Container — scales up on hover */}
+          <div className="relative z-10 w-full max-w-[240px] mx-auto rounded-2xl overflow-visible shadow-2xl border border-black/10 transition-all duration-500 ease-out hover:scale-110 hover:shadow-[0_30px_80px_rgba(0,0,0,0.35)] hover:z-30">
             <video
               controls
               playsInline
@@ -124,6 +118,16 @@ const OurMission = () => {
         </div>
       </div>
     </section>
+
+    {/* ── Wave blend divider between Our Mission (white) & Blog Section (dark) ── */}
+    <div className="relative z-40 -mt-px pointer-events-none">
+      <svg className="w-full block" viewBox="0 0 1440 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 L0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25 L1440,0 Z" fill="white" />
+        <path d="M0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25 L1440,50 L0,50 Z" fill="transparent" />
+        <path d="M0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25" fill="none" stroke="#BC9960" strokeWidth="2" opacity="0.35" />
+      </svg>
+    </div>
+    </>
   );
 };
 
