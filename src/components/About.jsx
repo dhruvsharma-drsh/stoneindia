@@ -105,7 +105,8 @@ const About = () => {
     <section
       ref={sectionRef}
       id="about"
-      className="relative z-30 w-full bg-[#FDFCFA] overflow-hidden py-20 sm:py-28 lg:py-36"
+      className="relative z-30 w-full bg-[#FFFFFF] overflow-hidden flex items-center justify-center"
+      style={{ height: 'calc(100vh - 60px)' }}
     >
       {/* ── Ambient Background Effects ── */}
       <div className="absolute top-1/2 left-[25%] -translate-x-1/2 -translate-y-1/2 w-[50vw] h-[50vw] bg-[#B8955D]/[0.06] rounded-full blur-[150px] pointer-events-none" />
@@ -120,62 +121,28 @@ const About = () => {
         }}
       />
 
-      {/* Decorative diagonal line */}
-      <div className="absolute top-20 right-[10%] w-px h-40 bg-gradient-to-b from-transparent via-[#B8955D]/20 to-transparent pointer-events-none hidden lg:block" />
-      <div className="absolute bottom-20 left-[8%] w-px h-32 bg-gradient-to-b from-transparent via-[#B8955D]/15 to-transparent pointer-events-none hidden lg:block" />
-
-      <div className="max-w-[88rem] mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
-        <div className="bg-white/80 backdrop-blur-md rounded-[40px] md:rounded-[80px] lg:rounded-[100px] p-6 sm:p-10 lg:p-16 xl:p-20 shadow-[0_40px_100px_rgba(0,0,0,0.06)] border border-[#B8955D]/15">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-12 lg:gap-16 xl:gap-24 items-center">
+      <div className="w-full h-full px-4 lg:px-6 py-4 lg:py-6 relative z-10">
+        <div className="bg-[#DCDCDC] rounded-[80px] lg:rounded-[250px] w-full h-full border border-[#E5E7EB] flex items-center relative overflow-hidden" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.10), 0 30px 80px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.6)' }}>
 
           {/* ════════════════════════════════════════════════════════════ */}
-          {/* ── LEFT: Capsule Image with Orbital Ring & Glow ────────── */}
+          {/* ── RIGHT: Capsule Image — absolutely positioned to the right of the pill ── */}
           {/* ════════════════════════════════════════════════════════════ */}
-          <div ref={imageColRef} className="relative flex items-center justify-center order-1 lg:order-1">
+          <div ref={imageColRef} className="hidden lg:flex absolute right-10 xl:right-14 top-1/2 -translate-y-1/2 items-center justify-center z-10">
 
-            {/* Radial glow behind capsule */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-[85%] h-[85%] rounded-full bg-gradient-to-br from-[#B8955D]/[0.12] via-[#D4B978]/[0.06] to-transparent blur-[60px]" />
-            </div>
 
-            {/* Rotating orbital ring */}
+            {/* ── THE VERTICAL PILL IMAGE ── */}
             <div
-              ref={orbitalRef}
-              className="absolute w-[105%] h-[105%] pointer-events-none"
-              style={{ transformOrigin: "center center" }}
-            >
-              {/* Ring path */}
-              <svg viewBox="0 0 400 600" fill="none" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
-                <ellipse cx="200" cy="300" rx="185" ry="285" stroke="url(#orbitalGrad)" strokeWidth="1.2" strokeDasharray="8 12" opacity="0.5" />
-                {/* Orbiting dot */}
-                <circle cx="200" cy="15" r="5" fill="#B8955D" opacity="0.8">
-                  <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
-                </circle>
-                <defs>
-                  <linearGradient id="orbitalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#B8955D" stopOpacity="0.6" />
-                    <stop offset="50%" stopColor="#D4B978" stopOpacity="0.15" />
-                    <stop offset="100%" stopColor="#B8955D" stopOpacity="0.5" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-
-            {/* Small floating accent diamonds */}
-            <div className="absolute -top-4 right-[15%] w-3 h-3 rotate-45 bg-[#B8955D]/20 rounded-sm animate-pulse hidden lg:block" />
-            <div className="absolute bottom-8 -left-2 w-2.5 h-2.5 rotate-45 bg-[#B8955D]/25 rounded-sm hidden lg:block" style={{ animation: "pulse 3s ease-in-out infinite 1s" }} />
-
-            {/* ── THE CAPSULE ── */}
-            <div
-              className="relative w-[340px] sm:w-[380px] lg:w-[420px] h-[520px] sm:h-[580px] lg:h-[640px] rounded-[200px] overflow-hidden group cursor-pointer"
+              className="relative w-[300px] sm:w-[340px] lg:w-[430px] rounded-[90px] lg:rounded-[190px] overflow-hidden group cursor-pointer"
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
               style={{
+                height: 'calc(100vh - 140px)',
                 boxShadow: `
-                  0 30px 80px rgba(0,0,0,0.18),
-                  0 0 0 1px rgba(245,214,62,0.15),
+                  0 20px 60px rgba(0,0,0,0.25),
+                  0 40px 100px rgba(0,0,0,0.15),
+                  0 0 0 1px rgba(245,214,62,0.18),
                   inset 0 0 0 2px rgba(245,214,62,0.12),
-                  0 0 60px rgba(245,214,62,0.08)
+                  0 0 80px rgba(245,214,62,0.10)
                 `,
               }}
             >
@@ -219,142 +186,95 @@ const About = () => {
                 <ChevronRight className="w-5 h-5" />
               </button>
 
-              {/* Vertical progress indicator — left side */}
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                {sliderImages.map((_, dotIdx) => (
-                  <button
-                    key={dotIdx}
-                    onClick={() => setActiveTexture(dotIdx)}
-                    className={`w-1.5 rounded-full transition-all duration-500 ${dotIdx === activeTexture
-                      ? "h-8 bg-[#FBC938] shadow-[0_0_8px_rgba(245,214,62,0.5)]"
-                      : "h-1.5 bg-white/40 hover:bg-white/80"
-                      }`}
-                  />
+            </div>
+          </div>
+
+          {/* Grid with spacer to keep text in the exact same position */}
+          <div className="w-full grid grid-cols-1 lg:grid-cols-[auto_auto] gap-6 lg:gap-16 xl:gap-20 items-center justify-center px-6 lg:px-10 xl:px-14 mx-auto">
+
+            {/* Invisible spacer — occupies the same slot the image used to, keeping text centered identically */}
+            <div className="hidden lg:block order-2 w-[400px] pointer-events-none" aria-hidden="true" />
+
+            {/* ════════════════════════════════════════════════════════════ */}
+            {/* ── LEFT: Text Content ─────────────────────────────────── */}
+            {/* ════════════════════════════════════════════════════════════ */}
+            <div ref={textColRef} className="z-10 flex flex-col items-start order-2 lg:order-1">
+
+              {/* Subtitle badge */}
+              <div className="flex items-center gap-3 mb-5">
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#B8955D]/[0.08] border border-[#B8955D]/20">
+                  <Sparkles className="w-3.5 h-3.5 text-[#B8955D]" />
+                  <span className="font-sans text-[11px] sm:text-xs tracking-[0.22em] font-semibold text-[#B8955D] uppercase">
+                    About Gwalior Stone
+                  </span>
+                </span>
+                <span className="h-px w-12 bg-gradient-to-r from-[#B8955D]/50 to-transparent block hidden sm:block" />
+              </div>
+
+              {/* Heading — refined typography */}
+              <h2 className="text-[2rem] sm:text-4xl lg:text-[2.85rem] xl:text-[3.1rem] leading-[1.1] tracking-tight text-[#1A1A1A] mb-5">
+                <span style={{ fontFamily: "'PP Neue Montreal', sans-serif" }} className="font-medium">
+                  Nature's Strength,
+                </span>
+                <span className="block mt-2 sm:mt-3">
+                  <span className="relative font-editorial italic font-normal text-[#B8955D]">
+                    Our Commitment
+                    <svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
+                      <path d="M0 8 Q50 0, 100 6 T200 4" stroke="#B8955D" strokeWidth="1.5" strokeLinecap="round" opacity="0.35" />
+                    </svg>
+                  </span>
+                  <span className="text-[#B8955D]">.</span>
+                </span>
+              </h2>
+
+              {/* Description with accent first letter */}
+              <div className="space-y-3 mb-5 max-w-[540px]">
+                <p className="font-sans text-[15px] sm:text-base lg:text-[17px] text-[#5A5A5A] leading-[1.75]">
+                  <span className="text-[#B8955D] font-semibold text-lg">F</span>or over two decades, Gwalior Stone has been transforming
+                  India's finest natural stones into timeless architectural
+                  masterpieces — exported to <span className="text-[#1A1A1A] font-medium">50+ countries</span> worldwide.
+                </p>
+                <p className="font-sans text-[15px] sm:text-base lg:text-[17px] text-[#5A5A5A] leading-[1.75]">
+                  From intricate jaali carvings to grand facade cladding,
+                  our artisans blend heritage techniques with modern precision
+                  to deliver stone solutions that stand the test of time.
+                </p>
+              </div>
+
+
+
+
+              {/* Feature pills */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {[
+                  { icon: ShieldCheck, text: "ISO Certified" },
+                  { icon: Globe, text: "Global Export" },
+                  { icon: Gem, text: "Premium Quality" },
+                  { icon: Layers, text: "Heritage Craft" },
+                ].map((item) => (
+                  <span
+                    key={item.text}
+                    className="group/pill inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E8E5DE] text-xs font-medium text-[#7A7A7A] hover:border-[#B8955D]/50 hover:text-[#B8955D] hover:shadow-[0_4px_16px_rgba(245,214,62,0.1)] transition-all duration-300 cursor-default"
+                  >
+                    <item.icon className="w-3.5 h-3.5 transition-transform duration-300 group-hover/pill:scale-110" />
+                    {item.text}
+                  </span>
                 ))}
               </div>
-            </div>
 
-            {/* Bottom dots — always visible, below capsule */}
-            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2.5">
-              {sliderImages.map((_, dotIdx) => (
-                <button
-                  key={dotIdx}
-                  onClick={() => setActiveTexture(dotIdx)}
-                  className={`h-1.5 rounded-full transition-all duration-500 ${dotIdx === activeTexture
-                    ? "w-8 bg-[#FBC938]"
-                    : "w-1.5 bg-[#FBC938]/30 hover:bg-[#FBC938]/60"
-                    }`}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* ════════════════════════════════════════════════════════════ */}
-          {/* ── RIGHT: Text Content ────────────────────────────────── */}
-          {/* ════════════════════════════════════════════════════════════ */}
-          <div ref={textColRef} className="z-10 flex flex-col items-start order-2 lg:order-2">
-
-            {/* Subtitle badge */}
-            <div className="flex items-center gap-3 mb-7">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#B8955D]/[0.08] border border-[#B8955D]/20">
-                <Sparkles className="w-3.5 h-3.5 text-[#B8955D]" />
-                <span className="font-sans text-[11px] sm:text-xs tracking-[0.22em] font-semibold text-[#B8955D] uppercase">
-                  About Gwalior Stone
+              {/* CTA Button */}
+              <Link
+                to="/about"
+                className="group relative inline-flex items-center gap-4 overflow-hidden bg-[#FBC938] text-[#111111] font-sans text-xs sm:text-[13px] font-semibold uppercase tracking-[0.18em] pl-8 pr-3.5 py-3.5 rounded-full border border-[#FBC938] shadow-[0_4px_20px_rgba(245,214,62,0.25)] hover:shadow-[0_12px_35px_rgba(245,214,62,0.4)] hover:-translate-y-0.5 transition-all duration-400 ease-out active:scale-[0.97] transform-gpu"
+              >
+                {/* Hover sweep effect */}
+                <span className="absolute inset-0 bg-gradient-to-r from-[#e3c434] to-[#FBC938] translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out" />
+                <span className="relative z-10">Discover Our Story</span>
+                <span className="relative z-10 w-9 h-9 rounded-full bg-black/10 border border-black/15 flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:text-[#111] group-hover:scale-105 group-hover:rotate-[-360deg]">
+                  <ArrowRight className="w-4 h-4" />
                 </span>
-              </span>
-              <span className="h-px w-12 bg-gradient-to-r from-[#B8955D]/50 to-transparent block hidden sm:block" />
+              </Link>
             </div>
-
-            {/* Heading — refined typography */}
-            <h2 className="text-[2rem] sm:text-4xl lg:text-[2.85rem] xl:text-[3.35rem] leading-[1.1] tracking-tight text-[#1A1A1A] mb-7">
-              <span style={{ fontFamily: "'PP Neue Montreal', sans-serif" }} className="font-medium">
-                Nature's Strength,
-              </span>
-              <span className="block mt-2 sm:mt-3">
-                <span className="relative font-editorial italic font-normal text-[#B8955D]">
-                  Our Commitment
-                  <svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
-                    <path d="M0 8 Q50 0, 100 6 T200 4" stroke="#B8955D" strokeWidth="1.5" strokeLinecap="round" opacity="0.35" />
-                  </svg>
-                </span>
-                <span className="text-[#B8955D]">.</span>
-              </span>
-            </h2>
-
-            {/* Description with accent first letter */}
-            <div className="space-y-4 mb-7 max-w-[540px]">
-              <p className="font-sans text-[15px] sm:text-base lg:text-[17px] text-[#5A5A5A] leading-[1.75]">
-                <span className="text-[#B8955D] font-semibold text-lg">F</span>or over two decades, Gwalior Stone has been transforming
-                India's finest natural stones into timeless architectural
-                masterpieces — exported to <span className="text-[#1A1A1A] font-medium">50+ countries</span> worldwide.
-              </p>
-              <p className="font-sans text-[15px] sm:text-base lg:text-[17px] text-[#5A5A5A] leading-[1.75]">
-                From intricate jaali carvings to grand facade cladding,
-                our artisans blend heritage techniques with modern precision
-                to deliver stone solutions that stand the test of time.
-              </p>
-            </div>
-
-            {/* Elegant quote */}
-            <div className="relative mb-9 max-w-[500px]">
-              <div className="absolute left-0 top-0 bottom-0 w-[2px] rounded-full bg-gradient-to-b from-[#B8955D] via-[#D4B978] to-[#B8955D]/30" />
-              <p className="font-serif text-[15px] text-[#888] leading-relaxed italic pl-5">
-                "Where centuries-old craftsmanship meets modern precision — every stone tells a story."
-              </p>
-            </div>
-
-            {/* ── Animated Stat Counters ── */}
-            <div className="flex items-stretch gap-0 mb-9 w-full max-w-[480px]">
-              {[
-                { value: countCountries, suffix: "+", label: "Countries", sub: "Global Reach" },
-                { value: countVarieties, suffix: "+", label: "Varieties", sub: "Stone Range" },
-                { value: countYears, suffix: "+", label: "Years", sub: "Experience" },
-              ].map((stat, i) => (
-                <div
-                  key={stat.label}
-                  className={`flex-1 text-center py-4 ${i !== 2 ? "border-r border-[#E8E5DE]" : ""}`}
-                >
-                  <span className="block font-editorial text-2xl sm:text-3xl lg:text-[2.2rem] font-light text-[#1A1A1A] leading-none">
-                    {stat.value}<span className="text-[#B8955D]">{stat.suffix}</span>
-                  </span>
-                  <span className="block mt-1.5 font-sans text-[11px] sm:text-xs tracking-[0.15em] uppercase text-[#999] font-medium">
-                    {stat.sub}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Feature pills */}
-            <div className="flex flex-wrap gap-2.5 mb-9">
-              {[
-                { icon: ShieldCheck, text: "ISO Certified" },
-                { icon: Globe, text: "Global Export" },
-                { icon: Gem, text: "Premium Quality" },
-                { icon: Layers, text: "Heritage Craft" },
-              ].map((item) => (
-                <span
-                  key={item.text}
-                  className="group/pill inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E8E5DE] text-xs font-medium text-[#7A7A7A] hover:border-[#B8955D]/50 hover:text-[#B8955D] hover:shadow-[0_4px_16px_rgba(245,214,62,0.1)] transition-all duration-300 cursor-default"
-                >
-                  <item.icon className="w-3.5 h-3.5 transition-transform duration-300 group-hover/pill:scale-110" />
-                  {item.text}
-                </span>
-              ))}
-            </div>
-
-            {/* CTA Button */}
-            <Link
-              to="/about"
-              className="group relative inline-flex items-center gap-4 overflow-hidden bg-[#FBC938] text-[#111111] font-sans text-xs sm:text-[13px] font-semibold uppercase tracking-[0.18em] pl-8 pr-3.5 py-3.5 rounded-full border border-[#FBC938] shadow-[0_4px_20px_rgba(245,214,62,0.25)] hover:shadow-[0_12px_35px_rgba(245,214,62,0.4)] hover:-translate-y-0.5 transition-all duration-400 ease-out active:scale-[0.97] transform-gpu"
-            >
-              {/* Hover sweep effect */}
-              <span className="absolute inset-0 bg-gradient-to-r from-[#e3c434] to-[#FBC938] translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out" />
-              <span className="relative z-10">Discover Our Story</span>
-              <span className="relative z-10 w-9 h-9 rounded-full bg-black/10 border border-black/15 flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:text-[#111] group-hover:scale-105 group-hover:rotate-[-360deg]">
-                <ArrowRight className="w-4 h-4" />
-              </span>
-            </Link>
-          </div>
           </div>
         </div>
       </div>
