@@ -125,7 +125,8 @@ const About = () => {
       <div className="absolute bottom-20 left-[8%] w-px h-32 bg-gradient-to-b from-transparent via-[#B8955D]/15 to-transparent pointer-events-none hidden lg:block" />
 
       <div className="max-w-[88rem] mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-12 lg:gap-16 xl:gap-24 items-center">
+        <div className="bg-white/80 backdrop-blur-md rounded-[40px] md:rounded-[80px] lg:rounded-[100px] p-6 sm:p-10 lg:p-16 xl:p-20 shadow-[0_40px_100px_rgba(0,0,0,0.06)] border border-[#B8955D]/15">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-12 lg:gap-16 xl:gap-24 items-center">
 
           {/* ════════════════════════════════════════════════════════════ */}
           {/* ── LEFT: Capsule Image with Orbital Ring & Glow ────────── */}
@@ -354,7 +355,7 @@ const About = () => {
               </span>
             </Link>
           </div>
-
+          </div>
         </div>
       </div>
     </section>
