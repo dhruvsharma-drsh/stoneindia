@@ -58,6 +58,13 @@
   }
 }
 
+.journey__wave-wrapper::before,
+.journey__wave-wrapper::after,
+.journey__wave-bg::before,
+.journey__wave-bg::after {
+  display: none !important;
+}
+
 .journey__wave-bg {
   display: none;
 }

@@ -231,7 +231,7 @@ const BlogPostPage = () => {
         </p>
         <button
           onClick={() => navigate('/blog')}
-          className="px-6 py-3 rounded-full bg-[#14140F] text-white font-medium text-sm hover:bg-[#B8955D] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8955D]"
+          className="px-6 py-3 rounded-full bg-[#14140F] text-white font-medium text-sm hover:bg-[#FBC938] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8955D]"
         >
           Back to the journal
         </button>
@@ -379,7 +379,7 @@ const BlogPostPage = () => {
               <button
                 onClick={handleCopyLink}
                 aria-label="Copy link to this article"
-                className="w-10 h-10 rounded-full border border-[#E4E0D8] flex items-center justify-center text-[#14140F] hover:bg-[#B8955D] hover:text-white hover:border-[#B8955D] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8955D]"
+                className="w-10 h-10 rounded-full border border-[#E4E0D8] flex items-center justify-center text-[#14140F] hover:bg-[#FBC938] hover:text-[#111] hover:border-[#B8955D] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8955D]"
               >
                 <Link2 size={16} />
               </button>
@@ -414,7 +414,7 @@ const BlogPostPage = () => {
                 {nextPost.title}
               </h3>
             </div>
-            <div className="flex items-center gap-3 px-7 py-4 rounded-full bg-gradient-to-r from-[#B8955D] to-[#DFBA73] text-black font-semibold text-sm shrink-0 group-hover:scale-105 group-hover:shadow-[0_0_30px_rgba(184,149,93,0.4)] transition-all">
+            <div className="flex items-center gap-3 px-7 py-4 rounded-full bg-[#FBC938] text-black font-semibold text-sm shrink-0 group-hover:scale-105 group-hover:shadow-[0_0_30px_rgba(245,214,62,0.4)] transition-all">
               Continue reading
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </div>

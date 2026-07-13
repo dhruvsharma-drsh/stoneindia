@@ -95,7 +95,7 @@ const ProductsPage = () => {
                 <p className="text-sm md:text-sm text-white/70 md:text-[#6b7280] leading-relaxed px-6 md:px-8 mb-6 md:mb-8 flex-grow">
                   Stone India offers a variety of manufactured stone products, thin brick, tile, and precast products. Architectural stone products can be used to greatly enhance the look and feel of your establishment.
                 </p>
-                <div className="px-8 py-3 bg-[#DFBA73] md:bg-[#B4956C] group-hover:bg-[#C8A05D] md:group-hover:bg-[#a3835c] text-black md:text-white text-[10px] font-bold tracking-widest uppercase rounded-full transition-colors">
+                <div className="px-8 py-3 bg-[#DFBA73] md:bg-[#FBC938] group-hover:bg-[#C8A05D] md:group-hover:bg-[#a3835c] text-black md:text-white text-[10px] font-bold tracking-widest uppercase rounded-full transition-colors">
                   READ MORE
                 </div>
               </Link>
@@ -120,7 +120,7 @@ const ProductsPage = () => {
                 <p className="text-sm md:text-sm text-white/70 md:text-[#6b7280] leading-relaxed px-6 md:px-8 mb-6 md:mb-8 flex-grow">
                   Among the most precious gift that nature offers, rocks and minerals stand tall. Sandstone is a sedimentary rock consisting of rock grains or minerals.They are available in a variety of colors including white, red, yellow, tan.
                 </p>
-                <div className="px-8 py-3 bg-[#DFBA73] md:bg-[#B4956C] group-hover:bg-[#C8A05D] md:group-hover:bg-[#a3835c] text-black md:text-white text-[10px] font-bold tracking-widest uppercase rounded-full transition-colors">
+                <div className="px-8 py-3 bg-[#DFBA73] md:bg-[#FBC938] group-hover:bg-[#C8A05D] md:group-hover:bg-[#a3835c] text-black md:text-white text-[10px] font-bold tracking-widest uppercase rounded-full transition-colors">
                   READ MORE
                 </div>
               </Link>
@@ -145,7 +145,7 @@ const ProductsPage = () => {
                 <p className="text-sm md:text-sm text-white/70 md:text-[#6b7280] leading-relaxed px-6 md:px-8 mb-6 md:mb-8 flex-grow">
                   STONE INDIA is a master in offering highly attractive and useful stone articrafts for our customers. We offer amazing varieties of products that are designed by following international manufacturing practices...
                 </p>
-                <div className="px-8 py-3 bg-[#DFBA73] md:bg-[#B4956C] group-hover:bg-[#C8A05D] md:group-hover:bg-[#a3835c] text-black md:text-white text-[10px] font-bold tracking-widest uppercase rounded-full transition-colors">
+                <div className="px-8 py-3 bg-[#DFBA73] md:bg-[#FBC938] group-hover:bg-[#C8A05D] md:group-hover:bg-[#a3835c] text-black md:text-white text-[10px] font-bold tracking-widest uppercase rounded-full transition-colors">
                   READ MORE
                 </div>
               </Link>

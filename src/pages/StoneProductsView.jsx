@@ -340,7 +340,7 @@ const StoneProductsView = () => {
 
               <div ref={heroCopyRef} className="flex flex-col gap-7">
                 <div className="flex items-center gap-3">
-                  <span className="w-10 h-[2px] bg-[#B4956C]"></span>
+                  <span className="w-10 h-[2px] bg-[#FBC938]"></span>
                   <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#B4956C]">About This Stone</span>
                 </div>
                 <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif text-[#111] leading-[1.12]">
@@ -424,7 +424,7 @@ const StoneProductsView = () => {
 
               <div ref={brandsCopyRef} className="flex flex-col gap-7 order-1 lg:order-2">
                 <div className="flex items-center gap-3">
-                  <span className="w-10 h-[2px] bg-[#B4956C]"></span>
+                  <span className="w-10 h-[2px] bg-[#FBC938]"></span>
                   <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#B4956C]">Why Choose Us</span>
                 </div>
                 <h2 className="text-4xl md:text-5xl font-serif text-[#111] leading-[1.12]">
@@ -436,7 +436,7 @@ const StoneProductsView = () => {
                 <div className="pt-2 flex flex-wrap gap-4">
                   <a
                     href="tel:+919425112100"
-                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full border-2 border-[#B4956C] text-[#B4956C] font-bold text-xs tracking-widest uppercase hover:bg-[#B4956C] hover:text-white transition-all duration-400 group"
+                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full border-2 border-[#B4956C] text-[#B4956C] font-bold text-xs tracking-widest uppercase hover:bg-[#FBC938] hover:text-white transition-all duration-400 group"
                   >
                     <PhoneCall size={16} className="group-hover:animate-pulse" />
                     +91 94251 12100
@@ -508,11 +508,11 @@ const StoneProductsView = () => {
                   </h4>
                   {/* Subtitle / SKU style */}
                   <div className="hidden sm:flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="w-4 h-[1px] bg-[#B4956C]/50"></div>
+                    <div className="w-4 h-[1px] bg-[#FBC938]/50"></div>
                     <p className="text-[8px] md:text-[9px] text-[#555] uppercase tracking-[0.3em] font-medium">
                       {item.desc}
                     </p>
-                    <div className="w-4 h-[1px] bg-[#B4956C]/50"></div>
+                    <div className="w-4 h-[1px] bg-[#FBC938]/50"></div>
                   </div>
                 </Link>
               ))}
@@ -535,7 +535,7 @@ const StoneProductsView = () => {
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#111] text-white font-bold text-sm tracking-widest uppercase hover:bg-[#B4956C] transition-colors duration-400"
+                className="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#111] text-white font-bold text-sm tracking-widest uppercase hover:bg-[#FBC938] transition-colors duration-400"
               >
                 Get Free Quote <ArrowRight size={16} />
               </Link>

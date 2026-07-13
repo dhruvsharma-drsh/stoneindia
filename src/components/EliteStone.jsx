@@ -316,12 +316,12 @@ const EliteStone = () => {
                 <div className="diamond-card relative z-10 my-2">
                   {/* Surrounding 3D Ambient Shadow Glow */}
                   <div className={`absolute inset-0 rounded-2xl sm:rounded-3xl rotate-45 blur-xl transition-all duration-500 pointer-events-none ${
-                    isActive ? "opacity-80 bg-[#B8955D]/35 scale-110" : "opacity-60 bg-black/25 group-hover:opacity-80 group-hover:bg-[#B8955D]/25 group-hover:scale-110"
+                    isActive ? "opacity-80 bg-[#B8955D]/35 scale-110" : "opacity-60 bg-black/25 group-hover:opacity-80 group-hover:bg-[#FBC938]/25 group-hover:scale-110"
                   }`} />
 
                   {/* Diamond Image Frame with Rich 3D Box Shadow */}
                   <div className={`relative w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 rotate-45 rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-500 ${
-                    isActive ? "border-2 border-[#B8955D] shadow-[0_20px_45px_-10px_rgba(184,149,93,0.45)] ring-2 ring-[#B8955D]/20" : "border border-white/80 shadow-[0_16px_38px_-8px_rgba(0,0,0,0.28)] ring-1 ring-black/[0.08] group-hover:border-[#B8955D]/60 group-hover:shadow-[0_22px_48px_-8px_rgba(184,149,93,0.35)]"
+                    isActive ? "border-2 border-[#B8955D] shadow-[0_20px_45px_-10px_rgba(245,214,62,0.45)] ring-2 ring-[#B8955D]/20" : "border border-white/80 shadow-[0_16px_38px_-8px_rgba(0,0,0,0.28)] ring-1 ring-black/[0.08] group-hover:border-[#B8955D]/60 group-hover:shadow-[0_22px_48px_-8px_rgba(245,214,62,0.35)]"
                   }`}>
                     <img
                       src={cat.image}
@@ -404,7 +404,7 @@ const EliteStone = () => {
             <div className="lg:col-span-4 flex justify-start lg:justify-end">
               <a
                 href="/products"
-                className="group relative inline-flex items-center gap-3 bg-[#1A1A1A] text-white font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.14em] px-7 py-4 rounded-full border border-black transition-all duration-300 hover:bg-[#B8955D] hover:border-[#B8955D] hover:shadow-lg hover:shadow-[#B8955D]/25 active:scale-95"
+                className="group relative inline-flex items-center gap-3 bg-[#1A1A1A] text-white font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.14em] px-7 py-4 rounded-full border border-black transition-all duration-300 hover:bg-[#FBC938] hover:border-[#B8955D] hover:shadow-lg hover:shadow-[#B8955D]/25 active:scale-95"
               >
                 <span>Explore {currentCategory.name.replace("\n", " ")}</span>
                 <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

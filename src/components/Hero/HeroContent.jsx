@@ -15,7 +15,7 @@ const splitIntoChars = (text, activeColor = "#ffffff", isInteractive = true) => 
       data-interactive={isInteractive.toString()}
       style={{
         color: isInteractive 
-          ? (activeColor === "#B8955D" ? "rgba(184,149,93,0.18)" : "rgba(255,255,255,0.15)")
+          ? (activeColor === "#B8955D" ? "rgba(245,214,62,0.18)" : "rgba(255,255,255,0.15)")
           : activeColor,
         willChange: "color, transform, text-shadow",
       }}
@@ -101,7 +101,7 @@ const HeroContent = () => {
       gsap.to(char, {
         color: activeColor,
         textShadow: isGold
-          ? `0 0 25px rgba(184,149,93,0.6), 0 0 50px rgba(184,149,93,0.2)`
+          ? `0 0 25px rgba(245,214,62,0.6), 0 0 50px rgba(245,214,62,0.2)`
           : `0 0 20px rgba(255,255,255,0.5), 0 0 40px rgba(255,255,255,0.1)`,
         scale: 1.1,
         duration: 0.2,

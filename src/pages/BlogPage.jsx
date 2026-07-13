@@ -77,7 +77,7 @@ const BlogPage = () => {
                 <Link 
                   to={`/blog/${post.id}`}
                   key={post.id} 
-                  className="bg-white rounded-2xl border border-[#EDEDE9] overflow-hidden group hover:shadow-[0_15px_30px_rgba(184,149,93,0.1)] transition-all duration-300 flex flex-col animate-fade-in-up block"
+                  className="bg-white rounded-2xl border border-[#EDEDE9] overflow-hidden group hover:shadow-[0_15px_30px_rgba(245,214,62,0.1)] transition-all duration-300 flex flex-col animate-fade-in-up block"
                   style={{ animationDelay: `${idx * 100}ms` }}
                 >
                   {/* Image Container */}
@@ -251,7 +251,7 @@ const BlogPage = () => {
               <p className="text-[#666] text-sm">Join our network of architects and builders creating real-world masterpieces.</p>
             </div>
           </div>
-          <button className="px-6 py-3 rounded-full bg-[#111] text-white font-medium text-sm hover:bg-[#B8955D] transition-colors whitespace-nowrap flex items-center gap-2">
+          <button className="px-6 py-3 rounded-full bg-[#111] text-white font-medium text-sm hover:bg-[#FBC938] transition-colors whitespace-nowrap flex items-center gap-2">
             Get in Touch <ArrowRight size={16} />
           </button>
         </div>

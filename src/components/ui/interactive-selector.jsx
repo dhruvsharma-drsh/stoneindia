@@ -125,7 +125,7 @@ const InteractiveSelector = ({ title, description, images }) => {
                 cursor: 'zoom-in',
                 backgroundColor: '#EDEDE9',
                 boxShadow: activeIndex === index
-                  ? '0 20px 50px rgba(184,149,93,0.3)'
+                  ? '0 20px 50px rgba(245,214,62,0.3)'
                   : '0 10px 20px rgba(0,0,0,0.05)',
                 flex: activeIndex === index ? '6 1 0%' : '1 1 0%',
                 zIndex: activeIndex === index ? 10 : 1,

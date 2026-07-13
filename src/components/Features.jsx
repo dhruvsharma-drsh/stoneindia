@@ -185,7 +185,7 @@ const Features = () => {
                           {/* Mobile CTA */}
                           <a
                             href="/projects"
-                            className="lg:hidden mt-4 w-full inline-flex items-center justify-center gap-2 bg-[#FAF9F5] border border-[#B8955D]/30 text-[#B8955D] font-sans text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-full transition-all duration-300 hover:bg-[#B8955D] hover:text-white"
+                            className="lg:hidden mt-4 w-full inline-flex items-center justify-center gap-2 bg-[#FAF9F5] border border-[#B8955D]/30 text-[#B8955D] font-sans text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-full transition-all duration-300 hover:bg-[#FBC938] hover:text-[#111]"
                           >
                             <span>View All Projects</span>
                             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -254,7 +254,7 @@ const Features = () => {
 
                 <a
                   href="/projects"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white text-[#111111] hover:bg-[#B8955D] hover:text-white font-sans text-xs font-bold uppercase tracking-widest px-6 py-3.5 rounded-full transition-all duration-300 shadow-lg text-center"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white text-[#111111] hover:bg-[#FBC938] hover:text-[#111] font-sans text-xs font-bold uppercase tracking-widest px-6 py-3.5 rounded-full transition-all duration-300 shadow-lg text-center"
                 >
                   <span>Explore All Projects</span>
                   <ArrowUpRight className="w-4 h-4" />

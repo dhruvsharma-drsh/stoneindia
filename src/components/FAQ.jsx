@@ -30,7 +30,7 @@ const theme = {
     border: 'border-black/[0.06]',
     hoverBorder: 'hover:border-[#B8955D]/40',
     activeBorder: 'border-[#B8955D]/40',
-    shadow: 'shadow-[0_10px_35px_rgba(184,149,93,0.08)]',
+    shadow: 'shadow-[0_10px_35px_rgba(245,214,62,0.08)]',
     badgeBg: 'bg-[#FAF9F5]',
     badgeBorder: 'border-[#B8955D]/30',
     badgeText: 'text-[#B8955D]',

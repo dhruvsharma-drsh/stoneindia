@@ -58,7 +58,7 @@ const Button = ({ id, title, rightIcon, leftIcon, containerClass, onClick }) => 
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={clsx(
-        "group relative z-10 inline-flex items-center justify-between gap-5 cursor-pointer overflow-hidden rounded-full bg-[#111111] pl-7 pr-2 py-2 text-white border border-white/10 shadow-[0_4px_25px_rgba(0,0,0,0.6)] transition-all duration-300 hover:border-[#B8955D]/60 hover:shadow-[0_0_30px_rgba(184,149,93,0.35)]",
+        "group relative z-10 inline-flex items-center justify-between gap-5 cursor-pointer overflow-hidden rounded-full bg-[#111111] pl-7 pr-2 py-2 text-white border border-white/10 shadow-[0_4px_25px_rgba(0,0,0,0.6)] transition-all duration-300 hover:border-[#B8955D]/60 hover:shadow-[0_0_30px_rgba(245,214,62,0.35)]",
         containerClass
       )}
     >
@@ -75,7 +75,7 @@ const Button = ({ id, title, rightIcon, leftIcon, containerClass, onClick }) => 
 
       <div
         ref={circleRef}
-        className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#222222] group-hover:bg-[#B8955D] group-hover:text-[#0A0A0A] text-white/80 flex items-center justify-center transition-all duration-300 shadow-inner"
+        className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#222222] group-hover:bg-[#FBC938] group-hover:text-[#0A0A0A] text-white/80 flex items-center justify-center transition-all duration-300 shadow-inner"
       >
         {rightIcon || <ArrowRight className="w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform duration-300 group-hover:rotate-[-45deg] group-hover:scale-110" />}
       </div>

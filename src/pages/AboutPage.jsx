@@ -702,7 +702,7 @@ const AboutPage = () => {
             <div className="w-full">
               {/* The mathematical SVG wave */}
               <div className="journey__wave-bg">
-                <svg viewBox="0 0 1500 200" preserveAspectRatio="none" width="100%" height="100%">
+                <svg viewBox="0 0 1500 200" preserveAspectRatio="none" width="100%" height="100%" style={{ overflow: 'visible' }}>
                 {/* Drop shadow / glow */}
                 <filter id="up-shadow" x="-20%" y="-20%" width="140%" height="140%">
                   <feDropShadow dx="0" dy="16" stdDeviation="16" floodColor="#B8955D" floodOpacity="0.4" />
@@ -845,7 +845,7 @@ const AboutPage = () => {
 
                     {/* Node Area */}
                     <div className="journey__node-area">
-                      <div className={`journey__icon-circle transition-all duration-500 group-hover:scale-110 group-hover:border-[#B8955D]/40 group-hover:shadow-[0_12px_32px_rgba(184,149,93,0.3)] ${isCrest ? 'journey__icon-circle--top' : 'journey__icon-circle--bottom'}`}>
+                      <div className={`journey__icon-circle transition-all duration-500 group-hover:scale-110 group-hover:border-[#B8955D]/40 group-hover:shadow-[0_12px_32px_rgba(245,214,62,0.3)] ${isCrest ? 'journey__icon-circle--top' : 'journey__icon-circle--bottom'}`}>
                         {step.icon}
                       </div>
                     </div>
@@ -923,7 +923,7 @@ const AboutPage = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/contact"
-                className="group inline-flex items-center gap-3 bg-[#1A1A1A] text-white font-semibold text-sm uppercase tracking-wider px-8 py-4 rounded-full hover:bg-[#B8955D] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                className="group inline-flex items-center gap-3 bg-[#1A1A1A] text-white font-semibold text-sm uppercase tracking-wider px-8 py-4 rounded-full hover:bg-[#FBC938] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
                 Request a Quote
                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">

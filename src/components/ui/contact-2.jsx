@@ -395,7 +395,7 @@ export const Contact2 = ({
 
                   <button
                     onClick={reset}
-                    className="group relative inline-flex items-center gap-3 bg-[#141414] text-white font-sans text-xs font-semibold uppercase tracking-[0.14em] pl-7 pr-4 py-3.5 rounded-full border border-[#B8955D]/30 overflow-hidden transition-all duration-500 hover:border-[#B8955D] hover:shadow-[0_12px_36px_rgba(184,149,93,0.25)] hover:-translate-y-0.5"
+                    className="group relative inline-flex items-center gap-3 bg-[#141414] text-white font-sans text-xs font-semibold uppercase tracking-[0.14em] pl-7 pr-4 py-3.5 rounded-full border border-[#B8955D]/30 overflow-hidden transition-all duration-500 hover:border-[#B8955D] hover:shadow-[0_12px_36px_rgba(245,214,62,0.25)] hover:-translate-y-0.5"
                   >
                     <span className="absolute inset-0 bg-gradient-to-r from-[#B8955D] via-[#C5A880] to-[#B8955D] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-none" />
                     <span className="relative z-10">Send Another</span>
@@ -457,7 +457,7 @@ export const Contact2 = ({
                       disabled={!canSend}
                       className={`group relative w-full inline-flex items-center justify-center gap-3 font-sans text-xs sm:text-[13px] font-semibold uppercase tracking-[0.16em] py-4 rounded-full border overflow-hidden transition-all duration-500 active:scale-[0.98] ${
                         canSend
-                          ? "bg-[#141414] text-white border-[#B8955D]/35 hover:border-[#B8955D] hover:shadow-[0_12px_36px_rgba(184,149,93,0.25)] hover:-translate-y-0.5 cursor-pointer"
+                          ? "bg-[#141414] text-white border-[#B8955D]/35 hover:border-[#B8955D] hover:shadow-[0_12px_36px_rgba(245,214,62,0.25)] hover:-translate-y-0.5 cursor-pointer"
                           : "bg-[#F0EDE8] text-[#B8B3AA] border-transparent cursor-not-allowed"
                       }`}
                     >
