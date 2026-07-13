@@ -84,45 +84,37 @@ export function Header() {
                   Our Product
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-[#141414] border border-white/10 shadow-2xl rounded-xl">
-                  <div className="flex w-[1100px] gap-10 p-8">
-                    {/* Column 1 (Wider) */}
-                    <div className="flex-[3]">
-                      <h4 className="text-xs font-mono uppercase tracking-widest text-[#B8955D] mb-4 pb-3 border-b border-white/10">Stone Products</h4>
-                      <ul className="grid grid-cols-3 gap-x-6 gap-y-3">
-                        {megaMenuData.stoneProducts.map(item => (
-                          <li key={item}>
-                            <NavigationMenuLink asChild>
-                              <Link to={`/products/stone-products/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all block py-1 whitespace-nowrap">{item}</Link>
-                            </NavigationMenuLink>
-                          </li>
-                        ))}
-                      </ul>
+                  <div className="grid grid-cols-[repeat(3,auto)_repeat(2,auto)_auto] gap-x-8 gap-y-2 p-8" style={{width: 'max-content'}}>
+                    {/* ── Stone Products heading (spans 3 cols) ── */}
+                    <h4 className="col-span-3 text-xs font-mono uppercase tracking-widest text-[#B8955D] mb-2 pb-3 border-b border-white/10">Stone Products</h4>
+                    {/* ── Sandstone heading (spans 2 cols) ── */}
+                    <h4 className="col-span-2 text-xs font-mono uppercase tracking-widest text-[#B8955D] mb-2 pb-3 border-b border-white/10">Sandstone</h4>
+                    {/* ── Stone Articrafts heading (spans 1 col) ── */}
+                    <h4 className="col-span-1 text-xs font-mono uppercase tracking-widest text-[#B8955D] mb-2 pb-3 border-b border-white/10">Stone Articrafts</h4>
+
+                    {/* ── Stone Products items (3 columns) ── */}
+                    <div className="col-span-3 grid grid-cols-3 gap-x-6 gap-y-2">
+                      {megaMenuData.stoneProducts.map(item => (
+                        <NavigationMenuLink key={item} asChild>
+                          <Link to={`/products/stone-products/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:translate-x-0.5 transition-all block py-1 leading-snug whitespace-nowrap">{item}</Link>
+                        </NavigationMenuLink>
+                      ))}
                     </div>
-                    {/* Column 2 (Wider) */}
-                    <div className="flex-[2]">
-                      <h4 className="text-xs font-mono uppercase tracking-widest text-[#B8955D] mb-4 pb-3 border-b border-white/10">Sandstone</h4>
-                      <ul className="grid grid-cols-2 gap-x-6 gap-y-3">
-                        {megaMenuData.sandstone.map(item => (
-                          <li key={item}>
-                            <NavigationMenuLink asChild>
-                              <Link to={`/products/sandstone/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all block py-1 whitespace-nowrap">{item}</Link>
-                            </NavigationMenuLink>
-                          </li>
-                        ))}
-                      </ul>
+                    {/* ── Sandstone items (2 columns) ── */}
+                    <div className="col-span-2 grid grid-cols-2 gap-x-6 gap-y-2">
+                      {megaMenuData.sandstone.map(item => (
+                        <NavigationMenuLink key={item} asChild>
+                          <Link to={`/products/sandstone/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:translate-x-0.5 transition-all block py-1 leading-snug whitespace-nowrap">{item}</Link>
+                        </NavigationMenuLink>
+                      ))}
                     </div>
-                    {/* Column 3 (Normal) */}
-                    <div className="flex-[1]">
-                      <h4 className="text-xs font-mono uppercase tracking-widest text-[#B8955D] mb-4 pb-3 border-b border-white/10">Stone Articrafts</h4>
-                      <ul className="flex flex-col gap-3">
-                        {megaMenuData.stoneArticrafts.map(item => (
-                          <li key={item}>
-                            <NavigationMenuLink asChild>
-                              <Link to={`/products/stone-articrafts/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:pl-1 transition-all block py-1">{item}</Link>
-                            </NavigationMenuLink>
-                          </li>
-                        ))}
-                      </ul>
+                    {/* ── Stone Articrafts items (1 column) ── */}
+                    <div className="col-span-1 flex flex-col gap-2">
+                      {megaMenuData.stoneArticrafts.map(item => (
+                        <NavigationMenuLink key={item} asChild>
+                          <Link to={`/products/stone-articrafts/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-[13px] font-medium text-white/70 hover:text-white hover:translate-x-0.5 transition-all block py-1 leading-snug whitespace-nowrap">{item}</Link>
+                        </NavigationMenuLink>
+                      ))}
                     </div>
                   </div>
                   <div className="border-t border-white/10 py-3 px-8 flex items-center justify-between bg-white/[0.02] rounded-b-xl">
