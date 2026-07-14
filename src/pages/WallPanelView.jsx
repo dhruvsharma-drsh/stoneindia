@@ -178,7 +178,7 @@ const WallPanelView = () => {
           </p>
 
           <div ref={heroCtaRef} className="opacity-0 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 w-full sm:w-auto">
-            <a href="#contact" className="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-[#FBC938] text-black font-bold text-xs sm:text-sm tracking-wider uppercase hover:scale-105 hover:shadow-[0_0_40px_rgba(245,214,62,0.5)] transition-all duration-300 flex items-center gap-2">
+            <a href="#contact" className="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-[#B7945D] text-black font-bold text-xs sm:text-sm tracking-wider uppercase hover:scale-105 hover:shadow-[0_0_40px_rgba(245,214,62,0.5)] transition-all duration-300 flex items-center gap-2">
               <PhoneCall size={18} /> Request Wholesale Quote
             </a>
             <a href="#parallax-gallery" className="px-6 sm:px-8 py-3 sm:py-4 rounded-full border border-white/30 text-white font-medium text-xs sm:text-sm hover:bg-white hover:text-black transition-colors backdrop-blur-sm flex items-center gap-2">
@@ -219,7 +219,7 @@ const WallPanelView = () => {
               Our wall panels available at the wholesale price offer an encompassing range of interiors made at par with international standards under the supervision of expert personnel. These Gwalior panels are broadly demanded flawless range and longer durability.
             </p>
             <div className="pt-4">
-              <a href="tel:+919826058456" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#FBC938] text-[#111] font-medium text-sm tracking-wider hover:bg-[#FBC938] transition-colors duration-300">
+              <a href="tel:+919826058456" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#B7945D] text-[#111] font-medium text-sm tracking-wider hover:bg-[#B7945D] transition-colors duration-300">
                 <PhoneCall size={18} /> +91 982 605 8456
               </a>
             </div>
@@ -412,11 +412,11 @@ const WallPanelView = () => {
                   {item.title}
                 </h4>
                 <div className="hidden sm:flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="w-4 h-[1px] bg-[#FBC938]/50" />
+                  <div className="w-4 h-[1px] bg-[#B7945D]/50" />
                   <p className="text-[8px] md:text-[9px] text-[#555] uppercase tracking-[0.3em] font-medium">
                     {item.desc}
                   </p>
-                  <div className="w-4 h-[1px] bg-[#FBC938]/50" />
+                  <div className="w-4 h-[1px] bg-[#B7945D]/50" />
                 </div>
               </Link>
             ))}
@@ -477,7 +477,7 @@ const WallPanelView = () => {
             Available in bulk for wholesale buyers globally — the perfect choice for feature
             walls, homes, offices, clubs, and restaurants.
           </p>
-          <a href="mailto:info@gwaliorstone.in" className="px-10 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wider uppercase hover:bg-[#FBC938] hover:text-[#111] transition-all duration-300 shadow-xl inline-flex items-center gap-2">
+          <a href="mailto:info@gwaliorstone.in" className="px-10 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wider uppercase hover:bg-[#B7945D] hover:text-[#111] transition-all duration-300 shadow-xl inline-flex items-center gap-2">
             Contact Us Today <ArrowRight size={16} />
           </a>
         </div>

@@ -190,7 +190,7 @@ const GwaliorSandstoneView = () => {
           </p>
 
           <div ref={heroCtaRef} className="opacity-0 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 w-full sm:w-auto">
-            <a href="#contact" className="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-[#FBC938] text-black font-bold text-xs sm:text-sm tracking-wider uppercase hover:scale-105 hover:shadow-[0_0_40px_rgba(245,214,62,0.5)] transition-all duration-300 flex items-center gap-2">
+            <a href="#contact" className="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-[#B7945D] text-black font-bold text-xs sm:text-sm tracking-wider uppercase hover:scale-105 hover:shadow-[0_0_40px_rgba(245,214,62,0.5)] transition-all duration-300 flex items-center gap-2">
               <PhoneCall size={16} className="sm:w-[18px] sm:h-[18px]" /> Request Wholesale Quote
             </a>
             <a href="#patterns" className="px-6 sm:px-8 py-3 sm:py-4 rounded-full border border-white/30 text-white font-medium text-xs sm:text-sm hover:bg-white hover:text-black transition-colors backdrop-blur-sm flex items-center gap-2">
@@ -230,7 +230,7 @@ const GwaliorSandstoneView = () => {
               There might be minor color tonal variations, but this might be in the tolerance limit. The hardness is around 6.5 to 7 on Moh’s scale, and the density ranges from 2.3 to 2.4 kg/cm3. Moreover, the porosity of this Gwalior Sandstone is very low, and it is resistant to any weather. Talking about the chemical composition, these are resistant mono-mineralic rocks that have silica as the main constituent. Other constituents include Alumina, Lime, Soda, Iron, SiO2, Loss On Ignition, and Magnesia.
             </p>
             <div className="pt-4">
-              <a href="tel:+919826058456" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#FBC938] text-[#111] font-medium text-sm tracking-wider hover:bg-[#FBC938] transition-colors duration-300">
+              <a href="tel:+919826058456" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#B7945D] text-[#111] font-medium text-sm tracking-wider hover:bg-[#B7945D] transition-colors duration-300">
                 <PhoneCall size={18} /> +91 982 605 8456
               </a>
             </div>
@@ -507,11 +507,11 @@ const GwaliorSandstoneView = () => {
                   {item.title}
                 </h4>
                 <div className="hidden sm:flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="w-4 h-[1px] bg-[#FBC938]/50" />
+                  <div className="w-4 h-[1px] bg-[#B7945D]/50" />
                   <p className="text-[8px] md:text-[9px] text-[#555] uppercase tracking-[0.3em] font-medium line-clamp-2">
                     {item.desc}
                   </p>
-                  <div className="w-4 h-[1px] bg-[#FBC938]/50" />
+                  <div className="w-4 h-[1px] bg-[#B7945D]/50" />
                 </div>
               </Link>
             ))}
@@ -575,7 +575,7 @@ const GwaliorSandstoneView = () => {
             Available in bulk for wholesale buyers globally — the perfect choice for feature
             walls, bathrooms, and elegant exterior cladding.
           </p>
-          <a href="mailto:info@gwaliorstone.in" className="px-10 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wider uppercase hover:bg-[#FBC938] hover:text-[#111] transition-all duration-300 shadow-xl inline-flex items-center gap-2">
+          <a href="mailto:info@gwaliorstone.in" className="px-10 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wider uppercase hover:bg-[#B7945D] hover:text-[#111] transition-all duration-300 shadow-xl inline-flex items-center gap-2">
             Contact Us Today <ArrowRight size={16} />
           </a>
         </div>

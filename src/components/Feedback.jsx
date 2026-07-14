@@ -13,7 +13,7 @@ const rawTestimonials = [
 ];
 
 const Feedback = () => {
-  // Map raw testimonials to the format expected by CircularTestimonials
+  
   const testimonials = rawTestimonials.map((t) => ({
     quote: t.quote,
     name: t.name,

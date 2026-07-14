@@ -156,7 +156,7 @@ export function Header() {
         <div className="hidden items-center gap-4 lg:flex">
           <a
             href="/contact"
-            className="px-6 py-2.5 rounded-full bg-[#FBC938] text-black font-semibold text-xs tracking-wider uppercase hover:shadow-[0_0_20px_rgba(245,214,62,0.5)] transition-all hover:scale-105 active:scale-95"
+            className="px-6 py-2.5 rounded-full bg-[#B7945D] text-black font-semibold text-xs tracking-wider uppercase hover:shadow-[0_0_20px_rgba(245,214,62,0.5)] transition-all hover:scale-105 active:scale-95"
           >
             Get Quote
           </a>
@@ -212,7 +212,7 @@ export function Header() {
           <a
             href="/contact"
             onClick={() => setOpen(false)}
-            className="w-full text-center py-3 rounded-full bg-[#FBC938] text-black font-semibold text-sm tracking-wider uppercase"
+            className="w-full text-center py-3 rounded-full bg-[#B7945D] text-black font-semibold text-sm tracking-wider uppercase"
           >
             Get Instant Quote
           </a>

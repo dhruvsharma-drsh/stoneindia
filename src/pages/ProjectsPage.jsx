@@ -210,7 +210,7 @@ const ProjectsPage = () => {
               <button
                 onClick={handleCopyLink}
                 aria-label="Copy link to this page"
-                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/80 hover:bg-[#FBC938] hover:text-[#111] hover:border-[#B8955D] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8955D]"
+                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/80 hover:bg-[#B7945D] hover:text-[#111] hover:border-[#B8955D] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8955D]"
               >
                 <Link2 size={16} />
               </button>
@@ -270,7 +270,7 @@ const ProjectsPage = () => {
                   </div>
                   <div className="flex items-center gap-8 text-gray-500 w-full md:w-auto transform group-hover:-translate-x-2 transition-transform duration-700 ease-[0.16,1,0.3,1]">
                     <span className="text-sm font-medium hidden md:block max-w-sm truncate text-black/40 group-hover:text-black/60 transition-colors duration-500">{project.description}</span>
-                    <div className={`ml-auto md:ml-0 relative w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-700 shrink-0 ${isExpanded ? 'border-[#B8955D] text-[#B8955D] bg-[#B8955D]/5' : 'border-black/10 text-black/40 group-hover:border-[#B8955D] group-hover:text-[#B8955D] group-hover:bg-[#FBC938]/5'}`}>
+                    <div className={`ml-auto md:ml-0 relative w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-700 shrink-0 ${isExpanded ? 'border-[#B8955D] text-[#B8955D] bg-[#B8955D]/5' : 'border-black/10 text-black/40 group-hover:border-[#B8955D] group-hover:text-[#B8955D] group-hover:bg-[#B7945D]/5'}`}>
                       {/* Horizontal line */}
                       <div className={`absolute w-3.5 h-[1px] bg-current transition-transform duration-500 ease-[0.16,1,0.3,1] ${isExpanded ? 'rotate-180' : 'rotate-0'}`} />
                       {/* Vertical line (cross) */}

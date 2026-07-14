@@ -162,7 +162,7 @@ const Navbar = () => {
                     setActiveLink(link.name);
                     setMobileMenuOpen(false);
                   }}
-                  className="px-4 py-3 text-sm font-sans font-medium text-[#1E1E1E] hover:text-[#B8955D] hover:bg-[#FBC938]/10 rounded-xl transition-all duration-200 flex items-center justify-between"
+                  className="px-4 py-3 text-sm font-sans font-medium text-[#1E1E1E] hover:text-[#B8955D] hover:bg-[#B7945D]/10 rounded-xl transition-all duration-200 flex items-center justify-between"
                 >
                   <span>{link.name}</span>
                   <span className="text-[10px] text-[#8A8A8A] uppercase font-mono tracking-widest">

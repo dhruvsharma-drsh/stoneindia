@@ -75,7 +75,7 @@ const Button = ({ id, title, rightIcon, leftIcon, containerClass, onClick }) => 
 
       <div
         ref={circleRef}
-        className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#222222] group-hover:bg-[#FBC938] group-hover:text-[#0A0A0A] text-white/80 flex items-center justify-center transition-all duration-300 shadow-inner"
+        className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#222222] group-hover:bg-[#B7945D] group-hover:text-[#0A0A0A] text-white/80 flex items-center justify-center transition-all duration-300 shadow-inner"
       >
         {rightIcon || <ArrowRight className="w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform duration-300 group-hover:rotate-[-45deg] group-hover:scale-110" />}
       </div>

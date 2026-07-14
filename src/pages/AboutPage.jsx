@@ -923,7 +923,7 @@ const AboutPage = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/contact"
-                className="group inline-flex items-center gap-3 bg-[#1A1A1A] text-white font-semibold text-sm uppercase tracking-wider px-8 py-4 rounded-full hover:bg-[#FBC938] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                className="group inline-flex items-center gap-3 bg-[#1A1A1A] text-white font-semibold text-sm uppercase tracking-wider px-8 py-4 rounded-full hover:bg-[#B7945D] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
                 Request a Quote
                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">

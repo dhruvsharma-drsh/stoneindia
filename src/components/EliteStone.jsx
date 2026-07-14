@@ -316,7 +316,7 @@ const EliteStone = () => {
                 <div className="diamond-card relative z-10 my-2">
                   {/* Surrounding 3D Ambient Shadow Glow */}
                   <div className={`absolute inset-0 rounded-2xl sm:rounded-3xl rotate-45 blur-xl transition-all duration-500 pointer-events-none ${
-                    isActive ? "opacity-80 bg-[#B8955D]/35 scale-110" : "opacity-60 bg-black/25 group-hover:opacity-80 group-hover:bg-[#FBC938]/25 group-hover:scale-110"
+                    isActive ? "opacity-80 bg-[#B8955D]/35 scale-110" : "opacity-60 bg-black/25 group-hover:opacity-80 group-hover:bg-[#B7945D]/25 group-hover:scale-110"
                   }`} />
 
                   {/* Diamond Image Frame with Rich 3D Box Shadow */}
@@ -404,7 +404,7 @@ const EliteStone = () => {
             <div className="lg:col-span-4 flex justify-start lg:justify-end">
               <a
                 href="/products"
-                className="group relative inline-flex items-center gap-3 bg-[#1A1A1A] text-white font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.14em] px-7 py-4 rounded-full border border-black transition-all duration-300 hover:bg-[#FBC938] hover:border-[#B8955D] hover:shadow-lg hover:shadow-[#B8955D]/25 active:scale-95"
+                className="group relative inline-flex items-center gap-3 bg-[#1A1A1A] text-white font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.14em] px-7 py-4 rounded-full border border-black transition-all duration-300 hover:bg-[#B7945D] hover:border-[#B8955D] hover:shadow-lg hover:shadow-[#B8955D]/25 active:scale-95"
               >
                 <span>Explore {currentCategory.name.replace("\n", " ")}</span>
                 <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

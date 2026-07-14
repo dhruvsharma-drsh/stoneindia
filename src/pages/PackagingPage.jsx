@@ -181,7 +181,7 @@ const PackagingPage = () => {
                 className="bg-white p-6 rounded-2xl border border-[#EDEDE9] shadow-sm hover:shadow-[0_15px_30px_rgba(245,214,62,0.1)] hover:border-[#B8955D]/30 hover:-translate-y-1 transition-all duration-300 group animate-fade-in-up"
                 style={{ animationDelay: `${(idx + 1) * 100}ms` }}
               >
-                <div className="w-12 h-12 rounded-xl bg-[#FAFAF8] flex items-center justify-center mb-5 group-hover:bg-[#FBC938] group-hover:text-white text-[#B8955D] transition-colors duration-300 group-hover:scale-110">
+                <div className="w-12 h-12 rounded-xl bg-[#FAFAF8] flex items-center justify-center mb-5 group-hover:bg-[#B7945D] group-hover:text-white text-[#B8955D] transition-colors duration-300 group-hover:scale-110">
                   <feature.icon size={24} />
                 </div>
                 <h3 className="text-lg font-bold mb-2">{feature.title}</h3>
@@ -199,7 +199,7 @@ const PackagingPage = () => {
           {/* Factory Stuffing */}
           <div className="bg-white flex flex-col h-full rounded-2xl p-8 border border-[#EDEDE9] shadow-sm relative overflow-hidden group hover:border-[#B8955D]/20 hover:shadow-lg transition-all duration-300">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 rounded-xl bg-[#FAFAF8] text-[#B8955D] group-hover:bg-[#FBC938] group-hover:text-white transition-colors duration-300">
+              <div className="p-3 rounded-xl bg-[#FAFAF8] text-[#B8955D] group-hover:bg-[#B7945D] group-hover:text-white transition-colors duration-300">
                 <Truck size={24} />
               </div>
               <h3 className="text-xl md:text-2xl font-bold leading-tight">Factory Stuffing <br/>& Safe Transit</h3>
@@ -215,7 +215,7 @@ const PackagingPage = () => {
           {/* Customization & Branding */}
           <div className="bg-white flex flex-col h-full rounded-2xl p-8 border border-[#EDEDE9] shadow-sm relative overflow-hidden group hover:border-[#B8955D]/20 hover:shadow-lg transition-all duration-300">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 rounded-xl bg-[#FAFAF8] text-[#B8955D] group-hover:bg-[#FBC938] group-hover:text-white transition-colors duration-300">
+              <div className="p-3 rounded-xl bg-[#FAFAF8] text-[#B8955D] group-hover:bg-[#B7945D] group-hover:text-white transition-colors duration-300">
                 <Tag size={24} />
               </div>
               <h3 className="text-xl md:text-2xl font-bold leading-tight">Customization <br/>& Branding</h3>

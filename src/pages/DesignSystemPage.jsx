@@ -357,7 +357,7 @@ const DesignSystemPage = () => {
                 Used across Projects, Infrastructure, and Contact pages for maximum legibility and highlighting visual content.
               </p>
               <div className="flex items-center gap-4">
-                <button className="px-6 py-3 rounded-full bg-[#111111] text-white text-sm font-bold hover:bg-[#FBC938] transition-colors shadow-lg shadow-black/10">
+                <button className="px-6 py-3 rounded-full bg-[#111111] text-white text-sm font-bold hover:bg-[#B7945D] transition-colors shadow-lg shadow-black/10">
                   Secondary Action
                 </button>
               </div>
@@ -542,10 +542,10 @@ const DesignSystemPage = () => {
                         <button className="px-8 py-3.5 rounded-full bg-[#B8955D] text-white text-sm font-bold shadow-lg shadow-[#B8955D]/20 hover:bg-[#D2AF75] transition-colors">
                           Explore Collection
                         </button>
-                        <button className="px-8 py-3.5 rounded-full bg-[#111] text-white text-sm font-bold hover:bg-[#FBC938] transition-colors">
+                        <button className="px-8 py-3.5 rounded-full bg-[#111] text-white text-sm font-bold hover:bg-[#B7945D] transition-colors">
                           Contact Us
                         </button>
-                        <button className="px-8 py-3.5 rounded-full border-2 border-[#B8955D] text-[#B8955D] text-sm font-bold hover:bg-[#FBC938] hover:text-[#111] transition-all">
+                        <button className="px-8 py-3.5 rounded-full border-2 border-[#B8955D] text-[#B8955D] text-sm font-bold hover:bg-[#B7945D] hover:text-[#111] transition-all">
                           View Projects
                         </button>
                         <button className="px-8 py-3.5 rounded-full bg-[#F7F6F0] text-[#111] text-sm font-bold border border-[#E8E6DF] hover:border-[#B8955D] transition-colors">

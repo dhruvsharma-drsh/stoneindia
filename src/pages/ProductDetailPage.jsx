@@ -57,7 +57,7 @@ const DefaultProductView = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-            <a href="#contact" className="px-8 py-4 rounded-full bg-[#FBC938] text-black font-bold text-sm tracking-wider uppercase hover:scale-105 hover:shadow-[0_0_40px_rgba(245,214,62,0.5)] transition-all duration-300 flex items-center gap-2">
+            <a href="#contact" className="px-8 py-4 rounded-full bg-[#B7945D] text-black font-bold text-sm tracking-wider uppercase hover:scale-105 hover:shadow-[0_0_40px_rgba(245,214,62,0.5)] transition-all duration-300 flex items-center gap-2">
               <PhoneCall size={18} /> Request Wholesale Quote
             </a>
             <button className="px-8 py-4 rounded-full border border-white/30 text-white font-medium text-sm hover:bg-white hover:text-black transition-colors backdrop-blur-sm flex items-center gap-2 group">
@@ -155,7 +155,7 @@ const DefaultProductView = () => {
           <p className="text-lg md:text-xl text-white/70 font-light max-w-2xl mx-auto mb-10 leading-relaxed">
             We supply top-notch quality natural stone to customers across India and globally. Dealing in bulk orders allows us to provide unmatched quality at the most reasonable charges.
           </p>
-          <a href="#contact" className="px-10 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wider uppercase hover:bg-[#FBC938] hover:text-[#111] transition-all duration-300 shadow-xl flex items-center gap-2">
+          <a href="#contact" className="px-10 py-4 rounded-full bg-white text-black font-bold text-sm tracking-wider uppercase hover:bg-[#B7945D] hover:text-[#111] transition-all duration-300 shadow-xl flex items-center gap-2">
             Contact Us Today <ArrowRight size={16} />
           </a>
         </div>
@@ -199,7 +199,7 @@ const DefaultProductView = () => {
                 { icon: CheckCircle2, text: "Available in custom sizes" },
               ].map((feature, idx) => (
                 <div key={idx} className="flex items-center gap-4 bg-white p-4 rounded-2xl border border-[#EDEDE9] hover:border-[#B8955D]/50 hover:shadow-lg transition-all group">
-                  <div className="w-10 h-10 rounded-full bg-[#FAFAF8] flex items-center justify-center group-hover:bg-[#FBC938] group-hover:text-white text-[#B8955D] transition-colors">
+                  <div className="w-10 h-10 rounded-full bg-[#FAFAF8] flex items-center justify-center group-hover:bg-[#B7945D] group-hover:text-white text-[#B8955D] transition-colors">
                     <feature.icon size={18} />
                   </div>
                   <span className="font-medium text-[#111] text-sm">{feature.text}</span>

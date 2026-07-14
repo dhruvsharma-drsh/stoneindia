@@ -1,17 +1,10 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, Sparkles, Globe, Gem, Layers, ShieldCheck, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const sliderImages = [
-  { src: "/img/drsh/image copy 12.png", label: "Master Carved Jaali", subtitle: "Intricate Geometric Stone Carving" },
-  { src: "/img/drsh/image copy 14.png", label: "Heritage Sandstone", subtitle: "Timeless Architectural Craft" },
-  { src: "/img/drsh/image copy 11.png", label: "Ornate Lattice Panel", subtitle: "Precision Laser Cut Stone Art" },
-  { src: "/img/drsh/9bb3928c-5874-4806-a749-94e644f55e79.jpg", label: "Royal Gwalior Facade", subtitle: "Elevating Exterior & Interior Spaces" },
-];
 
 /* ── Animated Counter Hook ── */
 const useCountUp = (end, duration = 2000, trigger = false) => {
@@ -32,254 +25,285 @@ const useCountUp = (end, duration = 2000, trigger = false) => {
 
 const About = () => {
   const sectionRef = useRef(null);
-  const textColRef = useRef(null);
-  const imageColRef = useRef(null);
-  const orbitalRef = useRef(null);
-  const [activeTexture, setActiveTexture] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const leftColRef = useRef(null);
+  const collageRef = useRef(null);
   const [statsVisible, setStatsVisible] = useState(false);
 
-  const countCountries = useCountUp(50, 2200, statsVisible);
-  const countVarieties = useCountUp(200, 2400, statsVisible);
-  const countYears = useCountUp(20, 1800, statsVisible);
+  const countYears = useCountUp(25, 2000, statsVisible);
 
-  // Auto-play slider
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      setActiveTexture((prev) => (prev + 1) % sliderImages.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [isPaused]);
-
-  const goNext = useCallback(() => setActiveTexture((p) => (p + 1) % sliderImages.length), []);
-  const goPrev = useCallback(() => setActiveTexture((p) => (p - 1 + sliderImages.length) % sliderImages.length), []);
-
-  // GSAP animations
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Text column stagger
+      // Left column stagger
       gsap.fromTo(
-        textColRef.current.children,
-        { opacity: 0, y: 40, filter: "blur(6px)" },
+        leftColRef.current.children,
+        { opacity: 0, y: 40 },
         {
-          opacity: 1, y: 0, filter: "blur(0px)",
-          duration: 1.0, stagger: 0.12, ease: "power3.out",
-          scrollTrigger: { trigger: sectionRef.current, start: "top 80%", toggleActions: "play none none reverse" },
+          opacity: 1, y: 0,
+          duration: 1.2, stagger: 0.15, ease: "power3.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 75%", toggleActions: "play none none reverse" },
         }
       );
 
-      // Image capsule entrance
+      // Right column images entrance
       gsap.fromTo(
-        imageColRef.current,
-        { opacity: 0, x: -60, scale: 0.9 },
+        ".collage-img-3", // Large right image
+        { opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)" },
         {
-          opacity: 1, x: 0, scale: 1,
-          duration: 1.4, ease: "power3.out",
-          scrollTrigger: { trigger: sectionRef.current, start: "top 80%", toggleActions: "play none none reverse" },
+          opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+          duration: 1.6, ease: "power4.inOut",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 75%", toggleActions: "play none none reverse" },
         }
       );
 
-      // Orbital ring spin
-      if (orbitalRef.current) {
-        gsap.to(orbitalRef.current, {
-          rotation: 360,
-          duration: 18,
-          repeat: -1,
-          ease: "none",
-        });
-      }
+      gsap.fromTo(
+        ".collage-img-1", // Top left image
+        { opacity: 0, y: 40, scale: 0.9 },
+        {
+          opacity: 1, y: 0, scale: 1,
+          duration: 1.2, ease: "back.out(1.2)", delay: 0.6,
+          scrollTrigger: { trigger: sectionRef.current, start: "top 75%", toggleActions: "play none none reverse" },
+        }
+      );
 
-      // Trigger stat counters
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top 70%",
-        onEnter: () => setStatsVisible(true),
+      gsap.fromTo(
+        ".collage-img-2", // Bottom left image
+        { opacity: 0, y: -40, scale: 0.9 },
+        {
+          opacity: 1, y: 0, scale: 1,
+          duration: 1.2, ease: "back.out(1.2)", delay: 0.8,
+          scrollTrigger: { trigger: sectionRef.current, start: "top 75%", toggleActions: "play none none reverse" },
+        }
+      );
+
+      gsap.fromTo(
+        ".stats-card",
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1, y: 0,
+          duration: 1.2, ease: "power3.out", delay: 1.0,
+          scrollTrigger: { trigger: sectionRef.current, start: "top 75%", toggleActions: "play none none reverse" },
+          onStart: () => setStatsVisible(true) // Trigger counter
+        }
+      );
+
+      // Animate gold map dots
+      gsap.to(".map-dot-gold", {
+        opacity: 0.3,
+        scale: 0.6,
+        duration: 1.5,
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.3,
+        ease: "sine.inOut"
       });
+
+      // Mouse Parallax Effect
+      const handleMouseMove = (e) => {
+        if (!collageRef.current) return;
+        const { clientX, clientY } = e;
+        const xPos = (clientX / window.innerWidth - 0.5) * 30; // Max move 15px
+        const yPos = (clientY / window.innerHeight - 0.5) * 30;
+
+        gsap.to(".collage-img-1", { x: xPos * 1.5, y: yPos * 1.5, duration: 1, ease: "power2.out" });
+        gsap.to(".collage-img-2", { x: -xPos * 1.2, y: -yPos * 1.2, duration: 1, ease: "power2.out" });
+        gsap.to(".collage-img-3", { x: xPos * 0.5, y: yPos * 0.5, duration: 1, ease: "power2.out" });
+        gsap.to(".stats-card", { x: -xPos * 0.8, y: -yPos * 0.8, duration: 1, ease: "power2.out" });
+      };
+
+      sectionRef.current.addEventListener("mousemove", handleMouseMove);
+
+      return () => {
+        if (sectionRef.current) sectionRef.current.removeEventListener("mousemove", handleMouseMove);
+      };
+
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
+    <>
     <section
       ref={sectionRef}
       id="about"
-      className="relative z-30 w-full bg-[#FFFFFF] overflow-hidden flex items-center justify-center"
-      style={{ height: 'calc(100vh - 60px)' }}
+      className="relative z-30 w-full bg-[#FAFAFA] py-16 lg:py-20 overflow-hidden"
     >
-      {/* ── Ambient Background Effects ── */}
-      <div className="absolute top-1/2 left-[25%] -translate-x-1/2 -translate-y-1/2 w-[50vw] h-[50vw] bg-[#B8955D]/[0.06] rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[35vw] h-[35vw] bg-[#1A1A1A]/[0.03] rounded-full blur-[120px] pointer-events-none" />
+      {/* --- Ambient Background --- */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-[#B8955D]/[0.05] rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-[#1A1A1A]/[0.03] rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[18vw] font-serif font-bold text-[#111] opacity-[0.015] pointer-events-none whitespace-nowrap z-0 tracking-[-0.05em] select-none">
+        HERITAGE
+      </div>
 
-      {/* Dot grid */}
-      <div
-        className="absolute inset-0 opacity-[0.025] pointer-events-none"
-        style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, #999 0.5px, transparent 0)`,
-          backgroundSize: "40px 40px",
-        }}
-      />
+      {/* Grid Pattern */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0" style={{ backgroundImage: 'linear-gradient(#999 1px, transparent 1px), linear-gradient(90deg, #999 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
 
-      <div className="w-full h-full px-4 lg:px-6 py-4 lg:py-6 relative z-10">
-        <div className="bg-[#DCDCDC] rounded-[80px] lg:rounded-[250px] w-full h-full border border-[#E5E7EB] flex items-center relative overflow-hidden" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.10), 0 30px 80px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.6)' }}>
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between relative z-10">
 
-          {/* ════════════════════════════════════════════════════════════ */}
-          {/* ── RIGHT: Capsule Image — absolutely positioned to the right of the pill ── */}
-          {/* ════════════════════════════════════════════════════════════ */}
-          <div ref={imageColRef} className="hidden lg:flex absolute right-10 xl:right-14 top-1/2 -translate-y-1/2 items-center justify-center z-10">
+        {/* LEFT COLUMN: TEXT */}
+        <div ref={leftColRef} className="w-full lg:w-[45%] flex flex-col items-start xl:pr-16 z-10 relative">
 
-
-            {/* ── THE VERTICAL PILL IMAGE ── */}
-            <div
-              className="relative w-[300px] sm:w-[340px] lg:w-[430px] rounded-[90px] lg:rounded-[190px] overflow-hidden group cursor-pointer"
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
-              style={{
-                height: 'calc(100vh - 140px)',
-                boxShadow: `
-                  0 20px 60px rgba(0,0,0,0.25),
-                  0 40px 100px rgba(0,0,0,0.15),
-                  0 0 0 1px rgba(245,214,62,0.18),
-                  inset 0 0 0 2px rgba(245,214,62,0.12),
-                  0 0 80px rgba(245,214,62,0.10)
-                `,
-              }}
+          <div className="flex flex-col items-start mb-6">
+            <svg
+              width="80"
+              height="16"
+              viewBox="0 0 100 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="mb-2"
             >
-              {/* Crossfade images (smoother than translate slider for capsule) */}
-              {sliderImages.map((t, idx) => (
-                <div
-                  key={t.label}
-                  className="absolute inset-0 transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
-                  style={{
-                    opacity: idx === activeTexture ? 1 : 0,
-                    transform: idx === activeTexture ? "scale(1)" : "scale(1.08)",
-                  }}
-                >
-                  <img
-                    src={t.src}
-                    alt={t.label}
-                    className="w-full h-full object-cover object-center select-none"
-                    draggable={false}
-                  />
-                </div>
-              ))}
-
-              {/* Inner capsule glow overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 pointer-events-none z-10" />
-
-
-
-              {/* Navigation arrows — appear on hover */}
-              <button
-                onClick={goPrev}
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full backdrop-blur-md bg-white/[0.1] border border-white/[0.2] text-white flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 hover:bg-[#FBC938] hover:border-[#FBC938] hover:text-[#111] hover:scale-110 shadow-lg"
-                aria-label="Previous slide"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={goNext}
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full backdrop-blur-md bg-white/[0.1] border border-white/[0.2] text-white flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 hover:bg-[#FBC938] hover:border-[#FBC938] hover:text-[#111] hover:scale-110 shadow-lg"
-                aria-label="Next slide"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-
-            </div>
+              <path
+                d="M2 12C8 4 16 4 22 12C28 20 36 20 42 12C48 4 56 4 62 12C68 20 76 20 82 12C88 4 96 4 98 12"
+                stroke="#B8955D"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+              />
+            </svg>
+            <span className="text-[#B8955D] font-bold tracking-[0.25em] text-xs lg:text-[13px] uppercase">
+              About Us
+            </span>
           </div>
 
-          {/* Grid with spacer to keep text in the exact same position */}
-          <div className="w-full grid grid-cols-1 lg:grid-cols-[auto_auto] gap-6 lg:gap-16 xl:gap-20 items-center justify-center px-6 lg:px-10 xl:px-14 mx-auto">
+          <h2 className="text-5xl lg:text-[4.5rem] font-serif text-[#111] mb-6 leading-[1.05] tracking-tight">
+            Every Stone<br />
+            <span className="font-light italic text-[#B8955D] pr-2">Tells</span>
+            a Story.
+          </h2>
 
-            {/* Invisible spacer — occupies the same slot the image used to, keeping text centered identically */}
-            <div className="hidden lg:block order-2 w-[400px] pointer-events-none" aria-hidden="true" />
+          <div className="space-y-4 text-[#555] text-[15px] lg:text-[16px] leading-[1.75] mb-8 font-medium">
+            <p>
+              For over two decades, <strong className="text-[#1A1A1A] font-bold">Gwalior Stone</strong> has been transforming India's finest natural stones into timeless architectural masterpieces — exported to <strong className="text-[#1A1A1A] font-bold">50+ countries</strong> worldwide.
+            </p>
+            <p>
+              From intricate jaali carvings to grand facade cladding, our artisans blend heritage techniques with modern precision to deliver stone solutions that stand the test of time.
+            </p>
+          </div>
 
-            {/* ════════════════════════════════════════════════════════════ */}
-            {/* ── LEFT: Text Content ─────────────────────────────────── */}
-            {/* ════════════════════════════════════════════════════════════ */}
-            <div ref={textColRef} className="z-10 flex flex-col items-start order-2 lg:order-1">
+          {/* Enhanced Button */}
+          <Link
+            to="/collection"
+            className="relative overflow-hidden group inline-flex items-center gap-4 border border-[#B8955D] px-8 py-4 text-[13px] font-bold tracking-[0.15em] uppercase text-[#B8955D] transition-colors duration-500 hover:text-white hover:border-transparent hover:shadow-[0_15px_30px_rgba(184,149,93,0.3)]"
+          >
+            <span className="absolute inset-0 bg-gradient-to-r from-[#C2A370] to-[#B8955D] transform scale-x-0 origin-left transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-x-100 -z-10"></span>
+            <span className="relative z-10">Discover Our Collection</span>
+            <span className="relative z-10 w-8 h-8 rounded-full border border-current flex items-center justify-center transition-transform duration-500 group-hover:bg-white group-hover:text-[#B8955D] group-hover:border-white group-hover:rotate-[-45deg]">
+              <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </span>
+          </Link>
 
-              {/* Subtitle badge */}
-              <div className="flex items-center gap-3 mb-5">
-                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#B8955D]/[0.08] border border-[#B8955D]/20">
-                  <Sparkles className="w-3.5 h-3.5 text-[#B8955D]" />
-                  <span className="font-sans text-[11px] sm:text-xs tracking-[0.22em] font-semibold text-[#B8955D] uppercase">
-                    About Gwalior Stone
-                  </span>
-                </span>
-                <span className="h-px w-12 bg-gradient-to-r from-[#B8955D]/50 to-transparent block hidden sm:block" />
+        </div>
+
+        {/* RIGHT COLUMN: COLLAGE */}
+        <div ref={collageRef} className="w-full lg:w-[50%] h-[500px] lg:h-[600px] relative mt-16 lg:mt-8 z-0">
+
+          {/* Main Large Image (Building) */}
+          <div className="collage-img-3 absolute top-0 right-0 w-[75%] h-[95%] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] group">
+            <img
+              src="/img/drsh/image copy 11.png"
+              alt="Royal Gwalior Facade"
+              className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+          </div>
+
+          {/* Top Left Small Image (Carving) */}
+          <div className="collage-img-1 absolute top-0 left-0 w-[45%] h-[40%] border-[4px] lg:border-[6px] border-white shadow-[0_30px_60px_rgba(0,0,0,0.12)] z-10 overflow-hidden group">
+            <img
+              src="/img/drsh/image copy 12.png"
+              alt="Master Carved Jaali"
+              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+            />
+          </div>
+
+          {/* Bottom Left Small Image (Texture) */}
+          <div className="collage-img-2 absolute top-[48%] left-[-8%] w-[42%] h-[38%] border-[4px] lg:border-[6px] border-white shadow-[0_30px_60px_rgba(0,0,0,0.12)] z-20 overflow-hidden group">
+            <img
+              src="/img/drsh/9bb3928c-5874-4806-a749-94e644f55e79.jpg"
+              alt="Stone Texture"
+              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+            />
+          </div>
+
+          {/* Stats Overlay Card */}
+          <div className="stats-card absolute -bottom-6 -right-6 w-auto bg-white/95 backdrop-blur-md p-3 lg:p-4 lg:pr-5 shadow-[0_40px_80px_rgba(184,149,93,0.15)] z-30 overflow-hidden border border-white/50">
+            <div className="flex items-center gap-2 relative z-10">
+              <div className="text-[#B8955D] shrink-0 transform transition-transform duration-500 hover:scale-110">
+                <svg width="14" height="18" viewBox="0 0 24 32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-100">
+                  <path d="M2 6 L12 2 L22 6 Z" fill="currentColor" fillOpacity="0.1" />
+                  <path d="M2 6 L22 6" />
+                  <path d="M4 8 L20 8" />
+                  <path d="M2 28 L22 28" />
+                  <path d="M4 26 L20 26" />
+                  <path d="M6 8 L6 26" />
+                  <path d="M10 8 L10 26" />
+                  <path d="M14 8 L14 26" />
+                  <path d="M18 8 L18 26" />
+                </svg>
               </div>
-
-              {/* Heading — refined typography */}
-              <h2 className="text-[2rem] sm:text-4xl lg:text-[2.85rem] xl:text-[3.1rem] leading-[1.1] tracking-tight text-[#1A1A1A] mb-5">
-                <span style={{ fontFamily: "'PP Neue Montreal', sans-serif" }} className="font-medium">
-                  Nature's Strength,
-                </span>
-                <span className="block mt-2 sm:mt-3">
-                  <span className="relative font-editorial italic font-normal text-[#B8955D]">
-                    Our Commitment
-                    <svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
-                      <path d="M0 8 Q50 0, 100 6 T200 4" stroke="#B8955D" strokeWidth="1.5" strokeLinecap="round" opacity="0.35" />
-                    </svg>
-                  </span>
-                  <span className="text-[#B8955D]">.</span>
-                </span>
-              </h2>
-
-              {/* Description with accent first letter */}
-              <div className="space-y-3 mb-5 max-w-[540px]">
-                <p className="font-sans text-[15px] sm:text-base lg:text-[17px] text-[#5A5A5A] leading-[1.75]">
-                  <span className="text-[#B8955D] font-semibold text-lg">F</span>or over two decades, Gwalior Stone has been transforming
-                  India's finest natural stones into timeless architectural
-                  masterpieces — exported to <span className="text-[#1A1A1A] font-medium">50+ countries</span> worldwide.
-                </p>
-                <p className="font-sans text-[15px] sm:text-base lg:text-[17px] text-[#5A5A5A] leading-[1.75]">
-                  From intricate jaali carvings to grand facade cladding,
-                  our artisans blend heritage techniques with modern precision
-                  to deliver stone solutions that stand the test of time.
-                </p>
+              <div className="flex flex-col">
+                <div className="flex items-baseline">
+                  <div className="text-xl lg:text-2xl font-serif text-[#111] leading-none tracking-tight">
+                    {countYears}
+                  </div>
+                  <div className="text-lg lg:text-xl font-serif text-[#B8955D] leading-none ml-0.5">+</div>
+                </div>
+                <div className="text-[6px] lg:text-[7px] font-bold tracking-[0.2em] text-[#333] mt-0.5">YEARS OF EXCELLENCE</div>
               </div>
+            </div>
 
+            {/* Dotted Map Pattern */}
+            <div className="absolute bottom-[-5%] right-[-5%] opacity-[0.06] pointer-events-none z-0 w-[95%]">
+              <svg viewBox="0 0 100 60" className="w-full h-auto fill-current text-[#111]">
+                <circle cx="20" cy="20" r="1" /> <circle cx="23" cy="18" r="1" /> <circle cx="25" cy="22" r="1" />
+                <circle cx="22" cy="25" r="1" /> <circle cx="27" cy="19" r="1" /> <circle cx="30" cy="21" r="1" />
+                <circle cx="18" cy="28" r="1" /> <circle cx="24" cy="29" r="1" /> <circle cx="28" cy="26" r="1" />
+                <circle cx="32" cy="24" r="1" /> <circle cx="35" cy="20" r="1" /> <circle cx="38" cy="23" r="1" />
+                <circle cx="31" cy="29" r="1" /> <circle cx="36" cy="28" r="1" /> <circle cx="40" cy="26" r="1" />
+                <circle cx="43" cy="21" r="1" /> <circle cx="45" cy="18" r="1" /> <circle cx="48" cy="22" r="1" />
+                <circle cx="42" cy="29" r="1" /> <circle cx="47" cy="27" r="1" /> <circle cx="50" cy="24" r="1" />
+                <circle cx="53" cy="20" r="1" /> <circle cx="55" cy="25" r="1" /> <circle cx="58" cy="22" r="1" />
+                <circle cx="62" cy="18" r="1" /> <circle cx="65" cy="21" r="1" /> <circle cx="60" cy="25" r="1" />
+                <circle cx="68" cy="24" r="1" /> <circle cx="72" cy="20" r="1" /> <circle cx="75" cy="25" r="1" />
+                <circle cx="70" cy="28" r="1" /> <circle cx="78" cy="22" r="1" /> <circle cx="82" cy="26" r="1" />
+                <circle cx="80" cy="30" r="1" /> <circle cx="85" cy="32" r="1" /> <circle cx="88" cy="35" r="1" />
+                <circle cx="75" cy="32" r="1" /> <circle cx="72" cy="35" r="1" /> <circle cx="68" cy="33" r="1" />
+                <circle cx="65" cy="38" r="1" /> <circle cx="62" cy="34" r="1" /> <circle cx="58" cy="30" r="1" />
+                <circle cx="55" cy="36" r="1" /> <circle cx="52" cy="32" r="1" /> <circle cx="48" cy="35" r="1" />
+                <circle cx="45" cy="39" r="1" /> <circle cx="40" cy="33" r="1" /> <circle cx="35" cy="37" r="1" />
+                <circle cx="30" cy="34" r="1" /> <circle cx="28" cy="38" r="1" /> <circle cx="25" cy="42" r="1" />
+                <circle cx="22" cy="36" r="1" /> <circle cx="18" cy="40" r="1" /> <circle cx="20" cy="45" r="1" />
+                <circle cx="26" cy="48" r="1" /> <circle cx="32" cy="45" r="1" /> <circle cx="38" cy="42" r="1" />
+                <circle cx="42" cy="46" r="1" /> <circle cx="48" cy="43" r="1" /> <circle cx="52" cy="48" r="1" />
+                <circle cx="58" cy="45" r="1" /> <circle cx="62" cy="42" r="1" /> <circle cx="68" cy="46" r="1" />
+                <circle cx="75" cy="40" r="1" /> <circle cx="80" cy="44" r="1" /> <circle cx="85" cy="40" r="1" />
+                <circle cx="88" cy="46" r="1" /> <circle cx="92" cy="42" r="1" /> <circle cx="95" cy="38" r="1" />
+                <circle cx="78" cy="48" r="1" /> <circle cx="82" cy="52" r="1" /> <circle cx="88" cy="50" r="1" />
 
-
-
-              {/* Feature pills */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {[
-                  { icon: ShieldCheck, text: "ISO Certified" },
-                  { icon: Globe, text: "Global Export" },
-                  { icon: Gem, text: "Premium Quality" },
-                  { icon: Layers, text: "Heritage Craft" },
-                ].map((item) => (
-                  <span
-                    key={item.text}
-                    className="group/pill inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E8E5DE] text-xs font-medium text-[#7A7A7A] hover:border-[#B8955D]/50 hover:text-[#B8955D] hover:shadow-[0_4px_16px_rgba(245,214,62,0.1)] transition-all duration-300 cursor-default"
-                  >
-                    <item.icon className="w-3.5 h-3.5 transition-transform duration-300 group-hover/pill:scale-110" />
-                    {item.text}
-                  </span>
-                ))}
-              </div>
-
-              {/* CTA Button */}
-              <Link
-                to="/about"
-                className="group relative inline-flex items-center gap-4 overflow-hidden bg-[#FBC938] text-[#111111] font-sans text-xs sm:text-[13px] font-semibold uppercase tracking-[0.18em] pl-8 pr-3.5 py-3.5 rounded-full border border-[#FBC938] shadow-[0_4px_20px_rgba(245,214,62,0.25)] hover:shadow-[0_12px_35px_rgba(245,214,62,0.4)] hover:-translate-y-0.5 transition-all duration-400 ease-out active:scale-[0.97] transform-gpu"
-              >
-                {/* Hover sweep effect */}
-                <span className="absolute inset-0 bg-gradient-to-r from-[#e3c434] to-[#FBC938] translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out" />
-                <span className="relative z-10">Discover Our Story</span>
-                <span className="relative z-10 w-9 h-9 rounded-full bg-black/10 border border-black/15 flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:text-[#111] group-hover:scale-105 group-hover:rotate-[-360deg]">
-                  <ArrowRight className="w-4 h-4" />
-                </span>
-              </Link>
+                {/* Gold highlights - animated via GSAP */}
+                <circle cx="25" cy="22" r="2" className="map-dot-gold fill-[#B8955D] opacity-100" />
+                <circle cx="48" cy="22" r="2" className="map-dot-gold fill-[#B8955D] opacity-100" />
+                <circle cx="68" cy="33" r="2" className="map-dot-gold fill-[#B8955D] opacity-100" />
+                <circle cx="38" cy="42" r="2" className="map-dot-gold fill-[#B8955D] opacity-100" />
+                <circle cx="82" cy="26" r="2" className="map-dot-gold fill-[#B8955D] opacity-100" />
+              </svg>
             </div>
           </div>
         </div>
+
       </div>
     </section>
+
+    {/* ── Wave blend divider at bottom of About section ── */}
+    <div className="relative z-40 -mt-px -mb-px pointer-events-none">
+      <svg className="w-full block" viewBox="0 0 1440 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 L0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25 L1440,0 Z" fill="#FAFAFA" />
+        <path d="M0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25 L1440,50 L0,50 Z" fill="transparent" />
+        <path d="M0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25" fill="none" stroke="#BC9960" strokeWidth="2" opacity="0.35" />
+      </svg>
+    </div>
+    </>
   );
 };
 
 export default About;
+

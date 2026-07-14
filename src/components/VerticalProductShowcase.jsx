@@ -156,11 +156,11 @@ const VerticalProductShowcase = () => {
                 </h4>
                 {/* Subtitle / SKU style */}
                 <div className="hidden sm:flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500 mt-2">
-                  <div className="w-4 h-[1px] bg-[#FBC938]/50"></div>
+                  <div className="w-4 h-[1px] bg-[#B7945D]/50"></div>
                   <p className="text-[11px] md:text-[12px] text-white/50 font-['Libre_Baskerville',serif] tracking-normal font-normal max-w-[220px] leading-relaxed">
                     {item.desc}
                   </p>
-                  <div className="w-4 h-[1px] bg-[#FBC938]/50"></div>
+                  <div className="w-4 h-[1px] bg-[#B7945D]/50"></div>
                 </div>
               </Link>
             ))}
@@ -170,7 +170,7 @@ const VerticalProductShowcase = () => {
           <div className="mt-10 md:mt-12 flex justify-center">
             <Link
               to="/products"
-              className="group inline-flex items-center gap-3 px-10 py-5 rounded-full bg-white text-[#111] font-bold text-sm tracking-widest uppercase hover:bg-[#FBC938] hover:text-white transition-colors duration-400"
+              className="group inline-flex items-center gap-3 px-10 py-5 rounded-full bg-white text-[#111] font-bold text-sm tracking-widest uppercase hover:bg-[#B7945D] hover:text-white transition-colors duration-400"
             >
               <span>Explore Entire Collection</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
