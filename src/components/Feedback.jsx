@@ -13,7 +13,7 @@ const rawTestimonials = [
 ];
 
 const Feedback = () => {
-  
+
   const testimonials = rawTestimonials.map((t) => ({
     quote: t.quote,
     name: t.name,

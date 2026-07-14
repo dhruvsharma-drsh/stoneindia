@@ -4,15 +4,15 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        editorial: ['"Libre Baskerville"', 'serif'],
-        playfair: ['"Libre Baskerville"', 'serif'],
+        editorial: ['"Cormorant Garamond"', 'serif'],
+        playfair: ['"Cormorant Garamond"', 'serif'],
         sans: ['"Libre Baskerville"', 'serif'],
-        zentry: ['"Libre Baskerville"', 'serif'],
+        zentry: ['"Cormorant Garamond"', 'serif'],
         general: ['"Libre Baskerville"', 'serif'],
         "circular-web": ['"Libre Baskerville"', 'serif'],
         "robert-medium": ['"Libre Baskerville"', 'serif'],
         "robert-regular": ['"Libre Baskerville"', 'serif'],
-        serif: ['"Libre Baskerville"', 'serif'],
+        serif: ['"Cormorant Garamond"', 'serif'],
         mono: ['"Libre Baskerville"', 'serif'],
       },
       fontSize: {
