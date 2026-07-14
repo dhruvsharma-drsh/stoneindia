@@ -74,8 +74,8 @@ const About = () => {
       <section
         ref={sectionRef}
         id="about"
-        className="relative z-30 w-full overflow-hidden"
-        style={{ height: "95vh", maxHeight: "95vh", backgroundColor: "#FAFAFA" }}
+        className="relative z-30 w-full overflow-hidden min-h-[100vh] lg:min-h-0 lg:h-[95vh] lg:max-h-[95vh] py-16 lg:py-0"
+        style={{ backgroundColor: "#FFFFFF" }}
       >
         {/* ▸ MAIN large building image — full right half of screen */}
         <div
