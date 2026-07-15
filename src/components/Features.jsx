@@ -1,6 +1,9 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight, Sparkles, MapPin, Layers, CheckCircle2 } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
@@ -50,220 +53,166 @@ const projects = [
 ];
 
 const Features = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const activeProject = projects[activeIndex];
+  const containerRef = useRef(null);
+
+  useLayoutEffect(() => {
+    let ctx = gsap.context(() => {
+      const textPanels = gsap.utils.toArray(".text-panel");
+      const imgPanels = gsap.utils.toArray(".img-panel");
+
+      // Initial States
+      gsap.set(textPanels[0], { clipPath: "inset(0% 0% 0% 0%)" });
+      gsap.set(imgPanels[0], { y: "0%" });
+
+      gsap.set(textPanels.slice(1), { clipPath: "inset(100% 0% 0% 0%)" });
+      gsap.set(imgPanels.slice(1), { y: "100%" });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".pin-container",
+          start: "center center",
+          end: "+=350%",
+          scrub: 1.5,
+          pin: true,
+          anticipatePin: 1,
+        },
+      });
+
+      // Animate through projects
+      textPanels.forEach((panel, i) => {
+        if (i === 0) return;
+
+        const prevText = textPanels[i - 1];
+        const currentText = panel;
+        const prevImg = imgPanels[i - 1];
+        const currentImg = imgPanels[i];
+
+        tl.to(
+          prevText,
+          {
+            clipPath: "inset(0% 0% 100% 0%)",
+            duration: 1.2,
+            ease: "power4.inOut",
+          },
+          `step${i}`
+        )
+          .to(
+            currentText,
+            {
+              clipPath: "inset(0% 0% 0% 0%)",
+              duration: 1.2,
+              ease: "power4.inOut",
+            },
+            `step${i}`
+          )
+          .to(
+            prevImg,
+            {
+              y: "-100%",
+              duration: 1.2,
+              ease: "power4.inOut",
+            },
+            `step${i}`
+          )
+          .to(
+            currentImg,
+            {
+              y: "0%",
+              duration: 1.2,
+              ease: "power4.inOut",
+            },
+            `step${i}`
+          );
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="projects-showcase" className="relative z-30 w-full bg-white text-[#111111] pt-10 sm:pt-14 pb-10 sm:pb-14 overflow-hidden">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[40vw] h-[40vw] bg-[#B8955D]/[0.04] rounded-full blur-[120px] pointer-events-none" />
+    <section ref={containerRef} id="projects-showcase" className="relative z-30 w-full bg-[#111111] text-white py-10 lg:py-20">
+      {/* Pinned Viewer Frame */}
+      <div className="pin-container h-[90vh] lg:h-[88vh] w-[98%] mx-auto rounded-[2rem] lg:rounded-[3rem] flex flex-col-reverse lg:flex-row overflow-hidden bg-[#0a0a0a] shadow-2xl border border-white/5">
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
-        
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-20 gap-6">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF9F5] border border-[#B8955D]/30 text-[#B8955D] font-sans text-xs font-semibold uppercase tracking-widest mb-4">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Featured Installations</span>
-            </div>
-            <h2 className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-light tracking-tight text-[#111111] leading-[1.1]">
-              Our Global <span className="font-normal italic text-[#B8955D]">Projects.</span>
+        {/* Left Side: Content */}
+        <div className="w-full lg:w-1/2 h-[60%] lg:h-full relative flex flex-col p-6 sm:p-10 lg:py-12 lg:px-16 overflow-hidden">
+
+          {/* Persistent Header - in normal flow */}
+          <div className="flex-shrink-0 mb-4 lg:mb-8 z-20">
+            <h2
+              style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 300 }}
+              className="text-3xl sm:text-4xl lg:text-5xl tracking-tight text-white leading-[1.1] whitespace-nowrap"
+            >
+              Our Global{" "}
+              <span style={{ color: "#B8955D", fontStyle: "italic" }}>Projects.</span>
             </h2>
+          </div>
+
+          {/* Text Panels Container */}
+          <div className="relative flex-1">
+            {projects.map((item, index) => (
+              <div
+                key={item.id}
+                className="text-panel absolute inset-0 flex flex-col justify-start"
+              >
+                <div className="w-full max-w-xl">
+                  <span className="font-mono text-[10px] sm:text-xs font-semibold tracking-widest text-[#B8955D] block mb-2 lg:mb-4">
+                    {item.id} — {item.category}
+                  </span>
+                  <h3
+                    style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 300 }}
+                    className="text-2xl sm:text-4xl lg:text-4xl xl:text-5xl text-white mb-3 lg:mb-5 leading-tight"
+                  >
+                    {item.title}
+                  </h3>
+                  <p className="font-sans text-xs sm:text-sm text-white/70 leading-relaxed mb-4 lg:mb-6 line-clamp-4 min-h-[4.5rem] sm:min-h-[5.5rem]">
+                    {item.description}
+                  </p>
+
+                  <div className="flex flex-wrap items-center gap-2 lg:gap-3 text-[10px] sm:text-xs font-sans text-white/80 mb-5 lg:mb-8">
+                    <span className="inline-flex items-center gap-1.5 bg-white/5 px-3 py-1.5 rounded-md border border-white/10">
+                      <MapPin className="w-3 h-3 text-[#B8955D]" /> {item.location}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 bg-white/5 px-3 py-1.5 rounded-md border border-white/10">
+                      <Layers className="w-3 h-3 text-[#B8955D]" /> {item.stoneUsed}
+                    </span>
+                  </div>
+
+                  <a
+                    href={item.link}
+                    className="inline-flex items-center justify-center gap-2 lg:gap-3 bg-[#B8955D] text-white hover:bg-white hover:text-[#111] font-sans text-[10px] sm:text-xs font-bold uppercase tracking-widest px-6 lg:px-8 py-3 lg:py-4 rounded-full transition-all duration-300 shadow-[0_10px_30px_rgba(184,149,93,0.3)] hover:shadow-[0_10px_30px_rgba(255,255,255,0.3)] group"
+                  >
+                    <span>View Project</span>
+                    <ArrowUpRight className="w-3.5 lg:w-4 h-3.5 lg:h-4 group-hover:rotate-45 transition-transform duration-300" />
+                  </a>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Vertical Interactive Showcase Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          
-          {/* Left Column: Vertical List of Projects (7 Cols) */}
-          <div className="lg:col-span-7 flex flex-col border-t border-black/10 min-h-[650px] xl:min-h-[700px]">
-            {projects.map((item, index) => {
-              const isActive = activeIndex === index;
-              return (
-                <div
-                  key={item.id}
-                  onMouseEnter={() => setActiveIndex(index)}
-                  onClick={() => setActiveIndex(index)}
-                  className={`group relative py-6 sm:py-8 border-b border-black/10 cursor-pointer transition-all duration-300 ${
-                    isActive ? "pl-4 sm:pl-6 bg-[#FAF9F5]/80" : "hover:pl-3"
-                  }`}
-                >
-                  {/* Active Left Gold Indicator Bar */}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeVerticalBar"
-                      className="absolute left-0 top-0 bottom-0 w-1 bg-[#B8955D]"
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    />
-                  )}
+        {/* Right Side: Images */}
+        <div className="w-full lg:w-1/2 h-[40vh] lg:h-full relative overflow-hidden bg-[#0a0a0a]">
+          {projects.map((item, index) => (
+            <div
+              key={`img-${item.id}`}
+              className="img-panel absolute inset-0 w-full h-full"
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-full h-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/80 lg:from-[#111111]/30 via-transparent to-transparent" />
 
-                  <div className="flex items-start sm:items-center justify-between gap-4">
-                    <div className="flex items-baseline gap-4 sm:gap-6">
-                      <span
-                        className={`font-mono text-xs sm:text-sm font-semibold tracking-widest transition-colors duration-300 ${
-                          isActive ? "text-[#B8955D]" : "text-[#999999] group-hover:text-[#111111]"
-                        }`}
-                      >
-                        {item.id}
-                      </span>
-                      <div>
-                        <h3
-                          className={`font-editorial text-xl sm:text-2xl lg:text-3xl transition-colors duration-300 ${
-                            isActive
-                              ? "text-[#B8955D] font-normal"
-                              : "text-[#111111] font-light group-hover:text-[#B8955D]"
-                          }`}
-                        >
-                          {item.title}
-                        </h3>
-                        <span className="font-sans text-xs text-[#888888] tracking-wider uppercase mt-1 block">
-                          {item.category}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Arrow Icon */}
-                    <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 flex-shrink-0 ${
-                        isActive
-                          ? "bg-[#B8955D] text-white rotate-45 shadow-md shadow-[#B8955D]/20"
-                          : "bg-black/5 text-[#111111] group-hover:bg-black/10"
-                      }`}
-                    >
-                      <ArrowUpRight className="w-5 h-5 transition-transform duration-300" />
-                    </div>
-                  </div>
-
-                  {/* Expandable Details for Active Item */}
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="overflow-hidden"
-                      >
-                        <div className="pt-4 pl-8 sm:pl-11 pr-4">
-                          <p className="font-sans text-xs sm:text-sm text-[#555555] leading-relaxed mb-4 max-w-xl">
-                            {item.description}
-                          </p>
-                          <div className="flex flex-wrap items-center gap-4 text-xs font-sans text-[#777777]">
-                            <span className="inline-flex items-center gap-1.5 bg-white px-3 py-1 rounded-md border border-black/5 shadow-2xs">
-                              <MapPin className="w-3.5 h-3.5 text-[#B8955D]" /> {item.location}
-                            </span>
-                            <span className="inline-flex items-center gap-1.5 bg-white px-3 py-1 rounded-md border border-black/5 shadow-2xs">
-                              <Layers className="w-3.5 h-3.5 text-[#B8955D]" /> {item.stoneUsed}
-                            </span>
-                          </div>
-
-                          {/* ── MOBILE ONLY: Inline image dropdown ── */}
-                          <div className="lg:hidden mt-5 rounded-2xl overflow-hidden border border-black/10 shadow-lg aspect-[4/3] relative">
-                            <img
-                              src={item.image}
-                              alt={item.title}
-                              loading="lazy"
-                              className="w-full h-full object-cover object-center"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                            <div className="absolute bottom-4 left-4 right-4 z-10">
-                              <span className="font-sans text-[10px] text-[#DFBA73] tracking-widest uppercase font-semibold">
-                                {item.location}
-                              </span>
-                              <h4 className="font-editorial text-lg text-white font-light leading-tight mt-0.5">
-                                {item.title}
-                              </h4>
-                            </div>
-                            <div className="absolute top-3 right-3 z-10">
-                              <span className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#B8955D] text-white font-sans text-[10px] font-semibold tracking-wider uppercase shadow-lg">
-                                <CheckCircle2 className="w-3 h-3" /> Verified
-                              </span>
-                            </div>
-                          </div>
-
-                          {/* Mobile CTA */}
-                          <a
-                            href="/projects"
-                            className="lg:hidden mt-4 w-full inline-flex items-center justify-center gap-2 bg-[#FAF9F5] border border-[#B8955D]/30 text-[#B8955D] font-sans text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-full transition-all duration-300 hover:bg-[#B7945D] hover:text-[#111]"
-                          >
-                            <span>View All Projects</span>
-                            <ArrowUpRight className="w-3.5 h-3.5" />
-                          </a>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Right Column: Sticky Image Showcase (5 Cols) — DESKTOP/TABLET ONLY */}
-          <div className="hidden lg:block lg:col-span-5 lg:sticky lg:top-32">
-            <div className="relative rounded-3xl overflow-hidden bg-[#FAF9F5] border border-black/10 shadow-xl aspect-[4/5] sm:aspect-[4/4] lg:aspect-[4/5] group">
-              
-              {/* Image Transition Box */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeProject.id}
-                  initial={{ opacity: 0, scale: 1.08 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute inset-0 w-full h-full"
-                >
-                  <img
-                    src={activeProject.image}
-                    alt={activeProject.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                  />
-                  {/* Subtle Gradient Overlay for readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90" />
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Floating Top Badge */}
-              <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-10 pointer-events-none">
-                <span className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-xs tracking-wider uppercase border border-white/15">
-                  Project #{activeProject.id}
-                </span>
-                <span className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#B8955D] text-white font-sans text-xs font-semibold tracking-wider uppercase shadow-lg">
-                  <CheckCircle2 className="w-3.5 h-3.5" /> Verified Supply
+              {/* Image overlay badge */}
+              <div className="absolute top-6 right-6 lg:top-12 lg:right-12 z-10">
+                <span className="flex items-center gap-1.5 px-3 lg:px-4 py-1.5 lg:py-2 rounded-full bg-black/60 backdrop-blur-md text-white font-sans text-[10px] lg:text-xs font-semibold tracking-wider uppercase border border-white/10 shadow-xl">
+                  <CheckCircle2 className="w-3.5 lg:w-4 h-3.5 lg:h-4 text-[#B8955D]" /> Verified Supply
                 </span>
               </div>
-
-              {/* Floating Bottom Info Overlay */}
-              <div className="absolute bottom-6 left-6 right-6 z-10 flex flex-col justify-end">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="font-sans text-[11px] text-[#DFBA73] tracking-widest uppercase font-semibold">
-                    {activeProject.location}
-                  </span>
-                  <span className="w-1 h-1 rounded-full bg-white/30" />
-                  <span className="font-sans text-[10px] text-white/80 tracking-widest uppercase font-semibold flex items-center gap-1.5">
-                    <Layers className="w-3 h-3 text-[#DFBA73]" /> {activeProject.stoneUsed}
-                  </span>
-                </div>
-                <h4 className="font-editorial text-2xl sm:text-3xl text-white font-light leading-tight mb-3">
-                  {activeProject.title}
-                </h4>
-                <p className="font-sans text-xs text-white/80 line-clamp-2 leading-relaxed mb-6">
-                  {activeProject.description}
-                </p>
-
-                <a
-                  href="/projects"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white text-[#111111] hover:bg-[#B7945D] hover:text-[#111] font-sans text-xs font-bold uppercase tracking-widest px-6 py-3.5 rounded-full transition-all duration-300 shadow-lg text-center"
-                >
-                  <span>Explore All Projects</span>
-                  <ArrowUpRight className="w-4 h-4" />
-                </a>
-              </div>
-
             </div>
-          </div>
-
+          ))}
         </div>
 
       </div>
