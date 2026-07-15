@@ -119,14 +119,6 @@ const OurMission = () => {
       </div>
     </section>
 
-    {/* ── Wave blend divider between Our Mission (white) & Blog Section (dark) ── */}
-    <div className="relative z-40 -mt-px -mb-px pointer-events-none">
-      <svg className="w-full block" viewBox="0 0 1440 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,0 L0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25 L1440,0 Z" fill="white" />
-        <path d="M0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25 L1440,50 L0,50 Z" fill="transparent" />
-        <path d="M0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25" fill="none" stroke="#BC9960" strokeWidth="2" opacity="0.35" />
-      </svg>
-    </div>
     </>
   );
 };

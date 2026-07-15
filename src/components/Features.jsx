@@ -1,9 +1,5 @@
-import React, { useLayoutEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRight, Sparkles, MapPin, Layers, CheckCircle2 } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
+import React, { useState, useEffect } from "react";
+import { ArrowUpRight, MapPin, Layers } from "lucide-react";
 
 const projects = [
   {
@@ -53,92 +49,27 @@ const projects = [
 ];
 
 const Features = () => {
-  const containerRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      const textPanels = gsap.utils.toArray(".text-panel");
-      const imgPanels = gsap.utils.toArray(".img-panel");
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % projects.length);
+    }, 4000); // 4 seconds interval
 
-      // Initial States
-      gsap.set(textPanels[0], { clipPath: "inset(0% 0% 0% 0%)" });
-      gsap.set(imgPanels[0], { y: "0%" });
-
-      gsap.set(textPanels.slice(1), { clipPath: "inset(100% 0% 0% 0%)" });
-      gsap.set(imgPanels.slice(1), { y: "100%" });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".pin-container",
-          start: "top 10%",
-          end: "+=400%",
-          scrub: 1.5,
-          pin: true,
-          anticipatePin: 1,
-        },
-      });
-
-      // Animate through projects
-      textPanels.forEach((panel, i) => {
-        if (i === 0) return;
-
-        const prevText = textPanels[i - 1];
-        const currentText = panel;
-        const prevImg = imgPanels[i - 1];
-        const currentImg = imgPanels[i];
-
-        tl.to(
-          prevText,
-          {
-            clipPath: "inset(0% 0% 100% 0%)",
-            duration: 1.2,
-            ease: "power4.inOut",
-          },
-          `step${i}`
-        )
-          .to(
-            currentText,
-            {
-              clipPath: "inset(0% 0% 0% 0%)",
-              duration: 1.2,
-              ease: "power4.inOut",
-            },
-            `step${i}`
-          )
-          .to(
-            prevImg,
-            {
-              y: "-100%",
-              duration: 1.2,
-              ease: "power4.inOut",
-            },
-            `step${i}`
-          )
-          .to(
-            currentImg,
-            {
-              y: "0%",
-              duration: 1.2,
-              ease: "power4.inOut",
-            },
-            `step${i}`
-          );
-      });
-    }, containerRef);
-
-    return () => ctx.revert();
+    return () => clearInterval(timer);
   }, []);
 
   return (
-    <section ref={containerRef} id="projects-showcase" className="relative z-30 w-full bg-white text-white">
-      {/* Pinned Viewer Frame */}
-      <div className="pin-container h-[100vh] w-full flex flex-col-reverse lg:flex-row overflow-hidden bg-[#0a0a0a] shadow-2xl border border-white/5">
+    <section id="projects-showcase" className="relative z-0 w-full text-white bg-transparent pointer-events-none">
+      {/* Viewer Frame - Strictly limited to remaining height (100vh - 80px navbar). pointer-events-none on section to allow scrolling past fixed background, but auto on content */}
+      <div className="w-full h-[calc(100vh-5rem)] flex flex-col lg:flex-row shadow-2xl border-y border-white/5 bg-transparent pointer-events-auto">
 
-        {/* Left Side: Content */}
-        <div className="w-full lg:w-1/2 h-[60%] lg:h-full relative flex flex-col p-5 sm:p-8 lg:py-10 lg:px-12 overflow-hidden">
-
-          {/* Persistent Header - in normal flow */}
-          <div className="flex-shrink-0 mb-4 lg:mb-8 z-20">
+        {/* Left Side: Content (Normal z-index) */}
+        {/* mt-auto pushes it to the bottom on mobile to leave the top space transparent and show the fixed image */}
+        <div className="w-full lg:w-1/2 h-[60%] lg:h-full mt-auto lg:mt-0 relative flex flex-col p-5 sm:p-8 lg:py-10 lg:px-12 z-10 bg-[#0a0a0a]">
+          
+          {/* Persistent Header */}
+          <div className="flex-shrink-0 mb-10 lg:mb-20 z-20">
             <h2
               style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600 }}
               className="text-3xl sm:text-4xl lg:text-5xl text-white leading-[1.1] whitespace-nowrap"
@@ -153,7 +84,9 @@ const Features = () => {
             {projects.map((item, index) => (
               <div
                 key={item.id}
-                className="text-panel absolute inset-0 flex flex-col justify-start"
+                className={`absolute inset-0 flex flex-col justify-start transition-all duration-700 ease-in-out ${
+                  index === activeIndex ? "opacity-100 translate-y-0 pointer-events-auto delay-100" : "opacity-0 translate-y-8 pointer-events-none"
+                }`}
               >
                 <div className="w-full max-w-xl">
                   <span className="font-mono text-[10px] sm:text-xs font-semibold tracking-widest text-[#B8955D] block mb-2 lg:mb-4">
@@ -191,12 +124,14 @@ const Features = () => {
           </div>
         </div>
 
-        {/* Right Side: Images */}
-        <div className="w-full lg:w-1/2 h-[40vh] lg:h-full relative overflow-hidden bg-[#0a0a0a]">
+        {/* Right Side: Images (Fixed Negative z-index for Shutter Reveal) */}
+        <div className="fixed top-20 right-0 w-full lg:w-1/2 h-[calc(100vh-5rem)] bg-[#0a0a0a] z-[-10]">
           {projects.map((item, index) => (
             <div
               key={`img-${item.id}`}
-              className="img-panel absolute inset-0 w-full h-full"
+              className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
+                index === activeIndex ? "opacity-100" : "opacity-0"
+              }`}
             >
               <img
                 src={item.image}

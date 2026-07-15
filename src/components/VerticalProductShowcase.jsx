@@ -14,18 +14,15 @@ const VerticalProductShowcase = () => {
   const headRef = useRef(null);
   const cardRefs = useRef([]);
   const [activeTab, setActiveTab] = useState("Stone Products");
+  const [isHovered, setIsHovered] = useState(false);
   
-  const scrollLeft = () => {
-    if (gridRef.current) {
-      gridRef.current.scrollBy({ left: -400, behavior: "smooth" });
-    }
-  };
-
-  const scrollRight = () => {
-    if (gridRef.current) {
-      gridRef.current.scrollBy({ left: 400, behavior: "smooth" });
-    }
-  };
+  // Drag state
+  const dragState = useRef({
+    isDown: false,
+    startX: 0,
+    scrollLeft: 0,
+    hasDragged: false,
+  });
   
   cardRefs.current = [];
 
@@ -49,6 +46,38 @@ const VerticalProductShowcase = () => {
     currentProducts = stoneProductsData.stoneArticrafts;
   }
 
+  // Auto-scroll loop
+  const scrollAccumulator = useRef(0);
+  
+  useEffect(() => {
+    const container = gridRef.current;
+    if (!container) return;
+    let animationFrameId;
+
+    const play = () => {
+      // Only auto scroll if not hovered and not currently dragging
+      if (!isHovered && !dragState.current.isDown) {
+        scrollAccumulator.current += 0.8; // Speed
+        
+        if (scrollAccumulator.current >= 1) {
+          const pixelsToMove = Math.floor(scrollAccumulator.current);
+          container.scrollLeft += pixelsToMove;
+          scrollAccumulator.current -= pixelsToMove;
+        }
+        
+        // Wrap forward
+        if (container.scrollLeft >= container.scrollWidth / 2) {
+          container.scrollLeft -= container.scrollWidth / 2;
+        }
+      }
+      animationFrameId = requestAnimationFrame(play);
+    };
+
+    animationFrameId = requestAnimationFrame(play);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isHovered, activeTab]);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Animate heading
@@ -71,7 +100,7 @@ const VerticalProductShowcase = () => {
         );
       }
 
-      // Animate cards stagger
+      // Animate cards stagger on load
       if (cardRefs.current.length) {
         gsap.fromTo(
           cardRefs.current,
@@ -80,13 +109,13 @@ const VerticalProductShowcase = () => {
             opacity: 1,
             y: 0,
             duration: 0.7,
-            stagger: 0.06,
+            stagger: 0.04,
             ease: "power3.out",
             scrollTrigger: {
-              trigger: gridRef.current,
-              start: "top 85%",
+              trigger: headRef.current, // trigger based on header so it doesn't wait for grid
+              start: "top 80%",
             },
-            clearProps: "opacity,transform" // Clear inline styles so Tailwind hover/scroll animations take over
+            clearProps: "opacity,transform"
           }
         );
       }
@@ -97,13 +126,57 @@ const VerticalProductShowcase = () => {
     };
   }, [activeTab]);
 
+  // Mouse drag handlers
+  const handleMouseDown = (e) => {
+    dragState.current.isDown = true;
+    dragState.current.hasDragged = false;
+    dragState.current.startX = e.pageX;
+    dragState.current.scrollLeft = gridRef.current.scrollLeft;
+  };
+
+  const handleMouseLeave = () => {
+    dragState.current.isDown = false;
+    setIsHovered(false);
+  };
+
+  const handleMouseUp = () => {
+    dragState.current.isDown = false;
+  };
+
+  const handleMouseMove = (e) => {
+    if (!dragState.current.isDown) return;
+    e.preventDefault(); // Prevents text selection while dragging
+    const x = e.pageX;
+    const walk = (x - dragState.current.startX) * 1.5;
+    if (Math.abs(walk) > 5) {
+      dragState.current.hasDragged = true;
+    }
+    const container = gridRef.current;
+    container.scrollLeft = dragState.current.scrollLeft - walk;
+    
+    // Wrap logic for infinite drag
+    if (container.scrollLeft >= container.scrollWidth / 2) {
+      container.scrollLeft -= container.scrollWidth / 2;
+      dragState.current.scrollLeft -= container.scrollWidth / 2; // adjust drag origin
+    } else if (container.scrollLeft <= 0) {
+      container.scrollLeft += container.scrollWidth / 2;
+      dragState.current.scrollLeft += container.scrollWidth / 2; // adjust drag origin
+    }
+  };
+
+  const handleClick = (e) => {
+    if (dragState.current.hasDragged) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <>
-      <section className="relative z-30 pt-8 md:pt-12 pb-8 md:pb-10 bg-white border-t border-[#BC9960]/20 shadow-[0_-25px_50px_rgba(0,0,0,0.25)] mt-16 md:mt-0">
+      <section className="relative z-30 pt-8 md:pt-12 pb-8 md:pb-10 bg-white mt-16 md:mt-0">
 
-        <div className="max-w-[90rem] mx-auto px-6 md:px-12 pt-16 md:pt-28 lg:pt-36 relative z-10">
+        <div className="max-w-[100vw] mx-auto pt-4 md:pt-8 lg:pt-12 relative z-10 overflow-hidden">
           {/* Heading — Stone Collection style */}
-          <div ref={headRef} className="flex flex-col w-fit mx-auto mb-4 md:mb-6">
+          <div ref={headRef} className="flex flex-col w-fit mx-auto mb-4 md:mb-6 px-6 md:px-12">
             <h2
               className="about-heading self-start uppercase"
               style={{ letterSpacing: '0.04em' }}
@@ -119,12 +192,12 @@ const VerticalProductShowcase = () => {
           </div>
 
           {/* Category Tabs */}
-          <div className="flex justify-center gap-2 sm:gap-4 md:gap-6 mb-4 md:mb-6 flex-wrap px-4">
+          <div className="flex justify-center gap-2 sm:gap-4 md:gap-6 mb-8 md:mb-12 flex-wrap px-4">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveTab(cat)}
-                className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-base sm:text-lg font-['Cormorant_Garamond',serif] font-medium tracking-[-0.02em] capitalize transition-all duration-300 ${
+                className={`px-3 py-1.5 rounded-full text-base sm:text-lg font-['Cormorant_Garamond',serif] font-medium tracking-[-0.02em] capitalize transition-all duration-300 ${
                   activeTab === cat
                     ? "bg-[#B7945D] text-white shadow-md scale-105"
                     : "bg-transparent text-[#1A1A1A] border border-[#1A1A1A]/20 hover:border-[#B7945D]/50 hover:bg-[#B7945D]/5"
@@ -135,19 +208,27 @@ const VerticalProductShowcase = () => {
             ))}
           </div>
 
-          {/* Slider Container Wrapper */}
-          <div className="relative group/slider mt-4">
-            {/* Horizontal Slider Layout */}
+          {/* Slider Container Wrapper (Full width) */}
+          <div 
+            ref={gridRef}
+            className="relative w-full pb-10 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] cursor-grab active:cursor-grabbing"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={handleMouseLeave}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+          >
+            {/* The Reel Container */}
             <div
-              ref={gridRef}
-              className="flex items-stretch overflow-x-auto overflow-y-hidden snap-x snap-proximity scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] gap-4 sm:gap-6 pb-4 pt-4 max-w-full"
+              className="flex items-stretch gap-4 sm:gap-6 w-max px-4 sm:px-6"
             >
-              {currentProducts.map((item, idx) => (
+              {[...currentProducts, ...currentProducts].map((item, idx) => (
                 <Link
-                  key={idx}
+                  key={`${activeTab}-${idx}`}
                   ref={addCardRef}
+                  onClick={handleClick}
                   to={`/products/${activeTab === 'Stone Articrafts' || articraftPicks.includes(item) ? 'stone-articrafts/' : ''}${item.title.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="relative flex-shrink-0 w-[250px] md:w-[280px] lg:w-[calc(25%-1.125rem)] h-[350px] sm:h-[400px] lg:h-[460px] snap-center flex flex-col group no-underline bg-white border border-[#111]/[0.08] hover:bg-white transition-all duration-700 shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] rounded-2xl overflow-hidden hover:-translate-y-2"
+                  className="relative flex-shrink-0 w-[250px] md:w-[280px] lg:w-[320px] h-[350px] sm:h-[400px] lg:h-[460px] flex flex-col group no-underline bg-white border border-[#111]/[0.08] hover:bg-white transition-all duration-700 shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] rounded-2xl overflow-hidden hover:-translate-y-2 select-none"
                 >
                 {/* Image Container with Panning Hover Effect */}
                 <div className="absolute inset-0 w-full h-full overflow-hidden bg-[#333] transition-all duration-700 ease-out z-0">
@@ -194,29 +275,13 @@ const VerticalProductShowcase = () => {
               </Link>
             ))}
             </div>
-
-            {/* Navigation Buttons */}
-            <button 
-              onClick={scrollLeft}
-              className="absolute -left-8 md:-left-16 top-1/2 -translate-y-1/2 w-10 md:w-12 h-10 md:h-12 rounded-full bg-white text-[#111] border border-[#111]/10 flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.12)] opacity-80 transition-all duration-300 z-40 hover:opacity-100 hover:bg-[#B7945D] hover:text-white hover:scale-110 hover:border-[#B7945D]"
-              aria-label="Scroll left"
-            >
-              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
-            </button>
-            <button 
-              onClick={scrollRight}
-              className="absolute -right-8 md:-right-16 top-1/2 -translate-y-1/2 w-10 md:w-12 h-10 md:h-12 rounded-full bg-white text-[#111] border border-[#111]/10 flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.12)] opacity-80 transition-all duration-300 z-40 hover:opacity-100 hover:bg-[#B7945D] hover:text-white hover:scale-110 hover:border-[#B7945D]"
-              aria-label="Scroll right"
-            >
-              <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
-            </button>
           </div>
 
           {/* Bottom CTA */}
-          <div className="mt-10 md:mt-12 flex justify-center">
+          <div className="mt-6 flex justify-center">
             <Link
               to="/products"
-              className="group inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#B7945D] border border-[#B7945D] text-white font-bold text-sm tracking-widest uppercase hover:bg-white hover:text-[#B7945D] transition-colors duration-400"
+              className="group inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#B7945D] border border-[#B7945D] text-white font-bold text-sm tracking-widest uppercase hover:bg-white hover:text-[#B7945D] transition-colors duration-400 shadow-xl"
             >
               <span>Explore Entire Collection</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
