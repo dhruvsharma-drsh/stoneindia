@@ -10,7 +10,7 @@ const projects = [
       "Premium stone supply for luxury European estates and residential villas. Engineered for extreme European weather conditions while maintaining timeless aesthetic warmth.",
     location: "Germany, Europe",
     stoneUsed: "Premium Mint Sandstone",
-    image: "img/Germany Europe Project/germany-europe-project-1.webp",
+    image: "/img/Germany Europe Project/germany-europe-project-1.webp",
     link: "/projects",
   },
   {
@@ -21,7 +21,7 @@ const projects = [
       "We successfully completed the prestigious residence project of Shri Om Birla Ji, Hon'ble Lok Sabha Speaker of India. We supplied flawless Gwalior Mint White Sandstone for intricate interior and exterior installations.",
     location: "New Delhi / Kota, India",
     stoneUsed: "Gwalior Mint White Sandstone",
-    image: "img/OM Birla/om-birla-6.webp",
+    image: "/img/OM Birla/om-birla-6.webp",
     link: "/projects",
   },
   {
@@ -32,7 +32,7 @@ const projects = [
       "Signature mint sandstone applications across luxury hotels, resorts, and private estates. Renowned for its natural non-slip texture and soothing color palette.",
     location: "Pan India & Export",
     stoneUsed: "Gwalior Mint Sandstone",
-    image: "img/Gwalior Mint Stone/gwalior-mint-stone-ke-project-1.webp",
+    image: "/img/Gwalior Mint Stone/gwalior-mint-stone-ke-project-1.webp",
     link: "/projects",
   },
   {
@@ -43,7 +43,7 @@ const projects = [
       "This prestigious project in London, UK features authentic Gwalior natural stone, meticulously quarried and supplied directly by our company 'Stone India' to meet stringent British architectural standards.",
     location: "London, United Kingdom",
     stoneUsed: "Gwalior Natural Stone",
-    image: "public/img/Gwalior Stone/gwalior-stone-4.webp",
+    image: "/img/Gwalior Stone/gwalior-stone-4.webp",
     link: "/projects",
   },
 ];
