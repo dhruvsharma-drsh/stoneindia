@@ -74,8 +74,8 @@ export function Header() {
         <Link to="/" className="flex items-center gap-3 group">
           <img src="/img/logo.png" alt="Stone India Logo" className="h-14 w-auto object-contain group-hover:scale-105 transition-transform" />
           <div className="flex flex-col">
-            <span className="font-serif font-bold tracking-wider text-white text-lg leading-tight">
-              GWALIOR <span className="text-[#B8955D] font-light">STONE</span>
+            <span className="font-serif font-bold tracking-wider text-[#B9BBB0] text-lg leading-tight">
+              GWALIOR <span className="text-[#B9BBB0] font-light">STONE</span>
             </span>
           </div>
         </Link>

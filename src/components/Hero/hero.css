@@ -65,8 +65,8 @@
 .hero-vignette-top {
   background: linear-gradient(
     180deg,
-    rgba(17, 17, 17, 0.75) 0%,
-    rgba(17, 17, 17, 0.20) 60%,
+    rgba(17, 17, 17, 0.40) 0%,
+    rgba(17, 17, 17, 0.10) 60%,
     transparent 100%
   );
 }

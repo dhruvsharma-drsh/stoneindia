@@ -30,13 +30,11 @@ const Hero = () => {
 
       {/* ── Cinematic Gradient Overlays ── */}
       <div className="absolute inset-0 z-10 pointer-events-none">
-        <div className="absolute inset-y-0 left-0 w-full sm:w-[70%] hero-vignette-left" />
-        <div className="absolute inset-x-0 top-0 h-44 hero-vignette-top" />
-        <div className="absolute inset-x-0 bottom-0 h-40 hero-vignette-bottom" />
+        <div className="absolute inset-x-0 top-0 h-32 hero-vignette-top" />
+        <div className="absolute inset-x-0 bottom-0 h-64 hero-vignette-bottom" />
       </div>
 
-      {/* ── Film Grain + Grid Texture ── */}
-      <div className="absolute inset-0 hero-noise-overlay z-[11] pointer-events-none" />
+      {/* ── Grid Texture ── */}
       <div className="absolute inset-0 hero-grid-pattern opacity-20 z-[11] pointer-events-none" />
 
       {/* ── Ambient Gold Glow ── */}
