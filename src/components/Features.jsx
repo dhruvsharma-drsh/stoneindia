@@ -25,7 +25,7 @@ const projects = [
       "We successfully completed the prestigious residence project of Shri Om Birla Ji, Hon'ble Lok Sabha Speaker of India. We supplied flawless Gwalior Mint White Sandstone for intricate interior and exterior installations.",
     location: "New Delhi / Kota, India",
     stoneUsed: "Gwalior Mint White Sandstone",
-    image: "img/OM Birla/om-birla-1.webp",
+    image: "img/OM Birla/om-birla-6.webp",
     link: "/projects",
   },
   {
@@ -47,7 +47,7 @@ const projects = [
       "This prestigious project in London, UK features authentic Gwalior natural stone, meticulously quarried and supplied directly by our company 'Stone India' to meet stringent British architectural standards.",
     location: "London, United Kingdom",
     stoneUsed: "Gwalior Natural Stone",
-    image: "img/Gwalior Stone/gwalior-stone-1.webp",
+    image: "public/img/Gwalior Stone/gwalior-stone-4.webp",
     link: "/projects",
   },
 ];
@@ -70,8 +70,8 @@ const Features = () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: ".pin-container",
-          start: "center center",
-          end: "+=350%",
+          start: "top 10%",
+          end: "+=400%",
           scrub: 1.5,
           pin: true,
           anticipatePin: 1,
@@ -130,21 +130,21 @@ const Features = () => {
   }, []);
 
   return (
-    <section ref={containerRef} id="projects-showcase" className="relative z-30 w-full bg-[#111111] text-white py-10 lg:py-20">
+    <section ref={containerRef} id="projects-showcase" className="relative z-30 w-full bg-white text-white">
       {/* Pinned Viewer Frame */}
-      <div className="pin-container h-[90vh] lg:h-[88vh] w-[98%] mx-auto rounded-[2rem] lg:rounded-[3rem] flex flex-col-reverse lg:flex-row overflow-hidden bg-[#0a0a0a] shadow-2xl border border-white/5">
+      <div className="pin-container h-[100vh] w-full flex flex-col-reverse lg:flex-row overflow-hidden bg-[#0a0a0a] shadow-2xl border border-white/5">
 
         {/* Left Side: Content */}
-        <div className="w-full lg:w-1/2 h-[60%] lg:h-full relative flex flex-col p-6 sm:p-10 lg:py-12 lg:px-16 overflow-hidden">
+        <div className="w-full lg:w-1/2 h-[60%] lg:h-full relative flex flex-col p-5 sm:p-8 lg:py-10 lg:px-12 overflow-hidden">
 
           {/* Persistent Header - in normal flow */}
           <div className="flex-shrink-0 mb-4 lg:mb-8 z-20">
             <h2
-              style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 300 }}
-              className="text-3xl sm:text-4xl lg:text-5xl tracking-tight text-white leading-[1.1] whitespace-nowrap"
+              style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 600 }}
+              className="text-3xl sm:text-4xl lg:text-5xl text-white leading-[1.1] whitespace-nowrap"
             >
               Our Global{" "}
-              <span style={{ color: "#B8955D", fontStyle: "italic" }}>Projects.</span>
+              <span style={{ color: "#B8955D" }}>Projects.</span>
             </h2>
           </div>
 
@@ -204,13 +204,6 @@ const Features = () => {
                 className="w-full h-full object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/80 lg:from-[#111111]/30 via-transparent to-transparent" />
-
-              {/* Image overlay badge */}
-              <div className="absolute top-6 right-6 lg:top-12 lg:right-12 z-10">
-                <span className="flex items-center gap-1.5 px-3 lg:px-4 py-1.5 lg:py-2 rounded-full bg-black/60 backdrop-blur-md text-white font-sans text-[10px] lg:text-xs font-semibold tracking-wider uppercase border border-white/10 shadow-xl">
-                  <CheckCircle2 className="w-3.5 lg:w-4 h-3.5 lg:h-4 text-[#B8955D]" /> Verified Supply
-                </span>
-              </div>
             </div>
           ))}
         </div>
