@@ -99,27 +99,19 @@ const VerticalProductShowcase = () => {
 
   return (
     <>
-      <section className="relative z-30 pt-8 md:pt-12 pb-8 md:pb-10 bg-[#DFDCD5] border-t border-[#BC9960]/20 shadow-[0_-25px_50px_rgba(0,0,0,0.25)] mt-16 md:mt-0">
+      <section className="relative z-30 pt-8 md:pt-12 pb-8 md:pb-10 bg-white border-t border-[#BC9960]/20 shadow-[0_-25px_50px_rgba(0,0,0,0.25)] mt-16 md:mt-0">
 
-        {/* Decorative Jaali image overlapping the section gap between Timeless Elegance & Stone Collection */}
-        <img
-          src="/img/drsh/vertical tile.png"
-          alt="Decorative Stone Art"
-          className="absolute top-0 right-2 sm:right-8 md:right-12 lg:right-10 -translate-y-[62%] w-[300px] sm:w-[360px] md:w-[460px] lg:w-[480px] h-auto object-contain z-[40] pointer-events-none drop-shadow-2xl"
-        />
-
-
-        <div className="max-w-[90rem] mx-auto px-6 md:px-12 pt-8 md:pt-16 relative z-10">
+        <div className="max-w-[90rem] mx-auto px-6 md:px-12 pt-16 md:pt-28 lg:pt-36 relative z-10">
           {/* Heading — Stone Collection style */}
           <div ref={headRef} className="flex flex-col w-fit mx-auto mb-4 md:mb-6">
             <h2
-              className="self-start text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem] text-[#1A1A1A] leading-[0.85] uppercase font-['Cormorant_Garamond',serif] font-semibold"
+              className="about-heading self-start uppercase"
               style={{ letterSpacing: '0.04em' }}
             >
               SIGNATURE
             </h2>
             <h2
-              className="self-end text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem] text-[#1A1A1A] leading-[0.85] uppercase ml-12 sm:ml-24 md:ml-32 lg:ml-40 font-['Cormorant_Garamond',serif] font-semibold"
+              className="about-heading self-end uppercase ml-12 sm:ml-24 md:ml-32 lg:ml-40"
               style={{ letterSpacing: '0.04em' }}
             >
               COLLECTION
@@ -148,17 +140,17 @@ const VerticalProductShowcase = () => {
             {/* Horizontal Slider Layout */}
             <div
               ref={gridRef}
-              className="flex items-stretch overflow-x-auto overflow-y-hidden snap-x snap-proximity scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] gap-4 sm:gap-6 pb-4 pt-4 px-4 sm:px-8 max-w-full"
+              className="flex items-stretch overflow-x-auto overflow-y-hidden snap-x snap-proximity scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] gap-4 sm:gap-6 pb-4 pt-4 max-w-full"
             >
               {currentProducts.map((item, idx) => (
                 <Link
                   key={idx}
                   ref={addCardRef}
                   to={`/products/${activeTab === 'Stone Articrafts' || articraftPicks.includes(item) ? 'stone-articrafts/' : ''}${item.title.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="flex-shrink-0 w-[270px] md:w-[300px] lg:w-[calc(31.5%-1rem)] h-[400px] sm:h-[460px] lg:h-[530px] snap-center flex flex-col group no-underline bg-[#E5E5E5] border border-[#111]/[0.08] hover:bg-white transition-all duration-700 shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] rounded-2xl overflow-hidden hover:-translate-y-2"
+                  className="relative flex-shrink-0 w-[250px] md:w-[280px] lg:w-[calc(25%-1.125rem)] h-[350px] sm:h-[400px] lg:h-[460px] snap-center flex flex-col group no-underline bg-white border border-[#111]/[0.08] hover:bg-white transition-all duration-700 shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] rounded-2xl overflow-hidden hover:-translate-y-2"
                 >
                 {/* Image Container with Panning Hover Effect */}
-                <div className="relative w-full h-[75%] overflow-hidden bg-[#333] border-b border-white/10 transition-all duration-700 ease-out">
+                <div className="absolute inset-0 w-full h-full overflow-hidden bg-[#333] transition-all duration-700 ease-out z-0">
                   {/* Image 1 - Pans left on hover */}
                   <img
                     src={item.img}
@@ -177,24 +169,23 @@ const VerticalProductShowcase = () => {
                 </div>
 
                 {/* Text Content */}
-                <div className="flex flex-col justify-between h-[25%] py-3 px-4 sm:px-5 w-full bg-gradient-to-b from-[#E5E5E5] to-[#F2F2F2] transition-colors duration-700">
+                <div className="absolute bottom-0 flex flex-col justify-between h-auto py-4 px-4 sm:px-5 w-full bg-black/60 backdrop-blur-md transition-all duration-700 group-hover:bg-black/80 z-10">
                   <div className="flex flex-col items-start w-full">
                     {/* Refined Typography */}
-                    <h4 className="text-[14px] md:text-[16px] font-['Libre_Baskerville',serif] text-[#1A1A1A] font-semibold tracking-normal group-hover:text-[#B4956C] transition-colors duration-500 line-clamp-2 text-left">
+                    <h4 className="text-[18px] md:text-[22px] font-['Libre_Baskerville',serif] text-white font-semibold tracking-normal group-hover:text-[#B4956C] transition-colors duration-500 line-clamp-2 text-left">
                       {item.title}
                     </h4>
                     {/* Subtitle / SKU style */}
-                    <div className="hidden sm:block opacity-70 group-hover:opacity-100 transition-opacity duration-500 mt-1 w-full">
-                      <p className="line-clamp-2 text-[10px] md:text-[11px] text-[#555] font-['Libre_Baskerville',serif] tracking-normal font-normal leading-relaxed text-left">
+                    <div className="hidden sm:block opacity-80 group-hover:opacity-100 transition-opacity duration-500 mt-1 w-full">
+                      <p className="line-clamp-2 text-[10px] md:text-[11px] text-gray-200 font-['Libre_Baskerville',serif] tracking-normal font-normal leading-relaxed text-left">
                         {item.desc}
                       </p>
                     </div>
                   </div>
                   
-                  {/* Always-visible Inquire Button on a New Row */}
-                  <div className="w-full flex justify-center mt-2">
-                    <div className="w-[85%] flex justify-center py-2 border border-[#B7945D]/60 rounded-full bg-transparent group-hover:bg-[#B7945D] transition-colors duration-500 shadow-sm cursor-pointer">
-                      <span className="text-[10px] tracking-[0.2em] uppercase text-[#B7945D] font-bold group-hover:text-white transition-colors duration-500">
+                  <div className="w-full flex justify-center mt-3">
+                    <div className="w-[85%] flex justify-center py-2 border border-[#B7945D]/60 rounded-full bg-[#B7945D] group-hover:bg-[#9a7b49] transition-colors duration-500 shadow-sm cursor-pointer">
+                      <span className="text-[10px] tracking-[0.2em] uppercase text-white font-bold transition-colors duration-500">
                         Inquire
                       </span>
                     </div>
@@ -207,17 +198,17 @@ const VerticalProductShowcase = () => {
             {/* Navigation Buttons */}
             <button 
               onClick={scrollLeft}
-              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[#B7945D] text-white flex items-center justify-center shadow-xl opacity-0 group-hover/slider:opacity-100 transition-all duration-300 z-40 hover:bg-[#111] hover:scale-110"
+              className="absolute -left-8 md:-left-16 top-1/2 -translate-y-1/2 w-10 md:w-12 h-10 md:h-12 rounded-full bg-white text-[#111] border border-[#111]/10 flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.12)] opacity-80 transition-all duration-300 z-40 hover:opacity-100 hover:bg-[#B7945D] hover:text-white hover:scale-110 hover:border-[#B7945D]"
               aria-label="Scroll left"
             >
-              <ChevronLeft className="w-7 h-7" />
+              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
             </button>
             <button 
               onClick={scrollRight}
-              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[#B7945D] text-white flex items-center justify-center shadow-xl opacity-0 group-hover/slider:opacity-100 transition-all duration-300 z-40 hover:bg-[#111] hover:scale-110"
+              className="absolute -right-8 md:-right-16 top-1/2 -translate-y-1/2 w-10 md:w-12 h-10 md:h-12 rounded-full bg-white text-[#111] border border-[#111]/10 flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.12)] opacity-80 transition-all duration-300 z-40 hover:opacity-100 hover:bg-[#B7945D] hover:text-white hover:scale-110 hover:border-[#B7945D]"
               aria-label="Scroll right"
             >
-              <ChevronRight className="w-7 h-7" />
+              <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
             </button>
           </div>
 
@@ -225,7 +216,7 @@ const VerticalProductShowcase = () => {
           <div className="mt-10 md:mt-12 flex justify-center">
             <Link
               to="/products"
-              className="group inline-flex items-center gap-3 px-10 py-5 rounded-full bg-white text-[#111] font-bold text-sm tracking-widest uppercase hover:bg-[#B7945D] hover:text-white transition-colors duration-400"
+              className="group inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#B7945D] border border-[#B7945D] text-white font-bold text-sm tracking-widest uppercase hover:bg-white hover:text-[#B7945D] transition-colors duration-400"
             >
               <span>Explore Entire Collection</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -234,15 +225,6 @@ const VerticalProductShowcase = () => {
         </div>
 
       </section>
-
-      {/* ── Wave blend divider between Stone Collection (grey) & Global Projects (white) ── */}
-      <div className="relative z-40 -mt-px -mb-px bg-white pointer-events-none">
-        <svg className="w-full block" viewBox="0 0 1440 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0,0 L0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25 L1440,0 Z" fill="#F5F5F2" />
-          <path d="M0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25 L1440,50 L0,50 Z" fill="white" />
-          <path d="M0,25 Q90,50 180,25 Q270,0 360,25 Q450,50 540,25 Q630,0 720,25 Q810,50 900,25 Q990,0 1080,25 Q1170,50 1260,25 Q1350,0 1440,25" fill="none" stroke="#BC9960" strokeWidth="1.5" opacity="0.25" />
-        </svg>
-      </div>
     </>
   );
 };
