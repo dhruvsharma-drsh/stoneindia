@@ -61,8 +61,8 @@ const Features = () => {
 
   return (
     <section id="projects-showcase" className="relative z-0 w-full text-white bg-transparent pointer-events-none">
-      {/* Viewer Frame - Strictly limited to remaining height (100vh - 80px navbar). pointer-events-none on section to allow scrolling past fixed background, but auto on content */}
-      <div className="w-full h-[calc(100vh-5rem)] flex flex-col lg:flex-row shadow-2xl border-y border-white/5 bg-transparent pointer-events-auto">
+      {/* Viewer Frame - Strictly limited to remaining height (100vh - 96px navbar). pointer-events-none on section to allow scrolling past fixed background, but auto on content */}
+      <div className="w-full h-[calc(100vh-6rem)] flex flex-col lg:flex-row shadow-2xl border-y border-white/5 bg-transparent pointer-events-auto">
 
         {/* Left Side: Content (Normal z-index) */}
         {/* mt-auto pushes it to the bottom on mobile to leave the top space transparent and show the fixed image */}
@@ -125,7 +125,7 @@ const Features = () => {
         </div>
 
         {/* Right Side: Images (Fixed Negative z-index for Shutter Reveal) */}
-        <div className="fixed top-20 right-0 w-full lg:w-1/2 h-[calc(100vh-5rem)] bg-[#0a0a0a] z-[-10]">
+        <div className="fixed top-24 right-0 w-full lg:w-1/2 h-[calc(100vh-6rem)] bg-[#0a0a0a] z-[-10]">
           {projects.map((item, index) => (
             <div
               key={`img-${item.id}`}
