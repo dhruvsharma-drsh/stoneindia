@@ -69,7 +69,7 @@ export function Header() {
       )}
     >
       {/* ── ROW 1: Logo + Get Quote ── */}
-      <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-6 sm:px-8">
+      <div className="mx-auto flex h-14 w-full max-w-8xl items-center justify-between px-6 lg:px-16">
         {/* Brand Logo */}
         <Link to="/" className="flex items-center gap-3 group">
           <img src="/img/logo.png" alt="Stone India Logo" className="h-14 w-auto object-contain group-hover:scale-105 transition-transform" />

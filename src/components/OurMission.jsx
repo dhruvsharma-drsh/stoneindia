@@ -69,13 +69,12 @@ const OurMission = () => {
 
       {/* Video Part of Our Mission */}
       <section className="relative z-30 w-full h-[100vh] flex items-center justify-center bg-[#212322] overflow-hidden">
-        {/* Centered Video Container - Portrait Mode */}
-        <div className="relative h-[75vh] aspect-[9/16] bg-black shadow-2xl overflow-hidden">
+      {/* Centered Video Container - Landscape Template (1920x1080) */}
+      <div className="relative w-[80vw] max-w-[900px] aspect-video bg-black shadow-2xl overflow-hidden border-2 border-dashed border-white/50">
           <video
             controls
             playsInline
-            preload="metadata"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           >
             <source src="/video/VID-20240208-WA0007.mp4" type="video/mp4" />
             Your browser does not support the video tag.

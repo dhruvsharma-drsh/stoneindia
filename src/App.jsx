@@ -5,6 +5,8 @@ import About from "./components/About";
 import VerticalProductShowcase from "./components/VerticalProductShowcase";
 import Features from "./components/Features";
 import OurMission from "./components/OurMission";
+import UpcomingProject from "./components/UpcomingProject";
+import Infrastructure from "./components/Infrastructure";
 import HomeBlogSection from "./components/HomeBlogSection";
 import Hero from "./components/Hero/Hero";
 import Footer from "./components/Footer";
@@ -49,6 +51,8 @@ function HomePage() {
       <VerticalProductShowcase />
       <Features />
       <OurMission />
+      <UpcomingProject />
+      <Infrastructure />
       <HomeBlogSection />
       <Footer />
     </>
