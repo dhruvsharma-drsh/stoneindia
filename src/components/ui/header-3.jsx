@@ -74,8 +74,8 @@ export function Header() {
         <Link to="/" className="flex items-center gap-3 group">
           <img src="/img/logo.png" alt="Stone India Logo" className="h-14 w-auto object-contain group-hover:scale-105 transition-transform" />
           <div className="flex flex-col">
-            <span className="font-serif font-bold tracking-wider text-[#B9BBB0] text-lg leading-tight">
-              GWALIOR <span className="text-[#B9BBB0] font-light">STONE</span>
+            <span className="font-serif font-bold tracking-wider text-white text-lg leading-tight">
+              GWALIOR <span className="text-white font-light">STONE</span>
             </span>
           </div>
         </Link>
@@ -119,8 +119,8 @@ export function Header() {
                   "relative bg-transparent font-medium text-[12px] uppercase tracking-[0.15em] cursor-pointer transition-colors px-5 py-2",
                   "after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:bg-[#B8955D] after:transition-all after:duration-300 after:ease-out",
                   pathname.startsWith('/products')
-                    ? 'text-[#B8955D] after:w-[60%]'
-                    : 'text-white/70 hover:text-white after:w-0 hover:after:w-[60%]'
+                    ? 'text-white after:w-[60%]'
+                    : 'text-white after:w-0 hover:after:w-[60%]'
                 )}
                 onClick={() => navigate('/products')}
               >
@@ -328,8 +328,8 @@ function NavLink({ to, active, children }) {
           "relative px-5 py-2 text-[12px] font-medium uppercase tracking-[0.15em] transition-colors",
           "after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:bg-[#B8955D] after:transition-all after:duration-300 after:ease-out",
           active
-            ? "text-[#B8955D] after:w-[60%]"
-            : "text-white/70 hover:text-white after:w-0 hover:after:w-[60%]"
+            ? "text-white after:w-[60%]"
+            : "text-white after:w-0 hover:after:w-[60%]"
         )}
       >
         {children}
