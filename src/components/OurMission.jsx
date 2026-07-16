@@ -52,7 +52,7 @@ const OurMission = () => {
     <>
     <section
       ref={sectionRef}
-      className="relative z-30 pt-6 sm:pt-10 pb-10 sm:pb-14 bg-white px-6 sm:px-12 lg:px-20 overflow-hidden"
+      className="relative z-30 pt-6 sm:pt-10 pb-10 sm:pb-14 bg-white px-6 sm:px-12 lg:px-20 overflow-hidden min-h-[100vh] flex items-center"
     >
       <div className="max-w-[86rem] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         {/* Left Column: CEO Words & Mission */}

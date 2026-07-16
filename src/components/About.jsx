@@ -74,7 +74,7 @@ const About = () => {
       <section
         ref={sectionRef}
         id="about"
-        className="relative z-30 w-full overflow-hidden min-h-[100vh] lg:min-h-0 lg:h-[95vh] lg:max-h-[95vh] py-16 lg:py-0"
+        className="relative z-30 w-full overflow-hidden min-h-[100vh] py-16 lg:py-0"
         style={{ backgroundColor: "#FFFFFF" }}
       >
         {/* ▸ MAIN large building image — full right half of screen */}
@@ -90,7 +90,7 @@ const About = () => {
         </div>
 
         <div
-          className="relative z-10 max-w-[1400px] mx-auto px-8 lg:px-14 flex flex-col lg:flex-row items-stretch h-full"
+          className="relative z-10 max-w-[1400px] mx-auto px-8 lg:px-14 flex flex-col lg:flex-row items-stretch min-h-[100vh]"
         >
           {/* ── LEFT: TEXT ── */}
           <div

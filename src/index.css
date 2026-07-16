@@ -45,6 +45,7 @@ body {
 .contact-clip-path-1,
 .contact-clip-path-2 {
   -webkit-clip-path: inherit;
+  clip-path: inherit;
 }
 
 @layer base {

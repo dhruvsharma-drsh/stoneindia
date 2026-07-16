@@ -204,10 +204,10 @@ const HomeBlogSection = () => {
       {/* ── SCROLLING SECTION CONTENT (Transparent so you see fixed bg) ── */}
       <section
         ref={sectionRef}
-        className="relative z-30 pt-12 pb-24 sm:pt-16 sm:pb-32 bg-transparent border-b border-[#DFDDD8]/20 overflow-hidden select-none"
+        className="relative z-30 pt-12 pb-24 sm:pt-16 sm:pb-32 bg-transparent border-b border-[#DFDDD8]/20 overflow-hidden select-none min-h-[100vh] flex flex-col justify-center"
       >
-        <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 text-center relative z-10">
-          
+        <div className="max-w-7xl w-full mx-auto px-6 sm:px-12 lg:px-16 text-center relative z-10">
+
           {/* Top Decorative Lines & Tagline exactly like Crafted by Nature */}
           <div className="flex items-center justify-center gap-4 mb-6">
             <div
@@ -258,11 +258,10 @@ const HomeBlogSection = () => {
                 <Link
                   key={card.id}
                   to={card.link}
-                  className={`group block p-3 rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-2 relative overflow-hidden ${
-                    isSage
+                  className={`group block p-3 rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-2 relative overflow-hidden ${isSage
                       ? "bg-gradient-to-br from-[#DCECD8] via-[#C9E0C3] to-[#A8C6A0] border-2 border-[#8BB382]"
                       : "bg-gradient-to-br from-[#EAEAE6] via-[#DDDCD7] to-[#C8C7C1] border-2 border-[#B8B7B0]"
-                  }`}
+                    }`}
                 >
                   {/* Image & Overlay Frame */}
                   <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-[#222]">

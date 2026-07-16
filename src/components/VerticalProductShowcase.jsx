@@ -172,7 +172,7 @@ const VerticalProductShowcase = () => {
 
   return (
     <>
-      <section className="relative z-30 pt-8 md:pt-12 pb-8 md:pb-10 bg-white mt-16 md:mt-0">
+      <section className="relative z-30 pt-8 md:pt-12 pb-8 md:pb-10 bg-white mt-16 md:mt-0 min-h-[100vh] flex flex-col justify-center">
 
         <div className="max-w-[100vw] mx-auto pt-4 md:pt-8 lg:pt-12 relative z-10 overflow-hidden">
           {/* Heading — Stone Collection style */}

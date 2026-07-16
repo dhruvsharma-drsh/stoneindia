@@ -64,7 +64,7 @@ export function Header() {
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] pointer-events-auto",
         hidden && !open ? "-translate-y-full" : "translate-y-0",
         scrolled
-          ? "bg-[#0a0a0a]/80 backdrop-blur-2xl shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
+          ? "bg-[#0a0a0a]/80 shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
           : "bg-transparent"
       )}
     >
@@ -114,7 +114,7 @@ export function Header() {
 
             {/* Mega Menu for Our Product */}
             <NavigationMenuItem>
-              <NavigationMenuTrigger 
+              <NavigationMenuTrigger
                 className={cn(
                   "relative bg-transparent font-medium text-[12px] uppercase tracking-[0.15em] cursor-pointer transition-colors px-5 py-2",
                   "after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:bg-[#B8955D] after:transition-all after:duration-300 after:ease-out",
@@ -127,7 +127,7 @@ export function Header() {
                 Products
               </NavigationMenuTrigger>
               <NavigationMenuContent className="bg-[#141414] border border-white/10 shadow-2xl rounded-xl">
-                <div className="grid grid-cols-[repeat(3,auto)_repeat(2,auto)_auto] gap-x-8 gap-y-2 p-8" style={{width: 'max-content'}}>
+                <div className="grid grid-cols-[repeat(3,auto)_repeat(2,auto)_auto] gap-x-8 gap-y-2 p-8" style={{ width: 'max-content' }}>
                   {/* ── Stone Products heading (spans 3 cols) ── */}
                   <h4 className="col-span-3 text-xs font-mono uppercase tracking-widest text-[#B8955D] mb-2 pb-3 border-b border-white/10">Stone Products</h4>
                   {/* ── Sandstone heading (spans 2 cols) ── */}
@@ -193,7 +193,7 @@ export function Header() {
           <span className="text-xs font-mono uppercase tracking-widest text-[#B8955D] mb-3">Menu</span>
           <Link to="/" onClick={() => setOpen(false)} className={`text-lg font-medium py-2.5 border-b border-white/5 transition-colors ${pathname === '/' ? 'text-[#B8955D]' : 'text-white hover:text-[#B8955D]'}`}>Home</Link>
           <Link to="/about" onClick={() => setOpen(false)} className={`text-lg font-medium py-2.5 border-b border-white/5 transition-colors ${pathname === '/about' ? 'text-[#B8955D]' : 'text-white hover:text-[#B8955D]'}`}>About Us</Link>
-          
+
           {/* ── Our Products Accordion ── */}
           <MobileAccordion label="Our Products" linkTo="/products" onNavigate={() => setOpen(false)}>
             <MobileAccordion label="Stone Products" nested>
@@ -347,7 +347,7 @@ const megaMenuData = {
   ],
   sandstone: [
     "Modak Sandstone", "Rainbow Sandstone", "Shivpuri Sandstone", "Teakwood Sandstone",
-    "Katni Grey Sandstone", "Sagar Black Sandstone", "Desert Mint Sandstone", 
+    "Katni Grey Sandstone", "Sagar Black Sandstone", "Desert Mint Sandstone",
     "Katni Yellow Sandstone", "Lalitpur Yellow Sandstone", "Gwalior Mint White Sandstone",
     "Gwalior Mint Yellow Sandstone", "Mint Fossil Indian Sandstone"
   ],
