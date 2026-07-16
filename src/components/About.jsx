@@ -74,7 +74,7 @@ const About = () => {
       <section
         ref={sectionRef}
         id="about"
-        className="relative z-30 w-full overflow-hidden min-h-[100vh] py-16 lg:py-0"
+        className="relative z-30 w-full overflow-hidden h-[100vh] py-16 lg:py-0"
         style={{ backgroundColor: "#FFFFFF" }}
       >
         {/* ▸ MAIN large building image — full right half of screen */}
@@ -90,7 +90,7 @@ const About = () => {
         </div>
 
         <div
-          className="relative z-10 max-w-[1400px] mx-auto px-8 lg:px-14 flex flex-col lg:flex-row items-stretch min-h-[100vh]"
+          className="relative z-10 max-w-[1400px] mx-auto px-8 lg:px-14 flex flex-col lg:flex-row items-stretch h-[100vh]"
         >
           {/* ── LEFT: TEXT ── */}
           <div
@@ -143,7 +143,7 @@ const About = () => {
               className="about-card-1 absolute overflow-hidden"
               style={{
                 top: "1%",
-                left: "6%",
+                left: "0%",
                 width: "24%",
                 aspectRatio: "3/4",
                 border: "6px solid white",
@@ -163,7 +163,7 @@ const About = () => {
               className="about-card-2 absolute overflow-hidden"
               style={{
                 top: "38%",
-                left: "-4%",
+                left: "-10%",
                 width: "32%",
                 aspectRatio: "1/1",
                 border: "6px solid white",
@@ -182,8 +182,8 @@ const About = () => {
             <div
               className="about-stats absolute bg-white"
               style={{
-                top: "51%",
-                left: "22%",
+                top: "58%",
+                left: "15%",
                 width: "270px",
                 padding: "16px 20px 12px",
                 boxShadow: "0 15px 40px rgba(0,0,0,0.08)",

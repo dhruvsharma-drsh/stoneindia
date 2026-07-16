@@ -41,7 +41,7 @@ const HeroContent = () => {
           whileHover={{ y: -3, scale: 1.02 }}
           whileTap={{ scale: 0.97 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
-          className="group flex items-center justify-center gap-3 bg-[#B8955D] text-white font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.15em] px-6 sm:px-8 py-3.5 sm:py-4 rounded-full gold-glow-shadow transition-all duration-300 hover:bg-[#a6834d]"
+          className="group flex items-center justify-center gap-3 bg-[#b3b8be] text-white font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.15em] px-6 sm:px-8 py-3.5 sm:py-4 rounded-full transition-all duration-300 hover:bg-[#a4aab1] shadow-lg hover:shadow-xl"
         >
           <span>Explore Products</span>
           <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
